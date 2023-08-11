@@ -1,0 +1,30 @@
+name: Rspec
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    name: Run specs on Ruby ${{ matrix.ruby_version }}
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        ruby_version: ['2.7', '3.0']
+      fail-fast: false
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up Ruby ${{ matrix.ruby_version }}
+      uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: ${{ matrix.ruby_version }}
+        bundler-cache: true # This will automatically set up bundler and cache gems
+
+    - name: Run specs
+      run: bundle exec rspec
