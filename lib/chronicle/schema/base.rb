@@ -50,9 +50,7 @@ module Chronicle::Schema
     end
 
     def to_h
-      identifier_hash
-        .merge(@properties)
-        .merge({ meta: meta })
+      @properties
     end
 
     def to_h_flattened
