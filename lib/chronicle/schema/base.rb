@@ -18,25 +18,15 @@ module Chronicle::Schema
       end
     end
 
-    def identifier_hash
-      {
-        type: self.class::TYPE,
-        id: @id
-      }.compact
+    def assign_attributes(attributes)
+      @properties.merge!(attributes)
     end
 
-    def to_h_jsonapi
-      identifier_hash.merge({
-        attributes: attributes,
-        relationships: associations.map do |k, v|
-          if v.is_a?(Array)
-            [k, { data: v.map(&:to_h_jsonapi) }]
-          else
-            [k, { data: v.to_h_jsonapi }]
-          end
-        end.to_h,
-      }).merge(meta_hash)
-      .compact
+    def identifier_hash
+      {
+        id: @id,
+        type: self.class::TYPE
+      }.compact
     end
 
     def attributes
@@ -53,47 +43,20 @@ module Chronicle::Schema
       end
     end
 
-    def associations_hash
-      associations.map do |k, v|
-        if v.is_a?(Array)
-          [k, v.map(&:to_h)]
-        else
-          [k, v.to_h]
-        end
-      end.to_h
-    end
-
     def meta
       {
         dedupe_on: @dedupe_on.map{|d| d.map(&:to_s).join(",")}
       }
     end
 
-    def meta_hash
-      {
-        meta: meta
-      }
-    end
-
-    def identifier_hash
-      {
-        id: @id,
-        type: self.class::TYPE
-      }.compact
+    def to_h
+      identifier_hash
+        .merge(@properties)
+        .merge({ meta: meta })
     end
 
     def to_h_flattened
       Chronicle::Utils::Hash.flatten_keys(to_h)
-    end
-
-    def to_h
-      identifier_hash
-        .merge(@properties)
-        .merge(meta_hash)
-    end
-
-    def assign_attributes(attributes)
-      @properties.merge!(attributes)
     end
   end
 end

@@ -2,6 +2,8 @@ require 'dry/schema' # TODO: Lazy load this
 Dry::Schema.load_extensions(:hints)
 Dry::Schema.load_extensions(:info)
 
+require 'chronicle/serialization'
+
 module Chronicle::Schema
   class Validator
     EntitySchema = Dry::Schema.Params do
@@ -33,14 +35,14 @@ module Chronicle::Schema
       end
     end
 
-    def self.validate(input)
-      case input
+    def self.validate(record)
+      case record
       when Entity
-        result = EntitySchema.call(input.to_h_jsonapi)
+        result = EntitySchema.call(Chronicle::Serialization::JSONAPISerializer.serialize(record))
       when Activity
-        result = ActivitySchema.call(input.to_h_jsonapi)
+        result = ActivitySchema.call(Chronicle::Serialization::JSONAPISerializer.serialize(record))
       else
-        raise ArgumentError, "Unsupported type: #{input.class}"
+        raise ArgumentError, "Unsupported type: #{record.class}"
       end
 
       if result.success?
