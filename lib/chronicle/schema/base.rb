@@ -26,8 +26,7 @@ module Chronicle::Schema
     end
 
     def to_h_jsonapi
-      {
-        type: self.class::TYPE,
+      identifier_hash.merge({
         attributes: attributes,
         relationships: associations.map do |k, v|
           if v.is_a?(Array)
@@ -36,8 +35,8 @@ module Chronicle::Schema
             [k, { data: v.to_h_jsonapi }]
           end
         end.to_h,
-        meta: @meta
-      }.compact
+      }).merge(meta_hash)
+      .compact
     end
 
     def attributes
@@ -80,7 +79,7 @@ module Chronicle::Schema
       {
         id: @id,
         type: self.class::TYPE
-      }
+      }.compact
     end
 
     def to_h_flattened
@@ -101,3 +100,4 @@ end
 
 require_relative "activity"
 require_relative "entity"
+require_relative "raw"
