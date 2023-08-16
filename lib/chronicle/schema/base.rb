@@ -1,4 +1,4 @@
-require 'chronicle/utils/hash'
+require 'chronicle/utils/hash_utils'
 
 module Chronicle::Schema
   class Base
@@ -50,11 +50,26 @@ module Chronicle::Schema
     end
 
     def to_h
-      @properties
+      @properties.transform_values do |v|
+        # convert nested records to hashes
+        if v.is_a?(Array)
+          v.map do |e|
+            if e.is_a?(Chronicle::Schema::Base)
+              e.to_h
+            else
+              e
+            end
+          end
+        elsif v.is_a?(Chronicle::Schema::Base)
+          v.to_h
+        else
+          v
+        end
+      end
     end
 
     def to_h_flattened
-      Chronicle::Utils::Hash.flatten_keys(to_h)
+      Chronicle::Utils::HashUtils.flatten_hash(to_h)
     end
   end
 end
