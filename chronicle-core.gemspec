@@ -33,6 +33,9 @@ Gem::Specification.new do |spec|
   spec.require_paths = ["lib"]
 
   spec.add_dependency "dry-schema", "~> 1.13"
+  spec.add_development_dependency "rdf-turtle", '~> 3.3'
+  spec.add_development_dependency "rdf-reasoner", '~> 0.9'
+  spec.add_development_dependency "sparql", '~> 3.3'
 
   spec.add_development_dependency "guard-rspec", "~> 4.7.3"
   spec.add_development_dependency "pry-byebug", "~> 3.9"

@@ -45,7 +45,8 @@ module Chronicle::Schema
 
     def meta
       {
-        dedupe_on: @dedupe_on.map{|d| d.map(&:to_s).join(",")}
+        # dedupe_on: @dedupe_on.map{|d| d.map(&:to_s).join(",")}
+        dedupe_on: @dedupe_on
       }
     end
 

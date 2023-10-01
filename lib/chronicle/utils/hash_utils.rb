@@ -3,9 +3,10 @@ module Chronicle::Utils
     def self.flatten_hash(hash, parent_key = '', result = {})
       hash.each do |key, value|
         current_key = parent_key + (parent_key.empty? ? '' : '.') + key.to_s
-        if value.is_a?(Hash)
+        case value
+        when Hash
           flatten_hash(value, current_key, result)
-        elsif value.is_a?(Array)
+        when Array
           value.each_with_index do |item, index|
             if item.is_a?(Hash)
               flatten_hash(item, "#{current_key}[#{index}]", result)
