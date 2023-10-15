@@ -7,6 +7,8 @@ require "chronicle/core"
 require "chronicle/schema"
 require "chronicle/serialization"
 
+$LOAD_PATH.unshift File.expand_path('../../lib', __FILE__)
+
 RSpec.configure do |config|
   # Disable RSpec exposing methods globally on `Module` and `main`
   config.disable_monkey_patching!

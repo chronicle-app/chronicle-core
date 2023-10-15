@@ -5,7 +5,7 @@ module Chronicle::Serialization
     # options::
     #   Options for configuring this Serializers
     def initialize(record, options = {})
-      raise(SerializationError, "Record must be a subclass of Chronicle::Schema::Base") unless record.is_a?(Chronicle::Schema::Base)
+      raise(SerializationError, "Record must be a subclass of Chronicle::Schema::Base}") unless record.is_a?(Chronicle::Schema::Base)
 
       @record = record
       @options = options

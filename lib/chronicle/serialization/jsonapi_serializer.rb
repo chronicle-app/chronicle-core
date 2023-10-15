@@ -12,21 +12,30 @@ module Chronicle::Serialization
 
     def identifier_hash
       {
-        type: @record.class::TYPE,
+        type: @record.class.name.split('::').last,
         id: @record.id
       }.compact
     end
 
     def attribute_hash
-      @record.attributes.compact
+      @record.attributes.slice(*@record.class.one_cardinality_attributes).compact.transform_values do |v|
+        if v.is_a?(Chronicle::Schema::Base)
+          JSONAPISerializer.new(v).serializable_hash
+        else
+          v
+        end
+      end
     end
 
     def associations_hash
-      @record.associations.map do |k, v|
+      assocations = @record.attributes.slice(*@record.class.many_cardinality_attributes).compact
+      assocations.map do |k, v|
         if v.is_a?(Array)
           [k, { data: v.map{|record| JSONAPISerializer.new(record).serializable_hash} }]
-        else
+        elsif v.is_a?(Chronicle::Schema::Base)
           [k, { data: JSONAPISerializer.new(v).serializable_hash }]
+        else
+          [k, { data: v }]
         end
       end.to_h
     end

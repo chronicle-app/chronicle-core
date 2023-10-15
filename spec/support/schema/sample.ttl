@@ -17,10 +17,6 @@
     rdfs:label "Text" ;
     rdfs:comment "Data type: Text." .
 
-:Entity a rdfs:Class ;
-    rdfs:label "A generic Entity" ;
-    rdfs:comment "The most generic type of item." .
-
 :byArtist a rdf:Property ;
     rdfs:label "byArtist" ;
     :domainIncludes :MusicAlbum ;
@@ -35,10 +31,15 @@
     rdfs:subClassOf :Person ;
     owl:equivalentProperty schema:MusicGroup .
 
+:RockGroup a rdfs:Class ;
+    rdfs:label "MusicGroup" ;
+    rdfs:comment "A musical group, such as a band, an orchestra, or a choir. Can also be a solo musician." ;
+    rdfs:subClassOf :MusicGroup ;
+    owl:equivalentProperty schema:MusicGroup .
+
 :DataType a rdfs:Class ;
     rdfs:label "DataType" ;
-    rdfs:comment "The basic data types such as Integers, Strings, etc." ;
-    rdfs:subClassOf rdfs:Class .
+    rdfs:comment "The basic data types such as Integers, Strings, etc." .
 
 :Entity a rdfs:Class ;
     rdfs:label "A generic Entity" ;
@@ -66,6 +67,17 @@
     owl:maxCardinality 1 ;
     owl:equivalentProperty dc:description .
 
+:hairLength a rdf:Property ;
+    rdfs:label "length of hair" ;
+    :domainIncludes :RockGroup ;
+    owl:maxCardinality 1 ;
+    :rangeIncludes :Text .
+
+:MusicGroup a rdfs:Class ;
+    rdfs:label "MusicGroup" ;
+    rdfs:comment "A musical group, such as a band, an orchestra, or a choir. Can also be a solo musician." ;
+    rdfs:subClassOf :Entity ;
+    owl:equivalentProperty schema:MusicGroup .
 
 :Person a rdfs:Class ;
     rdfs:label "Person" ;
@@ -73,11 +85,20 @@
     rdfs:subClassOf :Entity ;
     owl:equivalentProperty schema:Person .
 
+:RockGroup a rdfs:Class ;
+    rdfs:label "MusicGroup" ;
+    rdfs:comment "A musical group, such as a band, an orchestra, or a choir. Can also be a solo musician." ;
+    rdfs:subClassOf :MusicGroup ;
+    owl:equivalentProperty schema:MusicGroup .
+
 :MusicAlbum a rdfs:Class ;
     rdfs:label "MusicAlbum" ;
     rdfs:comment "A collection of music tracks." ;
     rdfs:subClassOf :Entity .
 
+:Entity a rdfs:Class ;
+    rdfs:label "A generic Entity" ;
+    rdfs:comment "The most generic type of item." .
 
 :Activity a rdfs:Class.
 
@@ -95,9 +116,4 @@
 :age a rdf:Property ;
     :domainIncludes :Person ;
     :rangeIncludes :Text ;
-    owl:maxCardinality 1 .
-
-:object a rdf:Property ;
-    :domainIncludes :Activity ;
-    :rangeIncludes :Entity ;
     owl:maxCardinality 1 .
