@@ -17,9 +17,20 @@
     rdfs:label "Text" ;
     rdfs:comment "Data type: Text." .
 
+:DateTime a :DataType,
+        rdfs:Class ;
+    rdfs:label "DateTime" ;
+    rdfs:comment "A combination of date and time of day in the form [-]CCYY-MM-DDThh:mm:ss[Z|(+|-)hh:mm] (see Chapter 5.4 of ISO 8601)." .
+
 :Entity a rdfs:Class ;
     rdfs:label "A generic Entity" ;
     rdfs:comment "The most generic type of item." .
+
+:CreativeWork a rdfs:Class ;
+    rdfs:label "CreativeWork" ;
+    :contributor <https://schema.org/docs/collab/rNews> ;
+    rdfs:comment "The most generic kind of creative work, including books, movies, photographs, software programs, etc." ;
+    rdfs:subClassOf :Entity .
 
 :byArtist a rdf:Property ;
     rdfs:label "byArtist" ;
@@ -101,3 +112,13 @@
     :domainIncludes :Activity ;
     :rangeIncludes :Entity ;
     owl:maxCardinality 1 .
+
+:endAt a rdf:Property ;
+    :domainIncludes :Activity ;
+    :rangeIncludes :DateTime ;
+    owl:maxCardinality 1 .
+
+:MusicRecording a rdfs:Class ;
+    rdfs:label "MusicRecording" ;
+    rdfs:comment "A music recording (track), usually a single song." ;
+    rdfs:subClassOf :CreativeWork .
