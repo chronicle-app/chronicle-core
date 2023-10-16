@@ -18,8 +18,16 @@ module Chronicle::Schema
     end
 
     def self.new(attributes = {})
-      super
-    rescue Dry::Struct::Error => e
+      if block_given?
+        attribute_struct = Struct.new(*schema.map(&:name))
+        attribute_struct = attribute_struct.new
+        yield(attribute_struct)
+        attributes = attribute_struct.to_h
+      end
+
+      super(attributes)
+    rescue Dry::Struct::Error, NoMethodError => e
+      # TODO: be more clear about the attribute that's invalid
       raise AttributeError, e.message
     end
 
