@@ -76,6 +76,43 @@ RSpec.describe Chronicle::Schema::Generators::GenerateModels do
           )
         end.to raise_error(Chronicle::Schema::AttributeError)
       end
+
+      describe 'numeric attributes' do
+        
+      end
+
+      describe 'time attributes' do
+        let(:activity_args) { 
+          {
+            verb: 'ate',
+            end_at: Time.now,
+            actor: Chronicle::TestSchema::Person.new
+          }
+         }
+
+        it 'can handle datetime classes' do
+          expect do
+            Chronicle::TestSchema::Activity.new(activity_args)
+          end.to_not raise_error
+        end
+
+        it 'is the right class' do
+          expect(
+            Chronicle::TestSchema::Activity
+              .new(activity_args)
+              .end_at
+          ).to be_a(Time)
+        end
+
+        it 'coerces string dates correctly' do
+          time_str = '2005-04-04 12:00'
+          expect(
+            Chronicle::TestSchema::Activity
+              .new(activity_args.merge(end_at: time_str))
+              .end_at
+          ).to eq(Time.parse(time_str))
+        end
+      end
     end
   end
 end

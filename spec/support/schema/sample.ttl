@@ -17,6 +17,32 @@
     rdfs:label "Text" ;
     rdfs:comment "Data type: Text." .
 
+:Number a :DataType,
+        rdfs:Class ;
+    rdfs:label "Number" ;
+    rdfs:comment "Data type: Number.\\n\\nUsage guidelines:\\n\\n* Use values from 0123456789 (Unicode 'DIGIT ZERO' (U+0030) to 'DIGIT NINE' (U+0039)) rather than superficially similar Unicode symbols.\\n* Use '.' (Unicode 'FULL STOP' (U+002E)) rather than ',' to indicate a decimal point. Avoid using these symbols as a readability separator." .
+
+:Float a rdfs:Class ;
+    rdfs:label "Float" ;
+    rdfs:comment "Data type: Floating number." ;
+    rdfs:subClassOf :Number .
+
+:Integer a rdfs:Class ;
+    rdfs:label "Integer" ;
+    rdfs:comment "Data type: Integer." ;
+    rdfs:subClassOf :Number .
+
+:DateTime a :DataType,
+        rdfs:Class ;
+    rdfs:label "DateTime" ;
+    rdfs:comment "A combination of date and time of day in the form [-]CCYY-MM-DDThh:mm:ss[Z|(+|-)hh:mm] (see Chapter 5.4 of ISO 8601)." .
+
+
+:Integer a rdfs:Class ;
+    rdfs:label "Integer" ;
+    rdfs:comment "Data type: Integer." ;
+    rdfs:subClassOf :Number .
+
 :byArtist a rdf:Property ;
     rdfs:label "byArtist" ;
     :domainIncludes :MusicAlbum ;
@@ -69,9 +95,9 @@
 
 :hairLength a rdf:Property ;
     rdfs:label "length of hair" ;
+    :rangeIncludes :Number ;
     :domainIncludes :RockGroup ;
-    owl:maxCardinality 1 ;
-    :rangeIncludes :Text .
+    owl:maxCardinality 1 .
 
 :MusicGroup a rdfs:Class ;
     rdfs:label "MusicGroup" ;
@@ -105,6 +131,7 @@
 :actor a rdf:Property ;
     :domainIncludes :Activity ;
     :rangeIncludes :Person ;
+    owl:minCardinality 1 ;
     owl:maxCardinality 1 .
 
 :verb a rdf:Property ;
@@ -113,7 +140,29 @@
     owl:minCardinality 1 ;
     owl:maxCardinality 1 .
 
-:age a rdf:Property ;
-    :domainIncludes :Person ;
-    :rangeIncludes :Text ;
+:endAt a rdf:Property ;
+    :domainIncludes :Activity ;
+    :rangeIncludes :DateTime ;
     owl:maxCardinality 1 .
+
+:startAt a rdf:Property ;
+    :domainIncludes :Activity ;
+    :rangeIncludes :DateTime ;
+    owl:maxCardinality 1 .
+
+:formedOn a rdf:Property ;
+    :domainIncludes :MusicGroup ;
+    :rangeIncludes :DateTime ;
+    owl:maxCardinality 1 .
+
+:VideoObject a rdfs:Class ;
+    rdfs:label "VideoObject" ;
+    rdfs:comment "A video file." ;
+    rdfs:subClassOf :CreativeWork .
+
+:video a rdf:Property ;
+    rdfs:label "video" ;
+    :domainIncludes :CreativeWork,
+        :Person,
+        :Organization;
+    :rangeIncludes :VideoObject .

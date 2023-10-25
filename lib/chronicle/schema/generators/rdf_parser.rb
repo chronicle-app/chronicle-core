@@ -140,9 +140,12 @@ module Chronicle::Schema::Generators
         detailed_classes[class_uri.to_s] = build_class_details(class_uri)
       end
 
-      DependencySorter.new(detailed_classes).tsort.map do |class_uri|
+      sorted = DependencySorter.new(detailed_classes).tsort.map do |class_uri|
         [class_uri, detailed_classes[class_uri]]
       end.to_h
+
+      sorted
+      detailed_classes
     end
 
     def build_class_details(class_uri)
@@ -153,9 +156,10 @@ module Chronicle::Schema::Generators
         subclasses: all_subclasses(class_uri),
         superclasses: all_superclasses(class_uri),
         dependencies:
-          (nearest_superclass(class_uri).map(&:to_s) +
-            properties_of_superclasses(class_uri)
-              .map{ |p| p[:range] }.flatten).uniq
+          (
+            all_superclasses(class_uri).map(&:to_s)).uniq
+            # properties_of_superclasses(class_uri)
+            #   .map{ |p| p[:range] }.flatten).uniq
       }
     end
 

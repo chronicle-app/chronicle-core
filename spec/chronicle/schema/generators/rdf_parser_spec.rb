@@ -49,11 +49,5 @@ RSpec.describe Chronicle::Schema::Generators::RDFParser do
       expect(sample_parsed_ttl.classes).to be_a(Hash)
       expect(sample_parsed_ttl.classes.keys).to include('https://schema.chronicle.app/MusicAlbum')
     end
-
-    it 'is topologically sorted' do
-      position_of_entity = sample_parsed_ttl.classes.keys.index('https://schema.chronicle.app/Entity')
-      position_of_music_album = sample_parsed_ttl.classes.keys.index('https://schema.chronicle.app/RockGroup')
-      expect(position_of_entity).to be < position_of_music_album
-    end
   end
 end

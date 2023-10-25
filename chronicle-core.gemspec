@@ -34,6 +34,7 @@ Gem::Specification.new do |spec|
 
   spec.add_dependency "dry-schema", "~> 1.13"
   spec.add_dependency "dry-struct", "~> 1.6"
+  spec.add_dependency "dry-validation", "~> 1.10"
   spec.add_dependency "json-ld", "~> 3.3"
   
   spec.add_development_dependency "rdf-turtle", '~> 3.3'

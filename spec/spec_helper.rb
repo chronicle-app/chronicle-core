@@ -1,6 +1,8 @@
 require 'simplecov'
 SimpleCov.start
 
+require 'support/matchers/valid_contract_matcher'
+
 require "bundler/setup"
 
 require "chronicle/core"
@@ -18,4 +20,7 @@ RSpec.configure do |config|
   config.expect_with :rspec do |c|
     c.syntax = :expect
   end
+
+  config.filter_run focus: true
+  config.run_all_when_everything_filtered = true
 end

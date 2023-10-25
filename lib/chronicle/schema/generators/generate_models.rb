@@ -48,9 +48,7 @@ module Chronicle::Schema::Generators
       optional_modifier = '.optional.default(nil)' if %i[zero_or_more zero_or_one].include?(property[:cardinality])
       cardinality_meta = ".meta(cardinality: :#{property[:cardinality]})"
 
-      range_str = property[:range_with_subclasses].map do |range|
-        range_to_type(range)
-      end.flatten.join(' | ')
+      range_str = range_to_type(property[:range_with_subclasses])
 
       outer_type = if %i[one_or_more zero_or_more].include?(property[:cardinality])
                      "Chronicle::Schema::Types::Array.of(#{range_str})"
@@ -62,12 +60,22 @@ module Chronicle::Schema::Generators
     end
 
     def range_to_type(range)
-      type = range.gsub('https://schema.chronicle.app/', "#{@namespace}::")
-      output = ["Chronicle::Schema::Types.Instance(#{type})"]
+      types = range.map do |range_item|
+        range_item.gsub('https://schema.chronicle.app/', '')
+      end
 
-      output << 'Chronicle::Schema::Types::String' if type == "#{@namespace}::Text"
+      types_string = types.map do |type|
+        "'#{type}'"
+      end.join(", ")
 
-      output
+      type_values = []
+
+      type_values << "Chronicle::Schema::Types::String" if (['Text', 'URL'] & types).any?
+      type_values << "Chronicle::Schema::Types::Params::Time" if types.include? 'DateTime'
+      type_values << "Chronicle::Schema::Types::Params::Integer" if types.include? 'Integer'
+      type_values << "Chronicle::Schema::Types::Params::Integer" if types.include? 'Integer'
+      type_values << "Chronicle::Schema.schema_type([#{types}])"
+      type_values.join(' | ')
     end
   end
 end

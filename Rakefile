@@ -30,4 +30,16 @@ namespace :generate do
     output_path = File.join(File.dirname(__FILE__), 'lib', 'chronicle', 'schema', 'schema_validators.rb')
     File.open(output_path, 'w') { |f| f.write(output) }
   end
+  
+  desc 'Generate Ruby hash file'
+  task :hash, [:ttl_path] do |t, args|
+    require_relative 'lib/chronicle/schema'
+    require_relative 'lib/chronicle/schema/generators/generate_hash'
+
+    ttl_path = args[:ttl_path] || DEFAULT_SCHEMA_FILE
+    output = Chronicle::Schema::Generators::GenerateHash.generate_from_ttl_path(ttl_path)
+
+    output_path = File.join(File.dirname(__FILE__), 'lib', 'chronicle', 'schema', 'data', 'data.rb')
+    File.open(output_path, 'w') { |f| f.write(output) }
+  end
 end
