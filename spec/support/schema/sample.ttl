@@ -45,7 +45,7 @@
 
 :byArtist a rdf:Property ;
     rdfs:label "byArtist" ;
-    :domainIncludes :MusicAlbum ;
+    :domainIncludes :MusicAlbum ; 
     :rangeIncludes :MusicGroup, 
         :Person,
         :Text ;

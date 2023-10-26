@@ -127,13 +127,47 @@ RSpec.describe Chronicle::Schema::Validation::Validator do
 
     describe 'value coercions' do
       # FIXME: not sure why this isn't working
-      xit 'will coerce a nested object' do
+      it 'will coerce an object' do
         obj = rock_group.merge(formed_on: '2023-10-01')
         result = described_class.call(obj)
 
         expect { result }.to_not raise_error
         expect(result).to be_considered_valid
         expect(result.to_h[:formed_on].class).to eq(Time)
+      end
+
+      # FIXME: the nested custom type strategy doesn't seem to work
+      # consistently and I don't know why
+      xit 'will coerce a deeply-nested object' do
+        obj = album.merge({
+          test: [{
+            '@type': 'Text',
+            value: 'asdfdas',
+            by_artist: [rock_group]
+          }],
+          description: {
+            '@type': 'Text',
+            value: {
+              '@type': 'Text',
+              value: 'asdf'
+            }
+          },
+          by_artist: [
+            rock_group.merge({
+              formed_on: '2023-10-01', video: [{
+                '@type': 'VideoObject',
+                name: {
+                  '@type': 'Text',
+                  value: 5
+                }
+              }]
+            })
+        ]})
+        result = described_class.call(obj)
+
+        expect { result }.to_not raise_error
+        expect(result).to be_considered_valid
+        expect(result.to_h[:by_artist][0][:formed_on].class).to eq(Time)
       end
     end
 

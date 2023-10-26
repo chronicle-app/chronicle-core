@@ -4,22 +4,39 @@ module Chronicle::Schema
   module Types
     include Dry.Types()
 
-    ChronicleEntity = Hash.constructor do |value|
-      type = value[:'@type']
+    def self.coerce_chronicle_entity(value)
+      type = value[:@type]
 
       contract_klass = Chronicle::Schema::Validation.get_contract(type)
-      raise Dry::Types::ConstraintError.new("Invalid type: #{type}") unless contract_klass
+      # TODO: maybe something smarter here?
+      # return value unless contract_klass
 
       result = contract_klass.schema.call(value)
-      result.to_h
+      result.success? ? result.to_h : value
     end
 
-    # ChronicleEdgeValue = Integer | String | ChronicleEntity
+    CoercibleChronicleEdgeWrapper = Hash.constructor do |value|
+      # puts "CoercibleChronicleEdgeWrapper: #{value}"
+      # I dont understand why value can be an array but here we are
+      # The only thing we care about here is getting the coercions from the 
+      # nested schemas
+
+      case value
+      when ::Array
+        coerced_array = value.map do |item|
+          Chronicle::Schema::Types.coerce_chronicle_entity(item)
+        end
+        next coerced_array
+
+      when ::Hash
+        next Chronicle::Schema::Types.coerce_chronicle_entity(value)
+      end
+    end
 
     def self.edge_plus_literal(literals)
-      return ChronicleEntity unless literals.any?
+      return CoercibleChronicleEdgeWrapper unless literals.any?
 
-      literals.reduce { |acc, literal| acc | literal } | ChronicleEntity
+      literals.reduce { |acc, literal| acc | literal } | CoercibleChronicleEdgeWrapper
     end
   end
 end
