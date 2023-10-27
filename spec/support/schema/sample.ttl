@@ -45,7 +45,8 @@
 
 :byArtist a rdf:Property ;
     rdfs:label "byArtist" ;
-    :domainIncludes :MusicAlbum ; 
+    :domainIncludes :MusicAlbum,
+        :MusicRecording ; 
     :rangeIncludes :MusicGroup, 
         :Person,
         :Text ;
@@ -166,3 +167,19 @@
         :Person,
         :Organization;
     :rangeIncludes :VideoObject .
+
+:object a rdf:Property ;
+    :domainIncludes :Activity ;
+    :rangeIncludes :Entity ;
+    owl:maxCardinality 1 .
+
+:MusicRecording a rdfs:Class ;
+    rdfs:label "MusicRecording" ;
+    rdfs:comment "A music recording (track), usually a single song." ;
+    rdfs:subClassOf :CreativeWork .
+
+:CreativeWork a rdfs:Class ;
+    rdfs:label "CreativeWork" ;
+    :contributor <https://schema.org/docs/collab/rNews> ;
+    rdfs:comment "The most generic kind of creative work, including books, movies, photographs, software programs, etc." ;
+    rdfs:subClassOf :Entity .

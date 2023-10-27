@@ -1,12 +1,11 @@
 module Chronicle::Schema::Validation
   class EdgeValidator
-    # TODO: validate the edge types for a property
     def validate(type, edge, value)
       errors = {}
       # puts "validating #{edge} for #{type} with value #{value}"
       return errors unless value.is_a?(Hash)
 
-      value_type = value[:@type]
+      value_type = value[:@type] || value['@type']
 
       edge_details = get_edge_details(type, edge)
       unless edge_details

@@ -138,7 +138,7 @@ RSpec.describe Chronicle::Schema::Validation::Validator do
 
       # FIXME: the nested custom type strategy doesn't seem to work
       # consistently and I don't know why
-      xit 'will coerce a deeply-nested object' do
+      it 'will coerce a deeply-nested object' do
         obj = album.merge({
           test: [{
             '@type': 'Text',
@@ -183,5 +183,34 @@ RSpec.describe Chronicle::Schema::Validation::Validator do
 
       expect(described_class.call(bad_album)).to be_considered_invalid( [:by_artist])
     end
-  end  
+  end
+
+  context 'real life data' do
+    it 'can validate' do
+      data = {"@type"=>"Activity",
+      "actor"=>
+       {"@type"=>"Person",
+        "provider"=>"lastfm",
+        "provider_slug"=>"hyfen",
+        "name"=>"Andrew Louis",
+        "url"=>"http://www.last.fm/user/hyfen"},
+      "verb"=>"listened",
+      "object"=>
+       {"@type"=>"MusicRecording",
+        "provider"=>"lastfm",
+        "provider_id"=>"0bbc57a5-ab84-3164-8ec1-a23480621512",
+        "by_artist"=>[
+         {"@type"=>"MusicGroup",
+           "provider"=>"lastfm",
+           "name"=>"John Talabot",
+           "url"=>"https://www.last.fm/music/John+Talabot"}],
+        "in_album"=>[{"@type"=>"MusicAlbum", "provider"=>"lastfm", "name"=>"Fin"}],
+        "name"=>"Depak Ine",
+        "url"=>"https://www.last.fm/music/John+Talabot/_/Depak+Ine"},
+      "end_at"=>"2023-10-27T11:54:08.000-04:00"}
+
+      result = described_class.call(data)
+      expect(described_class.call(data)).to be_considered_valid
+    end
+  end
 end
