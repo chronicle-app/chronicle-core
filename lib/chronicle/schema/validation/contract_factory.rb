@@ -92,10 +92,11 @@ module Chronicle::Schema::Validation
       literals << :integer if range.include?('https://schema.chronicle.app/Integer')
       literals << :float if range.include?('https://schema.chronicle.app/Float')
       literals << :string if range.include?('https://schema.chronicle.app/Text')
+      literals << :string if range.include?('https://schema.chronicle.app/URL')
       literals << :time if range.include?('https://schema.chronicle.app/DateTime')
 
       literals << :hash
-      literals
+      literals.uniq
     end
   end
 end
