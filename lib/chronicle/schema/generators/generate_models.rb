@@ -24,10 +24,10 @@ module Chronicle::Schema::Generators
     MODEL_TEMPLATE
 
     def generate
-      models = @parsed_schema.classes.map do |_class_name, class_details|
+      models = @parsed_schema.classes.map do |class_id, class_details|
         next unless class_details
 
-        generate_model(class_details[:name_short], class_details[:properties])
+        generate_model(class_id, class_details[:properties])
       end
 
       ERB.new(MODEL_FILE, trim_mode: '-').result(binding)
@@ -35,22 +35,24 @@ module Chronicle::Schema::Generators
 
     private
 
-    def generate_model(class_name, properties = [])
+    def generate_model(class_id, properties = [])
       attributes = properties.map do |property|
         generate_attribute(property)
       end
+
+      class_name = class_id.to_s
 
       ERB.new(MODEL_TEMPLATE, trim_mode: '-').result(binding)
     end
 
     def generate_attribute(property)
       attribute_name = property[:name_snake_case]
-      optional_modifier = '.optional.default(nil)' if %i[zero_or_more zero_or_one].include?(property[:cardinality])
-      cardinality_meta = ".meta(cardinality: :#{property[:cardinality]})"
+      optional_modifier = '.optional.default(nil)' unless property[:required?]
+      cardinality_meta = ".meta(required: :#{property[:required?]}, many: :#{property[:many?]})"
 
       range_str = range_to_type(property[:range_with_subclasses])
 
-      outer_type = if %i[one_or_more zero_or_more].include?(property[:cardinality])
+      outer_type = if property[:many?]
                      "Chronicle::Schema::Types::Array.of(#{range_str})"
                    else
                      "(#{range_str})"
@@ -60,21 +62,13 @@ module Chronicle::Schema::Generators
     end
 
     def range_to_type(range)
-      types = range.map do |range_item|
-        range_item.gsub('https://schema.chronicle.app/', '')
-      end
-
-      types_string = types.map do |type|
-        "'#{type}'"
-      end.join(", ")
-
       type_values = []
 
-      type_values << "Chronicle::Schema::Types::String" if (['Text', 'URL'] & types).any?
-      type_values << "Chronicle::Schema::Types::Params::Time" if types.include? 'DateTime'
-      type_values << "Chronicle::Schema::Types::Params::Integer" if types.include? 'Integer'
-      type_values << "Chronicle::Schema::Types::Params::Integer" if types.include? 'Integer'
-      type_values << "Chronicle::Schema.schema_type([#{types}])"
+      type_values << "Chronicle::Schema::Types::String" if ([:Text, :URL] & range).any?
+      type_values << "Chronicle::Schema::Types::Params::Time" if range.include? :DateTime
+      type_values << "Chronicle::Schema::Types::Params::Integer" if range.include? :Integer
+      type_values << "Chronicle::Schema::Types::Params::Integer" if range.include? :Integer
+      type_values << "Chronicle::Schema.schema_type([#{range}])"
       type_values.join(' | ')
     end
   end

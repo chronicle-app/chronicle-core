@@ -29,7 +29,7 @@ module Chronicle::Schema
     end
 
     def type
-      self.class.name.split('::').last
+      self.class.name.split('::').last.to_sym
     end
 
     def meta
@@ -54,6 +54,7 @@ module Chronicle::Schema
 
   def self.schema_type(types)
     Types::Instance(Chronicle::Schema::Base).constructor do |input|
+      # binding.pry
       unless input.respond_to?(:type) && [types].flatten.include?(input.type)
         raise Dry::Types::ConstraintError.new(:type?, input)
       end

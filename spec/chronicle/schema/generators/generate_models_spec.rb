@@ -3,7 +3,7 @@ require 'chronicle/schema/generators/generate_models'
 
 RSpec.describe Chronicle::Schema::Generators::GenerateModels do
   let(:sample_parsed_ttl) do
-    sample_ttl_path = File.join(File.dirname(__FILE__), '..', '..', '..', 'support', 'schema','sample.ttl')
+    sample_ttl_path = File.join(File.dirname(__FILE__), '..', '..', '..', 'support', 'schema', 'sample.ttl')
     sample_ttl_str = File.read(sample_ttl_path)
     Chronicle::Schema::Generators::RDFParser.new(sample_ttl_str).parse
 

@@ -13,7 +13,7 @@ RSpec.describe Chronicle::Schema::Validation::Generation do
   it 'can build a schema' do
     Chronicle::Schema::Validation::Generation.generate_contracts(schema_class_data)
 
-    contract = Chronicle::Schema::Validation.get_contract('Person')
+    contract = Chronicle::Schema::Validation.get_contract(:Person)
     expect(contract).to_not be_nil
     expect(contract.new).to respond_to(:call)
     expect(contract.new.call({}).success?).to be_falsey

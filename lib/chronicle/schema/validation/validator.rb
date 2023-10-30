@@ -2,7 +2,7 @@ module Chronicle::Schema::Validation
   class Validator
     def validate(data)
       type = data[:@type] || data['@type']
-      contract = Chronicle::Schema::Validation.get_contract(type)
+      contract = Chronicle::Schema::Validation.get_contract(type.to_sym)
 
       raise Chronicle::Schema::ValidationError, "No contract found for type #{type}" unless contract
 

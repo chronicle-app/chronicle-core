@@ -48,46 +48,52 @@ module Chronicle::Schema::Generators
     private
 
     def all_classes
-      @graph.query([nil, RDF.type, RDF::RDFS.Class]).map(&:subject).map(&:to_s)
+      @graph.query([nil, RDF.type, RDF::RDFS.Class])
+        .map(&:subject)
+        .map(&:to_s)
+        .map{|s| uri_to_symbolized_name(s)}
     end
 
-    def all_subclasses(class_uri, subclasses = [])
-      direct_subclasses = @graph.query([nil, RDF::RDFS.subClassOf, RDF::URI.new(class_uri)]).map(&:subject)
+    def all_subclasses(class_id, subclasses = [])
+      direct_subclasses = @graph.query([nil, RDF::RDFS.subClassOf, RDF::URI.new(id_to_uri(class_id))]).map(&:subject)
 
       direct_subclasses.each do |subclass|
-        subclasses << subclass unless subclasses.include?(subclass)
-        all_subclasses(subclass, subclasses)
+        subclass_id = uri_to_symbolized_name(subclass)
+        subclasses << subclass_id unless subclasses.include?(subclass_id)
+        all_subclasses(subclass_id, subclasses)
       end
 
-      subclasses.map(&:to_s)
+      subclasses
     end
 
-    def nearest_superclass(class_uri)
-      @graph.query([RDF::URI.new(class_uri), RDF::RDFS.subClassOf, nil]).map(&:object).map(&:to_s)
+    def nearest_superclass(class_id)
+      result = @graph.query([RDF::URI.new(id_to_uri(class_id)), RDF::RDFS.subClassOf, nil]).map(&:object).map(&:to_s)
+      uri_to_symbolized_name(result)
     end
 
-    def all_superclasses(class_uri, superclasses = [])
-      direct_superclasses = @graph.query([RDF::URI.new(class_uri), RDF::RDFS.subClassOf, nil]).map(&:object)
+    def all_superclasses(class_id, superclasses = [])
+      direct_superclasses = @graph.query([RDF::URI.new(id_to_uri(class_id)), RDF::RDFS.subClassOf, nil]).map(&:object)
 
       direct_superclasses.each do |superclass|
-        superclasses << superclass unless superclasses.include?(superclass)
-        all_superclasses(superclass, superclasses)
+        superclass_id = uri_to_symbolized_name(superclass)
+        superclasses << superclass_id unless superclasses.include?(superclass_id)
+        all_superclasses(superclass_id, superclasses)
       end
 
-      superclasses.map(&:to_s)
+      superclasses
     end
 
-    def properties_of_class(class_uri)
+    def properties_of_class(class_id)
       @properties.select do |property|
-        property[:domain].include?(class_uri.to_s)
+        property[:domain].include?(class_id)
       end
     end
 
-    def properties_of_superclasses(class_uri)
-      properties = properties_of_class(class_uri)
+    def properties_of_superclasses(class_id)
+      properties = properties_of_class(class_id)
 
       # Get properties of the superclasses
-      superclasses = all_superclasses(class_uri)
+      superclasses = all_superclasses(class_id)
       superclasses.each do |superclass|
         properties.concat(properties_of_class(superclass))
       end
@@ -95,49 +101,45 @@ module Chronicle::Schema::Generators
       properties.uniq
     end
 
-    def get_property_range(property_uri)
-      @graph.query([
-        property_uri,
-        RDF::URI.new("#{SCHEMA_URI}rangeIncludes"),
-        nil]
-      ).map(&:object)
-       .map{|o| clean_uri(o.to_s)}
-    end
-
     def gather_properties
       properties = @graph.query([nil, RDF.type, RDF::RDFV.Property]).map(&:subject)
 
       properties.map do |property|
+        property_id = uri_to_symbolized_name(property)
+
         range = @graph.query([
           property,
           RDF::URI.new("#{SCHEMA_URI}rangeIncludes"),
           nil]
-        ).map(&:object).map(&:to_s)
+        ).map(&:object)
+         .map(&:to_s)
+         .map{|r| uri_to_symbolized_name(r)}
 
-        range_with_subclasses = (range + range.map{|r| all_subclasses(r).map(&:to_s)}).flatten.uniq
+        range_with_subclasses = (range + range.map{|r| all_subclasses(r)}).flatten.uniq
 
         domain = @graph.query([
           property,
           RDF::URI.new("#{SCHEMA_URI}domainIncludes"),
           nil]
-        ).map(&:object).map(&:to_s)
+        ).map(&:object).map(&:to_s).map{|d| uri_to_symbolized_name(d) }
 
         {
-          name: property.to_s,
-          name_shortened: strip_uri(property.to_s),
-          name_snake_case: camel_to_snake(strip_uri(property.to_s)),
-          range: range,
-          range_with_subclasses: range_with_subclasses,
+          id: property_id,
+          schema_uri: property.to_s,
+          name_snake_case: camel_to_snake(property_id.to_s).to_sym,
+          range: range.map{|r| uri_to_symbolized_name(r) },
+          range_with_subclasses: range_with_subclasses.map{|r| uri_to_symbolized_name(r) },
           domain: domain,
-          cardinality: get_property_cardinality(property)
+          required?: property_required?(property_id),
+          many?: property_many?(property_id)
         }
       end
     end
 
     def gather_class_details
       detailed_classes = {}
-      all_classes.each do |class_uri|
-        detailed_classes[class_uri.to_s] = build_class_details(class_uri)
+      all_classes.each do |class_id|
+        detailed_classes[class_id] = build_class_details(class_id)
       end
 
       sorted = DependencySorter.new(detailed_classes).tsort.map do |class_uri|
@@ -148,48 +150,54 @@ module Chronicle::Schema::Generators
       detailed_classes
     end
 
-    def build_class_details(class_uri)
+    def build_class_details(class_id)
       {
-        name: class_uri,
-        name_short: strip_uri(class_uri),
-        properties: properties_of_superclasses(class_uri),
-        subclasses: all_subclasses(class_uri),
-        superclasses: all_superclasses(class_uri),
+        properties: properties_of_superclasses(class_id),
+        subclasses: all_subclasses(class_id),
+        superclasses: all_superclasses(class_id),
         dependencies:
           (
-            all_superclasses(class_uri).map(&:to_s)).uniq
+            all_superclasses(class_id)
             # properties_of_superclasses(class_uri)
             #   .map{ |p| p[:range] }.flatten).uniq
+          )
       }
     end
 
-    def get_property_cardinality(property)
+    def property_required?(property_id)
+      get_property_cardinality(property_id).first.positive?
+    end
+
+    def property_many?(property_id)
+      get_property_cardinality(property_id).last > 1
+    end
+
+    def get_property_cardinality(property_id)
       min_cardinality = @graph.query([
-        property,
+        RDF::URI.new(id_to_uri(property_id)),
         RDF::OWL.minCardinality,
         nil]
       ).map(&:object).first&.to_i
 
       max_cardinality = @graph.query([
-        property,
+        RDF::URI.new(id_to_uri(property_id)),
         RDF::OWL.maxCardinality,
         nil]
       ).map(&:object).first&.to_i
 
-      if min_cardinality == 1 && max_cardinality == 1
-        :one
-      elsif min_cardinality.nil? && max_cardinality == 1
-        :zero_or_one
-      elsif min_cardinality == 1 && max_cardinality.nil?
-        :one_or_more
-      else
-      # elsif min_cardinality.nil? && max_cardinality.nil?
-        :zero_or_more
-      end
+      [min_cardinality || 0, max_cardinality || 2]
     end
 
     def read_graph_from_ttl(ttl_str)
       RDF::Graph.new.from_ttl(ttl_str)
+    end
+
+    def id_to_uri(id)
+      RDF::URI.new("#{SCHEMA_URI}#{id}")
+    end
+
+    def uri_to_symbolized_name(uri)
+      strip_uri(uri).to_sym
     end
 
     def strip_uri(uri)

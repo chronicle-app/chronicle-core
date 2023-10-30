@@ -7,12 +7,10 @@ module Chronicle::Schema::Validation
 
       Chronicle::Schema::Validation.class_data = classes
 
-      classes.each do |name, details|
-        class_name = details[:name_short]
+      classes.each do |class_id, details|
+        type_contract_class = Chronicle::Schema::Validation::ContractFactory.create(class_id:, properties: details[:properties])
 
-        type_contract_class = Chronicle::Schema::Validation::ContractFactory.create(class_name:, properties: details[:properties])
-
-        Chronicle::Schema::Validation.set_contract(class_name, type_contract_class)
+        Chronicle::Schema::Validation.set_contract(class_id, type_contract_class)
       end
 
       @contracts_generated = true

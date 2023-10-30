@@ -1,17 +1,17 @@
 module Chronicle::Schema::Validation
   class ContractFactory
-    def self.create(class_name:, properties: [])
+    def self.create(class_id:, properties: [])
       Class.new(Chronicle::Schema::Validation::BaseContract) do
-        type class_name
+        type class_id
 
-        params(Chronicle::Schema::Validation::ContractFactory.create_schema(class_name:, properties:))
+        params(Chronicle::Schema::Validation::ContractFactory.create_schema(class_id:, properties:))
 
         properties.each do |property|
           edge_name = property[:name_snake_case].to_sym
 
-          if %i[zero_or_more one_or_more].include?(property[:cardinality])
+          if property[:many?]
             rule(edge_name).each do |index:|
-              errors = edge_validator.validate(class_name, edge_name, value)
+              errors = edge_validator.validate(class_id, edge_name, value)
 
               errors.each do |key, value|
                 if key == :base
@@ -25,7 +25,7 @@ module Chronicle::Schema::Validation
             rule(edge_name) do
               # handle nils. FIXME: this is a hack
               next unless value
-              errors = edge_validator.validate(class_name, edge_name, value)
+              errors = edge_validator.validate(class_id, edge_name, value)
               errors.each do |key, value|
                 if key == :base
                   key(edge_name).failure(value.to_s)
@@ -39,9 +39,9 @@ module Chronicle::Schema::Validation
       end
     end
 
-    def self.create_schema(class_name:, properties: [])
+    def self.create_schema(class_id:, properties: [])
       Dry::Schema.JSON do
-        required(:@type).value(:str?).filled(eql?: class_name)
+        required(:@type).value(:str?).filled(eql?: class_id.to_s)
 
         # Attempt to coerce chronicle edges recursively
         # I tried to use a custom type in the schema and use the constructor
@@ -49,11 +49,11 @@ module Chronicle::Schema::Validation
         before(:value_coercer) do |obj|
           obj.to_h.transform_values do |value|
             case value
-            when Array
+            when ::Array
               value.map do |v|
                 Chronicle::Schema::Validation::ContractFactory.coerce_chronicle_edge(v)
               end
-            when Hash
+            when ::Hash
               Chronicle::Schema::Validation::ContractFactory.coerce_chronicle_edge(value)
             else
               value
@@ -65,9 +65,9 @@ module Chronicle::Schema::Validation
           property_name = property[:name_snake_case].to_sym
           type = Chronicle::Schema::Validation::ContractFactory.build_type(property[:range_with_subclasses])
 
-          outer_macro = %i[zero_or_one zero_or_more].include?(property[:cardinality]) ? :optional : :required
+          outer_macro = property[:required?] ? :required : :optional
 
-          if %i[zero_or_more one_or_more].include?(property[:cardinality])
+          if property[:many?]
             send(outer_macro, property_name).value(:array).each(type)
           else
             send(outer_macro, property_name).value(type)
@@ -79,7 +79,7 @@ module Chronicle::Schema::Validation
     def self.coerce_chronicle_edge(value)
       return value unless value.is_a?(Hash)
 
-      type = value[:@type] || value['@type']
+      type = (value[:@type] || value['@type']).to_sym
       contract_klass = Chronicle::Schema::Validation.get_contract(type)
       return value unless contract_klass
 
@@ -89,13 +89,14 @@ module Chronicle::Schema::Validation
 
     def self.build_type(range)
       literals = []
-      literals << :integer if range.include?('https://schema.chronicle.app/Integer')
-      literals << :float if range.include?('https://schema.chronicle.app/Float')
-      literals << :string if range.include?('https://schema.chronicle.app/Text')
-      literals << :string if range.include?('https://schema.chronicle.app/URL')
-      literals << :time if range.include?('https://schema.chronicle.app/DateTime')
+      literals << :integer if range.include?(:Integer)
+      literals << :float if range.include?(:Float)
+      literals << :string if range.include?(:Text)
+      literals << :string if range.include?(:URL)
+      literals << :time if range.include?(:DateTime)
 
       literals << :hash
+      # puts "building type for #{range}. literals: #{literals}"
       literals.uniq
     end
   end
