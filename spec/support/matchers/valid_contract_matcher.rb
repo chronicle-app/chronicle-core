@@ -9,7 +9,7 @@ RSpec::Matchers.define :be_considered_valid do
   end
 end
 
-
+# TODO: make this handle nested errors
 RSpec::Matchers.define :be_considered_invalid do |expected_error_keys = []|
   match do |result|
     @errors = result.errors.to_h

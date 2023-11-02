@@ -47,12 +47,12 @@ module Chronicle::Schema::Generators
 
     def generate_attribute(property)
       attribute_name = property[:name_snake_case]
-      optional_modifier = '.optional.default(nil)' unless property[:required?]
-      cardinality_meta = ".meta(required: :#{property[:required?]}, many: :#{property[:many?]})"
+      optional_modifier = '.optional.default(nil)' unless property[:is_required]
+      cardinality_meta = ".meta(required: :#{property[:is_required]}, many: :#{property[:is_many]})"
 
       range_str = range_to_type(property[:range_with_subclasses])
 
-      outer_type = if property[:many?]
+      outer_type = if property[:is_many]
                      "Chronicle::Schema::Types::Array.of(#{range_str})"
                    else
                      "(#{range_str})"
@@ -68,7 +68,7 @@ module Chronicle::Schema::Generators
       type_values << "Chronicle::Schema::Types::Params::Time" if range.include? :DateTime
       type_values << "Chronicle::Schema::Types::Params::Integer" if range.include? :Integer
       type_values << "Chronicle::Schema::Types::Params::Integer" if range.include? :Integer
-      type_values << "Chronicle::Schema.schema_type([#{range}])"
+      type_values << "Chronicle::Schema.schema_type(#{range})"
       type_values.join(' | ')
     end
   end

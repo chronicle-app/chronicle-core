@@ -7,7 +7,6 @@ module Chronicle::Schema::Generators
   class GenerateHash < Generator
     HASH_FILE = <<~EOF
       module <%= @namespace %>
-      
         CLASS_DATA = <%= classes.inspect %>
       end
     EOF

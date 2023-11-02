@@ -2,9 +2,12 @@ module Chronicle::Schema::Validation
   class Validator
     def validate(data)
       type = data[:@type] || data['@type']
+      raise Chronicle::Schema::ValidationError, "Data does not contain a typed object" unless type
+      
       contract = Chronicle::Schema::Validation.get_contract(type.to_sym)
 
-      raise Chronicle::Schema::ValidationError, "No contract found for type #{type}" unless contract
+      # binding.pry unless contract
+      raise Chronicle::Schema::ValidationError, "#{type} is not a valid type" unless contract
 
       result = contract.new.call(data)
       result

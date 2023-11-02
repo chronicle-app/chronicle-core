@@ -16,7 +16,7 @@ module Chronicle::Schema::Validation
       valid_range_types = edge_details[:range_with_subclasses]
 
       unless valid_range_types.include?(value_type)
-        errors[:base] = "not a valid type for #{edge}: #{value_type}"
+        errors[:base] = "#{value_type} is not a valid type for #{edge}. Valid types are #{valid_range_types.join(', ')}"
         return errors
       end
 

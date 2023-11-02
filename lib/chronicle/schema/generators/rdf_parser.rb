@@ -130,8 +130,8 @@ module Chronicle::Schema::Generators
           range: range.map{|r| uri_to_symbolized_name(r) },
           range_with_subclasses: range_with_subclasses.map{|r| uri_to_symbolized_name(r) },
           domain: domain,
-          required?: property_required?(property_id),
-          many?: property_many?(property_id)
+          is_required: property_required?(property_id),
+          is_many: property_many?(property_id)
         }
       end
     end

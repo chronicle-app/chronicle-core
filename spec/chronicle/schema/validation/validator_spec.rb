@@ -74,7 +74,7 @@ RSpec.describe Chronicle::Schema::Validation::Validator do
 
   context 'for generally invalid input' do
     it 'raises an error when class unknown' do
-      expect { described_class.call(bogus) }.to raise_error(Chronicle::Schema::ValidationError, /No contract found for type/)
+      expect { described_class.call(bogus) }.to raise_error(Chronicle::Schema::ValidationError, /not a valid type/)
     end
 
     it 'can does not allow unknown keys' do
@@ -175,8 +175,10 @@ RSpec.describe Chronicle::Schema::Validation::Validator do
 
     it 'will not validate an object with non-acceptable deeply-nested edge type' do
       bad_album = album.merge(by_artist: [rock_group.merge(video: [album])])
+      subject = described_class.call(bad_album)
 
-      expect(described_class.call(bad_album)).to be_considered_invalid( [:by_artist])
+      expect(subject).to be_considered_invalid([:by_artist])
+      expect(subject.errors.to_h[:by_artist][0][:video][0].first).to match(/MusicAlbum is not a valid type for video/)
     end
   end
 

@@ -1,5 +1,22 @@
 module Chronicle::Schema::Validation
   class ContractFactory
+    def self.process_errors(errors)
+      messages = []
+      errors.each do |key, value|
+        base_path = key == :base ? [] : [key]
+        if value.is_a?(Hash)
+          value.each do |k, v|
+            messages << [base_path + [k], v.first.to_s]
+          end
+        elsif value.is_a?(Array)
+          messages << [base_path, value.first.to_s]
+        else
+          messages << [base_path, value.to_s]
+        end
+      end
+      messages
+    end
+
     def self.create(class_id:, properties: [])
       Class.new(Chronicle::Schema::Validation::BaseContract) do
         type class_id
@@ -9,29 +26,26 @@ module Chronicle::Schema::Validation
         properties.each do |property|
           edge_name = property[:name_snake_case].to_sym
 
-          if property[:many?]
+          if property[:is_many]
             rule(edge_name).each do |index:|
               errors = edge_validator.validate(class_id, edge_name, value)
 
-              errors.each do |key, value|
-                if key == :base
-                  key([edge_name, index]).failure(value.to_s)
-                else
-                  key([edge_name, index, key]).failure(value.to_s)
-                end
+              error_path = [edge_name, index]
+              messages = Chronicle::Schema::Validation::ContractFactory.process_errors(errors)
+              messages.each do |path, message|
+                key(error_path + path).failure(message)
               end
             end
           else
             rule(edge_name) do
               # handle nils. FIXME: this is a hack
               next unless value
+
               errors = edge_validator.validate(class_id, edge_name, value)
-              errors.each do |key, value|
-                if key == :base
-                  key(edge_name).failure(value.to_s)
-                else
-                  key([edge_name, key]).failure(value.to_s)
-                end
+              error_path = [edge_name]
+              messages = Chronicle::Schema::Validation::ContractFactory.process_errors(errors)
+              messages.each do |path, message|
+                key(error_path + path).failure(message)
               end
             end
           end
@@ -65,9 +79,9 @@ module Chronicle::Schema::Validation
           property_name = property[:name_snake_case].to_sym
           type = Chronicle::Schema::Validation::ContractFactory.build_type(property[:range_with_subclasses])
 
-          outer_macro = property[:required?] ? :required : :optional
+          outer_macro = property[:is_required] ? :required : :optional
 
-          if property[:many?]
+          if property[:is_many]
             send(outer_macro, property_name).value(:array).each(type)
           else
             send(outer_macro, property_name).value(type)

@@ -37,9 +37,10 @@ namespace :generate do
     require_relative 'lib/chronicle/schema/generators/generate_hash'
 
     ttl_path = args[:ttl_path] || DEFAULT_SCHEMA_FILE
-    output = Chronicle::Schema::Generators::GenerateHash.generate_from_ttl_path(ttl_path)
+    output = Chronicle::Schema::Generators::GenerateHash.generate_from_ttl_path(ttl_path).dup
 
     output_path = File.join(File.dirname(__FILE__), 'lib', 'chronicle', 'schema', 'data', 'data.rb')
+    
     File.open(output_path, 'w') { |f| f.write(output) }
   end
 end
