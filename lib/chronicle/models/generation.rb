@@ -5,9 +5,10 @@ require_relative 'base'
 module Chronicle::Models
   module Generation
     @models_generated = false
+    @benchmark_enabled = false
 
     class << self
-      attr_accessor :models_generated
+      attr_accessor :models_generated, :benchmark_enabled
     end
 
     def self.included(base)
@@ -36,7 +37,8 @@ module Chronicle::Models
           const_set(class_id, new_model_klass)
         end
         end_time = Time.now
-        # puts "Generated #{classes.length} models in ms: #{(end_time - start_time) * 1000}"
+        duration_ms = (end_time - start_time) * 1000
+        handle_benchmark_data(classes.length, duration_ms) if Chronicle::Models::Generation.benchmark_enabled
 
         Chronicle::Models::Generation.models_generated = true
       end
@@ -47,6 +49,16 @@ module Chronicle::Models
           send(:remove_const, constant_name) if constant.is_a?(Class) && constant.superclass == Chronicle::Models::Base
         end
         Chronicle::Models::Generation.models_generated = false
+      end
+
+      def enable_benchmarking
+        Chronicle::Models::Generation.benchmark_enabled = true
+      end
+
+      private
+
+      def handle_benchmark_data(number_of_models, duration)
+        puts "Generated #{number_of_models} models in #{duration.round(2)}ms"
       end
     end
 
