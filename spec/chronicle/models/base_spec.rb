@@ -1,6 +1,10 @@
 require 'spec_helper'
 
-RSpec.describe Chronicle::Schema::Base do
+require 'chronicle/models/generation'
+Chronicle::Models::Generation.suppress_model_generation
+require 'chronicle/models'
+
+RSpec.describe Chronicle::Models::Base do
   describe '#new' do
     it 'can create a new instance with attributes' do
       expect(described_class.new(id: 'foo')).to be_a(described_class)
@@ -10,7 +14,7 @@ RSpec.describe Chronicle::Schema::Base do
     it 'will raise an error for attributes it does not expect' do
       expect do
         described_class.new(xyz: 'bar')
-      end.to raise_error(Chronicle::Schema::AttributeError)
+      end.to raise_error(Chronicle::Models::AttributeError)
     end
 
     context 'when creating with a block' do
@@ -32,7 +36,7 @@ RSpec.describe Chronicle::Schema::Base do
           described_class.new do |c|
             c.xyz = 'bar'
           end
-        end.to raise_error(Chronicle::Schema::AttributeError)
+        end.to raise_error(Chronicle::Models::AttributeError)
       end
     end
   end

@@ -183,3 +183,8 @@
     :contributor <https://schema.org/docs/collab/rNews> ;
     rdfs:comment "The most generic kind of creative work, including books, movies, photographs, software programs, etc." ;
     rdfs:subClassOf :Entity .
+
+:TestOnly a rdfs:Class ;
+    rdfs:label "TestOnly" ;
+    rdfs:comment "A class that only exists in test schmea." ;
+    rdfs:subClassOf :Entity .

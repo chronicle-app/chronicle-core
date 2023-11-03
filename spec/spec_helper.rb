@@ -6,8 +6,8 @@ require 'support/matchers/valid_contract_matcher'
 require "bundler/setup"
 
 require "chronicle/core"
-require "chronicle/schema"
-require "chronicle/serialization"
+# require "chronicle/schema"
+# require "chronicle/serialization"
 
 $LOAD_PATH.unshift File.expand_path('../../lib', __FILE__)
 

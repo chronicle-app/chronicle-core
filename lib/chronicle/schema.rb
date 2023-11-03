@@ -1,9 +1,6 @@
 module Chronicle
   module Schema
     class Error < StandardError; end
-
-    class AttributeError < Error; end
-
     class ValidationError < Error; end
   end
 end
@@ -12,6 +9,4 @@ end
 
 require_relative 'schema/data/data'
 require_relative 'schema/types'
-require_relative 'schema/base'
-require_relative 'schema/models'
 require_relative 'schema/validation'

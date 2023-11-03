@@ -1,6 +1,7 @@
 require 'dry-struct'
+require 'chronicle/schema/types'
 
-module Chronicle::Schema
+module Chronicle::Models
   class Base < Dry::Struct
     transform_keys(&:to_sym)
     schema schema.strict
@@ -8,10 +9,11 @@ module Chronicle::Schema
     alias properties attributes
 
     # TODO: rename naked `provider` attribute
-    CHRONICLE_ATTRIBUTES = %i[id provider provider_id provider_slug provider_namespace].freeze
+    CHRONICLE_ATTRIBUTES = %i[id].freeze
+    # CHRONICLE_ATTRIBUTES = %i[id provider provider_id provider_slug provider_namespace].freeze
 
     CHRONICLE_ATTRIBUTES.each do |attribute|
-      attribute(attribute, Types::String.optional.default(nil).meta(cardinality: :zero_or_one))
+      attribute(attribute, Chronicle::Schema::Types::String.optional.default(nil).meta(cardinality: :zero_or_one))
     end
 
     def self.new(attributes = {})
@@ -53,21 +55,11 @@ module Chronicle::Schema
   end
 
   def self.schema_type(types)
-    Types::Instance(Chronicle::Schema::Base).constructor do |input|
-      # binding.pry
+    Chronicle::Schema::Types::Instance(Chronicle::Models::Base).constructor do |input|
       unless input.respond_to?(:type) && [types].flatten.include?(input.type)
         raise Dry::Types::ConstraintError.new(:type?, input)
       end
       input
     end
   end
-
-  # SchemaType = proc do |types|
-  #   Types::Instance(Chronicle::Schema::Base).constructor do |input|
-  #     unless input.respond_to?(:type) && [types].flatten.include?(input.type)
-  #       raise Dry::Types::ConstraintError.new(:type?, input)
-  #     end
-  #     input
-  #   end
-  # end
 end
