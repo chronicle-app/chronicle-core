@@ -2,7 +2,7 @@ require 'spec_helper'
 
 RSpec.describe Chronicle::Serialization::JSONAPISerializer do
   let(:record) do
-    Chronicle::Schema::Activity.new(
+    Chronicle::Schema::Action.new(
       id: 'afsad',
       verb: 'tested',
       actor: Chronicle::Schema::Person.new(

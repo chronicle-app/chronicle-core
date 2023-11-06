@@ -4,14 +4,9 @@ AllCops:
 Style/FrozenStringLiteralComment:
   Enabled: false
 
-Metrics/MethodLength:
-  Enabled: false
-
-Metrics/ClassLength:
-  Enabled: false
-
-Metrics/AbcSize:
-  Enabled: false
+Style/ClassAndModuleChildren:
+  Enabled: true
+  EnforcedStyle: compact
 
 Metrics:
   Enabled: false

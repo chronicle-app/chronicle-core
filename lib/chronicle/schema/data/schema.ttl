@@ -102,16 +102,16 @@
     rdfs:subClassOf :Entity .
 
 
-:Activity a rdfs:Class.
+:Action a rdfs:Class.
 
 :actor a rdf:Property ;
-    :domainIncludes :Activity ;
+    :domainIncludes :Action ;
     :rangeIncludes :Person ;
     owl:minCardinality 1 ;
     owl:maxCardinality 1 .
 
 :verb a rdf:Property ;
-    :domainIncludes :Activity ;
+    :domainIncludes :Action ;
     :rangeIncludes :Text ;
     owl:minCardinality 1 ;
     owl:maxCardinality 1 .
@@ -122,12 +122,12 @@
     owl:maxCardinality 1 .
 
 :object a rdf:Property ;
-    :domainIncludes :Activity ;
+    :domainIncludes :Action ;
     :rangeIncludes :Entity ;
     owl:maxCardinality 1 .
 
 :endAt a rdf:Property ;
-    :domainIncludes :Activity ;
+    :domainIncludes :Action ;
     :rangeIncludes :DateTime ;
     owl:maxCardinality 1 .
 
@@ -136,9 +136,13 @@
     rdfs:comment "A music recording (track), usually a single song." ;
     rdfs:subClassOf :CreativeWork .
 
+:Thing a rdfs:Class ;
+    rdfs:label "Thing" ;
+    rdfs:comment "The most generic type of item." .
+
 :Entity a rdfs:Class ;
     rdfs:label "A generic Entity" ;
-    rdfs:comment "The most generic type of item." .
+    rdfs:subClassOf :Thing .
 
 :url a rdf:Property ;
     rdfs:label "url" ;

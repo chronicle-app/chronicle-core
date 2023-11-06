@@ -15,7 +15,7 @@ RSpec.describe Chronicle::Serialization::JSONLDSerializer do
 
   xit "can build a JSONAPI object from a model" do
     expected = {
-      '@type': "Activity",
+      '@type': "Action",
       id: "afsad",
       verb: "tested",
       actor: {

@@ -127,27 +127,27 @@
     rdfs:label "A generic Entity" ;
     rdfs:comment "The most generic type of item." .
 
-:Activity a rdfs:Class.
+:Action a rdfs:Class.
 
 :actor a rdf:Property ;
-    :domainIncludes :Activity ;
+    :domainIncludes :Action ;
     :rangeIncludes :Person ;
     owl:minCardinality 1 ;
     owl:maxCardinality 1 .
 
 :verb a rdf:Property ;
-    :domainIncludes :Activity ;
+    :domainIncludes :Action ;
     :rangeIncludes :Text ;
     owl:minCardinality 1 ;
     owl:maxCardinality 1 .
 
 :endAt a rdf:Property ;
-    :domainIncludes :Activity ;
+    :domainIncludes :Action ;
     :rangeIncludes :DateTime ;
     owl:maxCardinality 1 .
 
 :startAt a rdf:Property ;
-    :domainIncludes :Activity ;
+    :domainIncludes :Action ;
     :rangeIncludes :DateTime ;
     owl:maxCardinality 1 .
 
@@ -169,7 +169,7 @@
     :rangeIncludes :VideoObject .
 
 :object a rdf:Property ;
-    :domainIncludes :Activity ;
+    :domainIncludes :Action ;
     :rangeIncludes :Entity ;
     owl:maxCardinality 1 .
 
