@@ -107,6 +107,7 @@
 :actor a rdf:Property ;
     :domainIncludes :Activity ;
     :rangeIncludes :Person ;
+    owl:minCardinality 1 ;
     owl:maxCardinality 1 .
 
 :verb a rdf:Property ;

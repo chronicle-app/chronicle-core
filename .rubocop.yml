@@ -13,14 +13,5 @@ Metrics/ClassLength:
 Metrics/AbcSize:
   Enabled: false
 
-# FIXME: remove this
 Metrics:
   Enabled: false
-
-Metrics/BlockLength:
-  CountComments: false  # count full line comments?
-  Max: 25
-  Exclude:
-    - 'Rakefile'
-    - '**/*.rake'
-    - 'spec/**/*.rb'

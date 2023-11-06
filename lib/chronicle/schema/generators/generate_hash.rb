@@ -1,6 +1,5 @@
 require 'erb'
 
-require_relative '../base'
 require_relative 'generator'
 
 module Chronicle::Schema::Generators

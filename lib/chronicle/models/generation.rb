@@ -1,4 +1,4 @@
-require 'chronicle/schema/data/data'
+require 'chronicle/schema'
 require_relative 'model_factory'
 require_relative 'base'
 

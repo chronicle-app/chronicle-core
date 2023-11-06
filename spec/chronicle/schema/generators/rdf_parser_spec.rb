@@ -1,4 +1,5 @@
 require 'spec_helper'
+require 'chronicle/schema'
 require 'chronicle/schema/generators/rdf_parser'
 
 RSpec.describe Chronicle::Schema::Generators::RDFParser do
@@ -74,6 +75,13 @@ RSpec.describe Chronicle::Schema::Generators::RDFParser do
         properties = subject.properties
         name_property = properties.find { |p| p[:id] == :description }
         expect(name_property[:is_required]).to eq(false)
+        expect(name_property[:is_many]).to eq(false)
+      end
+
+      it 'can deduce cardinality for single required fields' do
+        properties = subject.properties
+        name_property = properties.find { |p| p[:id] == :actor }
+        expect(name_property[:is_required]).to eq(true)
         expect(name_property[:is_many]).to eq(false)
       end
 
