@@ -32,6 +32,10 @@ RSpec.describe Chronicle::Models::ModelFactory do
       }
     end
 
+    let (:superclasses) do
+      [:Entity, :Thing]
+    end
+
     let (:properties_simple) do
       [name_property]
     end
@@ -40,7 +44,7 @@ RSpec.describe Chronicle::Models::ModelFactory do
       [name_property, mandatory_property]
     end
 
-    subject { described_class.new(properties_simple).generate }
+    subject { described_class.new(properties: properties_simple, superclasses: ).generate }
 
     it 'can generates a class' do
       expect(subject).to be_a(Class)
@@ -51,8 +55,12 @@ RSpec.describe Chronicle::Models::ModelFactory do
       expect(subject.attribute_names).to include(:name)
     end
 
+    it 'has the correct superclasses' do
+      expect(subject.superclasses).to eq(superclasses)
+    end
+
     describe 'attribute type checking' do
-      subject { described_class.new(properties_simple).generate }
+      subject { described_class.new(properties: properties_simple).generate }
 
       it 'will accept the correct type' do
         expect do
@@ -73,7 +81,7 @@ RSpec.describe Chronicle::Models::ModelFactory do
       end
 
       describe 'non-optional attributes' do
-        subject { described_class.new(properties_complex).generate }
+        subject { described_class.new(properties: properties_complex).generate }
 
         it 'will raise an error if the attribute is not present' do
           expect do
@@ -95,7 +103,7 @@ RSpec.describe Chronicle::Models::ModelFactory do
       end
 
       describe 'chronicle edge checking' do
-        subject { described_class.new([chronicle_edge]).generate }
+        subject { described_class.new(properties: [chronicle_edge]).generate }
 
         it 'will accept the correct type' do
           FooBar = described_class.new().generate

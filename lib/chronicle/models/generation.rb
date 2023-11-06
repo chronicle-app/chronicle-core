@@ -32,7 +32,7 @@ module Chronicle::Models
       def generate_models(classes = Chronicle::Schema::CLASS_DATA)
         start_time = Time.now
         classes.each do |class_id, details|
-          new_model_klass = Chronicle::Models::ModelFactory.new(details[:properties]).generate
+          new_model_klass = Chronicle::Models::ModelFactory.new(properties: details[:properties], superclasses: details[:superclasses]).generate
 
           const_set(class_id, new_model_klass)
         end

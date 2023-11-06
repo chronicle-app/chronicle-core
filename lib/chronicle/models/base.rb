@@ -8,12 +8,22 @@ module Chronicle::Models
 
     alias properties attributes
 
+    @superclasses = []
+
     # TODO: rename naked `provider` attribute
     CHRONICLE_ATTRIBUTES = %i[id].freeze
     # CHRONICLE_ATTRIBUTES = %i[id provider provider_id provider_slug provider_namespace].freeze
 
     CHRONICLE_ATTRIBUTES.each do |attribute|
       attribute(attribute, Chronicle::Schema::Types::String.optional.default(nil).meta(cardinality: :zero_or_one))
+    end
+
+    def self.set_superclasses(superclasses)
+      @superclasses = superclasses
+    end
+
+    class << self
+      attr_reader :superclasses
     end
 
     def self.new(attributes = {})

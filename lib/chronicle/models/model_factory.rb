@@ -1,7 +1,8 @@
 module Chronicle::Models
   class ModelFactory
-    def initialize(properties = [])
+    def initialize(properties: [], superclasses: [])
       @properties = properties
+      @superclasses = superclasses
     end
 
     def generate
@@ -9,7 +10,10 @@ module Chronicle::Models
         generate_attribute_info(property)
       end
 
+      superclasses = @superclasses
+
       Class.new(Chronicle::Models::Base) do
+        set_superclasses(superclasses)
         attribute_info.each do |a|
           attribute(a[:name], a[:type])
         end
