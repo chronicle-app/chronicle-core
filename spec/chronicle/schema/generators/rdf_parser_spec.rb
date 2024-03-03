@@ -80,14 +80,14 @@ RSpec.describe Chronicle::Schema::Generators::RDFParser do
 
       it 'can deduce cardinality for single required fields' do
         properties = subject.properties
-        name_property = properties.find { |p| p[:id] == :actor }
+        name_property = properties.find { |p| p[:id] == :agent }
         expect(name_property[:is_required]).to eq(true)
         expect(name_property[:is_many]).to eq(false)
       end
 
       it 'can deduce correct cardinality for required singles' do
         properties = sample_parsed_ttl.properties
-        name_property = properties.find { |p| p[:id] == :actor }
+        name_property = properties.find { |p| p[:id] == :agent }
         expect(name_property[:is_required]).to eq(true)
         expect(name_property[:is_many]).to eq(false)
       end

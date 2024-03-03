@@ -2,8 +2,6 @@ require 'spec_helper'
 
 require 'chronicle/schema/generators/rdf_parser'
 
-# rubocop:disable Lint/ConstantDefinitionInBlock
-
 RSpec.describe Chronicle::Schema::Validation::Validator do
   before(:each) do
     sample_ttl_path = File.join(File.dirname(__FILE__), '..', '..', '..', 'support', 'schema', 'sample.ttl')
@@ -41,7 +39,7 @@ RSpec.describe Chronicle::Schema::Validation::Validator do
     }
   end
 
-  let(:rock_group) do 
+  let(:rock_group) do
     {
       '@type': 'RockGroup',
       name: 'The Beatle',
@@ -56,7 +54,7 @@ RSpec.describe Chronicle::Schema::Validation::Validator do
       '@type': 'MusicAlbum',
       name: 'White Album',
       description: 'asdfsda',
-      by_artist: [rock_group, "asdfas"]
+      by_artist: [rock_group, 'asdfas']
     }
   end
 
@@ -100,7 +98,7 @@ RSpec.describe Chronicle::Schema::Validation::Validator do
     it 'will not validate an object with wrong literal type' do
       bad_album = album.merge(by_artist: [5])
 
-      expect(described_class.call(bad_album)).to be_considered_invalid( [:by_artist])
+      expect(described_class.call(bad_album)).to be_considered_invalid([:by_artist])
     end
 
     it 'will not validate an object with non-valid schema type' do
@@ -138,26 +136,27 @@ RSpec.describe Chronicle::Schema::Validation::Validator do
 
       it 'will coerce a deeply-nested object' do
         obj = album.merge({
-          test: [{
-            '@type': 'Text',
-            value: 'asdfdas',
-            by_artist: [rock_group]
-          }],
-          description: {
-            '@type': 'Text',
-            value: {
-              '@type': 'Text',
-              value: 'asdf'
-            }
-          },
-          by_artist: [
-            rock_group.merge({
-              formed_on: '2023-10-01', video: [{
-                '@type': 'VideoObject',
-                name: 'adssad'
-              }]
-            })
-        ]})
+                            test: [{
+                              '@type': 'Text',
+                              value: 'asdfdas',
+                              by_artist: [rock_group]
+                            }],
+                            description: {
+                              '@type': 'Text',
+                              value: {
+                                '@type': 'Text',
+                                value: 'asdf'
+                              }
+                            },
+                            by_artist: [
+                              rock_group.merge({
+                                                 formed_on: '2023-10-01', video: [{
+                                                   '@type': 'VideoObject',
+                                                   name: 'adssad'
+                                                 }]
+                                               })
+                            ]
+                          })
         result = described_class.call(obj)
 
         expect { result }.to_not raise_error
@@ -170,7 +169,7 @@ RSpec.describe Chronicle::Schema::Validation::Validator do
     it 'will not validate an object with non-acceptable edge type' do
       bad_album = album.merge(by_artist: [album])
 
-      expect(described_class.call(bad_album)).to be_considered_invalid( [:by_artist])
+      expect(described_class.call(bad_album)).to be_considered_invalid([:by_artist])
     end
 
     it 'will not validate an object with non-acceptable deeply-nested edge type' do
@@ -185,28 +184,29 @@ RSpec.describe Chronicle::Schema::Validation::Validator do
   context 'real life data' do
     it 'can validate' do
       data = {
-        "@type"=>"Action",
-        "actor"=> {
-          "@type" => "Person",
-          "provider" => "lastfm",
-          'provider_slug' => "hyfen",
-          "name"=>"Andrew Louis",
-          "url"=>"http://www.last.fm/user/hyfen"
+        '@type' => 'Action',
+        'agent' => {
+          '@type' => 'Person',
+          'provider' => 'lastfm',
+          'provider_slug' => 'hyfen',
+          'name' => 'Andrew Louis',
+          'url' => 'http://www.last.fm/user/hyfen'
         },
-        "verb"=>"listened",
-        "object"=>
-        {"@type"=>"MusicRecording",
-          "provider"=>"lastfm",
-          "provider_id"=>"0bbc57a5-ab84-3164-8ec1-a23480621512",
-          "by_artist"=>[
-          {"@type"=>"MusicGroup",
-            "provider"=>"lastfm",
-            "name"=>"John Talabot",
-            "url"=>"https://www.last.fm/music/John+Talabot"}],
-          "in_album"=>[{"@type"=>"MusicAlbum", "provider"=>"lastfm", "name"=>"Fin"}],
-          "name"=>"Depak Ine",
-          "url"=>"https://www.last.fm/music/John+Talabot/_/Depak+Ine"},
-        "end_at"=>"2023-10-27T11:54:08.000-04:00"}
+        'object' =>
+        { '@type' => 'MusicRecording',
+          'provider' => 'lastfm',
+          'provider_id' => '0bbc57a5-ab84-3164-8ec1-a23480621512',
+          'by_artist' => [
+            { '@type' => 'MusicGroup',
+              'provider' => 'lastfm',
+              'name' => 'John Talabot',
+              'url' => 'https://www.last.fm/music/John+Talabot' }
+          ],
+          'in_album' => [{ '@type' => 'MusicAlbum', 'provider' => 'lastfm', 'name' => 'Fin' }],
+          'name' => 'Depak Ine',
+          'url' => 'https://www.last.fm/music/John+Talabot/_/Depak+Ine' },
+        'end_at' => '2023-10-27T11:54:08.000-04:00'
+      }
 
       result = described_class.call(data)
       expect(described_class.call(data)).to be_considered_valid

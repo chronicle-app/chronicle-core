@@ -104,15 +104,9 @@
 
 :Action a rdfs:Class.
 
-:actor a rdf:Property ;
+:agent a rdf:Property ;
     :domainIncludes :Action ;
     :rangeIncludes :Person ;
-    owl:minCardinality 1 ;
-    owl:maxCardinality 1 .
-
-:verb a rdf:Property ;
-    :domainIncludes :Action ;
-    :rangeIncludes :Text ;
     owl:minCardinality 1 ;
     owl:maxCardinality 1 .
 
@@ -173,3 +167,15 @@
     :domainIncludes :Person ;
     :rangeIncludes :Number ;
     owl:maxCardinality 1 .
+
+:EncounterAction a rdfs:Class ;
+    rdfs:subClassOf :Action .
+
+:CreateAction a rdfs:Class ;
+    rdfs:subClassOf :Action .
+
+:ConsumeAction a rdfs:Class ;
+    rdfs:subClassOf :Action .
+
+:WatchAction a rdfs:Class ;
+    rdfs:subClassOf :ConsumeAction .

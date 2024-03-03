@@ -25,7 +25,7 @@ RSpec.describe Chronicle::Serialization::HashSerializer do
     expected = {
       type: "activities",
       attributes: { verb: "tested" },
-      relationships: { actor: { data: { type: "person", attributes: { name: "bar", description: 'identity' }, relationships: {}, meta: { dedupe_on: [] } } } },
+      relationships: { agent: { data: { type: "person", attributes: { name: "bar", description: 'identity' }, relationships: {}, meta: { dedupe_on: [] } } } },
       meta: { dedupe_on: [] }
     }
 

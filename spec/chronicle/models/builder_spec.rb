@@ -64,8 +64,7 @@ RSpec.describe Chronicle::Models::Builder do
       it 'can build a model with a nested hash' do
         obj = {
           '@type': 'Action',
-          verb: 'foo',
-          actor: {
+          agent: {
             '@type': 'Person',
             name: 'John Doe'
           }
@@ -73,7 +72,7 @@ RSpec.describe Chronicle::Models::Builder do
 
         model = mock_module.build(obj)
         expect(model).to be_a(mock_module::Action)
-        expect(model.actor).to be_a(mock_module::Person)
+        expect(model.agent).to be_a(mock_module::Person)
       end
 
       it 'can build a model with a nested array' do
