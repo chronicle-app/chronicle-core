@@ -10,3 +10,9 @@ Style/ClassAndModuleChildren:
 
 Metrics:
   Enabled: false
+
+Layout/ArgumentAlignment:
+  EnforcedStyle: with_fixed_indentation
+
+Layout/MultilineMethodCallIndentation:
+  EnforcedStyle: indented
