@@ -7,6 +7,8 @@ end
 
 # require_relative "schema/validator"
 
-require_relative 'schema/data/data'
 require_relative 'schema/types'
 require_relative 'schema/validation'
+require_relative 'schema/schema_property'
+require_relative 'schema/schema_type'
+require_relative 'schema/schema_graph'

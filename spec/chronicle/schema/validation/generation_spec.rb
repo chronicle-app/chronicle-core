@@ -1,17 +1,13 @@
 require 'spec_helper'
 # require 'chronicle/schema/validation'
-require 'chronicle/schema/generators/rdf_parser'
+require 'chronicle/schema'
+require 'chronicle/schema/rdf_parsing/ttl_graph_builder'
 
 RSpec.describe Chronicle::Schema::Validation::Generation do
-  # TODO: share this with other specs
-  let (:schema_class_data) do
-    sample_ttl_path = File.join(File.dirname(__FILE__), '..', '..', '..', 'support', 'schema','sample.ttl')
-    sample_ttl_str = File.read(sample_ttl_path)
-    Chronicle::Schema::Generators::RDFParser.new(sample_ttl_str).parse.classes
-  end
+  include_context 'with_sample_schema_graph'
 
   it 'can build a schema' do
-    Chronicle::Schema::Validation::Generation.generate_contracts(schema_class_data)
+    Chronicle::Schema::Validation::Generation.generate_contracts(sample_schema_graph)
 
     contract = Chronicle::Schema::Validation.get_contract(:Person)
     expect(contract).to_not be_nil

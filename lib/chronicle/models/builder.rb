@@ -1,5 +1,7 @@
 module Chronicle::Models
+  # Utility methods to build models from hash input
   module Builder
+    # Build a nested a model with nested associated from a hash in json-ld format
     def build(obj)
       raise ArgumentError, 'Object must be a hash' unless obj.is_a?(Hash)
 

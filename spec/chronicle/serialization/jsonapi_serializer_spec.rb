@@ -1,29 +1,60 @@
 require 'spec_helper'
+require 'chronicle/serialization'
 
 RSpec.describe Chronicle::Serialization::JSONAPISerializer do
-  let(:record) do
-    Chronicle::Schema::Action.new(
-      id: 'afsad',
-      verb: 'tested',
-      actor: Chronicle::Schema::Person.new(
-        description: 'identity',
-        name: 'bar'
-      ),
-      object: Chronicle::Schema::MusicAlbum.new(
-        name: 'foo'
-      )
+  include_context 'with_sample_schema_graph'
+
+  let(:action_record) do
+    sample_model_module::Action.new(
+      end_time: Time.parse('2019-01-01')
     )
   end
 
-  # needs some fixing
-  xit "can build a JSONAPI object from a model" do
-    expected = {
-      type: "activities",
-      attributes: { verb: "tested" },
-      relationships: { actor: { data: { type: "person", attributes: { name: "bar", description: 'identity' }, relationships: {}, meta: { dedupe_on: [] } } } },
-      meta: { dedupe_on: [] }
-    }
+  let(:music_group_record) do
+    sample_model_module::MusicGroup.new(
+      name: 'The Beatles'
+    )
+  end
 
-    expect(Chronicle::Serialization::JSONAPISerializer.serialize(record)).to eql(expected)
+  let(:album_record) do
+    sample_model_module::MusicAlbum.new(
+      name: 'White Album',
+      by_artist: [music_group_record, music_group_record]
+    )
+  end
+
+  it 'can build a JSONAPI object from a single model' do
+    expect(described_class.serialize(action_record)).to eql({
+      type: 'Action',
+      meta: {},
+      relationships: {},
+      attributes: {
+        end_time: Time.parse('2019-01-01')
+      }
+    })
+  end
+
+  it 'can build a JSONAPI object from a model with a relationship' do
+    expect(described_class.serialize(album_record)).to eql({
+      type: 'MusicAlbum',
+      meta: {},
+      relationships: {
+        by_artist: {
+          data: [
+            {
+              type: 'MusicGroup',
+              attributes: { name: 'The Beatles' }, relationships: {}, meta: {}
+            },
+            {
+              type: 'MusicGroup',
+              attributes: { name: 'The Beatles' }, relationships: {}, meta: {}
+            }
+          ]
+        }
+      },
+      attributes: {
+        name: 'White Album'
+      }
+    })
   end
 end

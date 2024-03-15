@@ -21,7 +21,9 @@ RSpec::Matchers.define :be_considered_invalid do |expected_error_keys = []|
   failure_message do |_contract|
     messages = []
     messages << "expected contract to have errors on keys: #{@missing_keys.inspect}" unless @missing_keys.empty?
-    messages << "did not expect contract to have errors on keys: #{@unexpected_keys.inspect}" unless @unexpected_keys.empty?
+    unless @unexpected_keys.empty?
+      messages << "did not expect contract to have errors on keys: #{@unexpected_keys.inspect}"
+    end
     messages.join(', ')
   end
 end

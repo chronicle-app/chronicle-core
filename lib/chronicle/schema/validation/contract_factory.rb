@@ -24,9 +24,9 @@ module Chronicle::Schema::Validation
         params(Chronicle::Schema::Validation::ContractFactory.create_schema(class_id:, properties:))
 
         properties.each do |property|
-          edge_name = property[:name_snake_case].to_sym
+          edge_name = property.id_snakecase
 
-          if property[:is_many]
+          if property.many?
             rule(edge_name).each do |index:|
               errors = edge_validator.validate(class_id, edge_name, value)
 
@@ -57,6 +57,18 @@ module Chronicle::Schema::Validation
       Dry::Schema.JSON do
         required(:@type).value(:str?).filled(eql?: class_id.to_s)
 
+        before(:key_coercer) do |result|
+          result.to_h.transform_keys!(&:to_sym)
+
+          valid_property_ids = properties.map(&:id_snakecase)
+          valid_property_ids << :@type
+          invalid_properties = result.to_h.keys - valid_property_ids
+
+          invalid_properties.each do |invalid_property|
+            result.add_error([:unexpected_key, [invalid_property.to_sym, []]])
+          end
+        end
+
         # Attempt to coerce chronicle edges recursively
         # I tried to use a custom type in the schema and use the constructor
         # method to do the coercion but it didn't work consistently
@@ -76,12 +88,12 @@ module Chronicle::Schema::Validation
         end
 
         properties.each do |property|
-          property_name = property[:name_snake_case].to_sym
-          type = Chronicle::Schema::Validation::ContractFactory.build_type(property[:range_with_subclasses])
+          property_name = property.id_snakecase
+          type = Chronicle::Schema::Validation::ContractFactory.build_type(property.range_identifiers)
 
-          outer_macro = property[:is_required] ? :required : :optional
+          outer_macro = property.required? ? :required : :optional
 
-          if property[:is_many]
+          if property.many?
             send(outer_macro, property_name).value(:array).each(type)
           else
             send(outer_macro, property_name).value(type)

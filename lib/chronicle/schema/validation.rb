@@ -4,11 +4,10 @@ module Chronicle::Schema::Validation
   # - handle different serialization flavours
   # - move to model of memoizing individual contracts and generating them on demand
   @contracts = {}
-  @class_data = nil
+  @graph = nil
 
   class << self
-    attr_accessor :class_data
-    attr_accessor :contracts
+    attr_accessor :graph, :contracts
   end
 
   def self.unload_contracts
@@ -20,7 +19,8 @@ module Chronicle::Schema::Validation
   end
 
   def self.get_contract(name)
-    Chronicle::Schema::Validation::Generation.generate_contracts
+    # FIXME:
+    # Chronicle::Schema::Validation::Generation.generate_contracts
 
     @contracts[name]
   end

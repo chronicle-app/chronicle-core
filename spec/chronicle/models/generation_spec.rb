@@ -1,12 +1,15 @@
 require 'spec_helper'
 require 'chronicle/schema'
-require 'chronicle/schema/generators/rdf_parser'
+# require 'chronicle/schema/rdf_parsing'
+# require 'chronicle/schema/generators/rdf_parser'
 
 require 'chronicle/models/generation'
 Chronicle::Models::Generation.suppress_model_generation
 require 'chronicle/models'
 
 RSpec.describe Chronicle::Models::Generation do
+  include_context 'with_sample_schema_graph'
+
   let(:test_module) do
     Module.new do
       include Chronicle::Models::Generation
@@ -41,30 +44,16 @@ RSpec.describe Chronicle::Models::Generation do
   end
 
   describe '#generate_models' do
-    let (:sample_schema_classes) do
-      sample_ttl_path = File.join(File.dirname(__FILE__), '..', '..', 'support', 'schema', 'sample.ttl')
-      sample_ttl_str = File.read(sample_ttl_path)
-      Chronicle::Schema::Generators::RDFParser.new(sample_ttl_str).parse.classes
-    end
-
     it 'can be used to manually generate models' do
       Chronicle::Models::Generation.suppress_model_generation
       expect(test_module.extant_models).to be_empty
 
-      test_module.generate_models(Chronicle::Schema::CLASS_DATA)
+      test_module.generate_models(sample_schema_graph)
       expect(test_module.models_generated?).to be_truthy
       expect(test_module.extant_models).to_not be_empty
-    end
+      expect(test_module.extant_models).to include(:Action)
 
-    it 'can be used to manually generate models from a schema' do
-      Chronicle::Models::Generation.suppress_model_generation
-      expect(test_module.extant_models).to be_empty
-
-      test_module.generate_models(sample_schema_classes)
-      expect(test_module.models_generated?).to be_truthy
-      expect(test_module.extant_models).to include(:TestOnly)
-
-      test_only = test_module.const_get(:TestOnly)
+      test_only = test_module.const_get(:Action)
       expect(test_only).to be_a(Class)
       expect(test_only.superclass).to eq(Chronicle::Models::Base)
       expect(test_only.new(name: 'foo').name).to eq('foo')

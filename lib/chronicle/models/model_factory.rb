@@ -23,30 +23,38 @@ module Chronicle::Models
     private
 
     def generate_attribute_info(property)
-      range = range_to_type(property[:range_with_subclasses])
-      type = if property[:is_many]
+      range = build_type(property)
+      type = if property.many?
                Chronicle::Schema::Types::Array.of(range)
              else
                range
              end
 
-      type = type.optional.default(nil) unless property[:is_required]
+      type = type.optional.default(nil) unless property.required?
+      type = type.meta(required: property.required?, many: property.many?)
 
       {
-        name: property[:name_snake_case],
+        name: property.id_snakecase.to_sym,
         type:
       }
     end
 
-    def range_to_type(range)
+    def build_type(property)
       type_values = []
 
-      type_values << Chronicle::Schema::Types::String if %i[Text URL].intersect?(range)
+      range = property.range_identifiers
+
       type_values << Chronicle::Schema::Types::Params::Time if range.include? :DateTime
+      type_values << Chronicle::Schema::Types::String if %i[Text URL].intersect?(range)
+      # type_values << Chronicle::Schema::Types::String if true
       type_values << Chronicle::Schema::Types::Params::Integer if range.include? :Integer
       type_values << Chronicle::Models.schema_type(range)
 
-      type_values.reduce do |memo, type|
+      # type_values = type_values.map do |type|
+      #   type.meta(required: property.required?, many: property.many?)
+      # end
+
+      union = type_values.reduce do |memo, type|
         memo | type
       end
     end

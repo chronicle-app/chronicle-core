@@ -1,50 +1,47 @@
 require 'spec_helper'
+require 'chronicle/schema/rdf_parsing'
 require 'chronicle/models/generation'
 Chronicle::Models::Generation.suppress_model_generation
 require 'chronicle/models'
 
 RSpec.describe Chronicle::Models::ModelFactory do
   describe '#generate' do
-    let (:name_property) do
-      {
-          name_snake_case: :name,
-          range_with_subclasses: [:Text],
-          is_required: false,
-          is_many: false
-      }
+    let(:name_property) do
+      r = Chronicle::Schema::SchemaProperty.new('https://schema.org/name')
+      r.domain = ['https://schema.org/Thing']
+      r.range = ['https://schema.org/Text']
+      r
     end
 
-    let (:mandatory_property) do
-      {
-        name_snake_case: :mandatory_ages,
-        range_with_subclasses: [:Integer],
-        is_required: true,
-        is_many: true
-      }
+    let(:mandatory_property) do
+      r = Chronicle::Schema::SchemaProperty.new('https://schema.org/mandatoryAges')
+      r.range = ['https://schema.org/Integer']
+      r.required = true
+      r.many = true
+      r
     end
 
-    let (:chronicle_edge) do
-      {
-        name_snake_case: :chronicle_edge,
-        range_with_subclasses: [:FooBar],
-        is_required: false,
-        is_many: false
-      }
+    let(:chronicle_edge) do
+      r = Chronicle::Schema::SchemaProperty.new('https://schema.org/chronicle_edge')
+      r.range = ['https://schema.org/FooBar']
+      r.required = false
+      r.many = false
+      r
     end
 
-    let (:superclasses) do
-      [:Entity, :Thing]
+    let(:superclasses) do
+      %i[Thing]
     end
 
-    let (:properties_simple) do
+    let(:properties_simple) do
       [name_property]
     end
 
-    let (:properties_complex) do
+    let(:properties_complex) do
       [name_property, mandatory_property]
     end
 
-    subject { described_class.new(properties: properties_simple, superclasses: ).generate }
+    subject { described_class.new(properties: properties_simple, superclasses:).generate }
 
     it 'can generates a class' do
       expect(subject).to be_a(Class)
@@ -85,7 +82,7 @@ RSpec.describe Chronicle::Models::ModelFactory do
 
         it 'will raise an error if the attribute is not present' do
           expect do
-            subject.new()
+            subject.new
           end.to raise_error(Chronicle::Models::AttributeError)
         end
 
@@ -106,7 +103,7 @@ RSpec.describe Chronicle::Models::ModelFactory do
         subject { described_class.new(properties: [chronicle_edge]).generate }
 
         it 'will accept the correct type' do
-          FooBar = described_class.new().generate
+          FooBar = described_class.new.generate
 
           expect do
             subject.new(chronicle_edge: FooBar.new)
@@ -114,7 +111,7 @@ RSpec.describe Chronicle::Models::ModelFactory do
         end
 
         it 'will raise an error if the attribute is not the correct type' do
-          FooBaz = described_class.new().generate
+          FooBaz = described_class.new.generate
 
           expect do
             subject.new(chronicle_edge: FooBaz.new)

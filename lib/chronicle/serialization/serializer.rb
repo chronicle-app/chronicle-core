@@ -5,7 +5,10 @@ module Chronicle::Serialization
     # options::
     #   Options for configuring this Serializers
     def initialize(record, options = {})
-      raise(SerializationError, "Record must be a subclass of Chronicle::Schema::Base}") unless record.is_a?(Chronicle::Schema::Base)
+      unless record.is_a?(Chronicle::Models::Base)
+        raise(SerializationError,
+          'Record must be a subclass of Chronicle::Models::Base}')
+      end
 
       @record = record
       @options = options
@@ -17,7 +20,7 @@ module Chronicle::Serialization
     end
 
     def self.serialize(record)
-      serializer = self.new(record)
+      serializer = new(record)
       serializer.serializable_hash
     end
   end

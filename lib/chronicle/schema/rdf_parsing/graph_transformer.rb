@@ -2,7 +2,7 @@ module Chronicle::Schema::RDFParsing
   # A class that takes a parsed TTL file (DAG) and walks down through
   # the nodes, selecting some properties and selecting some subclasses
   # to include in a new output.
-  # GraphTransformer.transform(rdf_graph, root) do
+  # GraphTransformer.transform(schema_graph, root) do
   #   pick_subclass :Action do
   #     pick_subclass :CreateAction do
   #       pick_all_subclasses
@@ -18,22 +18,47 @@ module Chronicle::Schema::RDFParsing
     attr_reader :graph, :new_graph
 
     def initialize(graph)
-      unless graph.is_a? Chronicle::Schema::RDFParsing::RDFGraph
+      unless graph.is_a? Chronicle::Schema::SchemaGraph
         raise ArgumentError,
-          'rdf_graph must be a Chronicle::Schema::RDFParsing::RDFGraph'
+          'schema_graph must be a Chronicle::Schema::SchemaGraph'
       end
 
       @graph = graph
-      @new_graph = Chronicle::Schema::RDFParsing::RDFGraph.new
+      @new_graph = Chronicle::Schema::SchemaGraph.new
       @current_parent = nil
     end
 
-    def self.transform(graph, root_id, &)
+    def self.transform(graph, _root_id, &)
       transformer = new(graph)
 
-      transformer.pick_subclass(root_id, &)
+      transformer.start_evaluating(&)
 
+      transformer.new_graph.properties.each do |property|
+        property.domain = property.domain.select do |class_id|
+          transformer.new_graph.find_class_by_id(class_id)
+        end
+        # do the same thing for range but only after datatypes
+      end
+
+      transformer.new_graph.build_references!
       transformer.new_graph
+    end
+
+    def self.transform_from_file(graph, root_id, definition_file_path)
+      dsl_commands = File.read(definition_file_path)
+      transform(graph, root_id) do
+        instance_eval(dsl_commands)
+      end
+    end
+
+    def start_evaluating(&)
+      instance_eval(&) if block_given?
+    end
+
+    private
+
+    def version(version)
+      @new_graph.version = version
     end
 
     def pick_subclass(subclass_identifier, &)
@@ -43,7 +68,7 @@ module Chronicle::Schema::RDFParsing
       new_subclass = @new_graph.add_class(subclass_identifier)
       new_subclass.comment = subclass.comment
 
-      @current_parent&.add_subclass(new_subclass)
+      @current_parent&.add_subclass_id(new_subclass.id)
 
       previous_parent = @current_parent
       @current_parent = new_subclass
@@ -54,20 +79,22 @@ module Chronicle::Schema::RDFParsing
     end
 
     def pick_all_subclasses(&)
-      @graph.find_class_by_id(@current_parent.id).subclasses.each do |subclass|
-        identifier = @graph.id_to_identifier(subclass.id)
+      @graph.find_class_by_id(@current_parent.id).subclass_ids.each do |subclass_id|
+        identifier = @graph.id_to_identifier(subclass_id)
         pick_subclass(identifier, &)
       end
     end
 
-    def pick_property(property_identifier)
+    def pick_property(property_identifier, many: false, required: false)
       property = @graph.find_property(property_identifier)
       raise ArgumentError, "Property not found: #{property_identifier}" unless property
 
       new_property = @new_graph.add_property(property_identifier)
       new_property.range = property.range
       new_property.comment = property.comment
-      @current_parent&.add_property(new_property)
+      new_property.many = many
+      new_property.required = required
+      new_property.domain += [@current_parent.id]
     end
 
     def pick_all_properties

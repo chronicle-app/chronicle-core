@@ -2,6 +2,7 @@ require 'dry-struct'
 require 'chronicle/schema/types'
 
 module Chronicle::Models
+  # The base class for all generated models
   class Base < Dry::Struct
     transform_keys(&:to_sym)
     schema schema.strict
@@ -15,7 +16,7 @@ module Chronicle::Models
     # CHRONICLE_ATTRIBUTES = %i[id provider provider_id provider_slug provider_namespace].freeze
 
     CHRONICLE_ATTRIBUTES.each do |attribute|
-      attribute(attribute, Chronicle::Schema::Types::String.optional.default(nil).meta(cardinality: :zero_or_one))
+      attribute(attribute, Chronicle::Schema::Types::String.optional.default(nil).meta(many: false, required: false))
     end
 
     def self.set_superclasses(superclasses)
@@ -53,14 +54,15 @@ module Chronicle::Models
       Chronicle::Utils::HashUtils.flatten_hash(to_h)
     end
 
-    def self.one_cardinality_attributes
-      schema.type.filter do |type|
-        [:one, :zero_or_one].include?(type.meta[:cardinality])
+    # FIXME: this isn't working
+    def self.many_cardinality_attributes
+      schema.type.select do |type|
+        type.meta[:many]
       end.map(&:name)
     end
 
-    def self.many_cardinality_attributes
-      schema.type.map(&:name) - one_cardinality_attributes
+    def self.one_cardinality_attributes
+      schema.type.map(&:name) - many_cardinality_attributes
     end
   end
 
@@ -69,6 +71,7 @@ module Chronicle::Models
       unless input.respond_to?(:type) && [types].flatten.include?(input.type)
         raise Dry::Types::ConstraintError.new(:type?, input)
       end
+
       input
     end
   end

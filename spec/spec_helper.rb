@@ -2,14 +2,15 @@ require 'simplecov'
 SimpleCov.start
 
 require 'support/matchers/valid_contract_matcher'
+require 'support/shared_contexts'
 
-require "bundler/setup"
+require 'bundler/setup'
 
-require "chronicle/core"
+require 'chronicle/core'
 # require "chronicle/schema"
 # require "chronicle/serialization"
 
-$LOAD_PATH.unshift File.expand_path('../../lib', __FILE__)
+$LOAD_PATH.unshift File.expand_path('../lib', __dir__)
 
 RSpec.configure do |config|
   # Disable RSpec exposing methods globally on `Module` and `main`

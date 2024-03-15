@@ -29,10 +29,22 @@ module Chronicle::Models
         end
       end
 
-      def generate_models(classes = Chronicle::Schema::CLASS_DATA)
+      def generate_models(graph = nil)
+        graph ||= begin
+          require 'json'
+          require 'chronicle/schema/rdf_parsing'
+          schema_path = File.join(File.dirname(__FILE__), '..', '..', '..', 'schema', 'chronicle_schema_v1.json')
+          Chronicle::Schema::SchemaGraph.build_from_json(JSON.parse(File.read(schema_path)))
+        end
+
         start_time = Time.now
-        classes.each do |class_id, details|
-          new_model_klass = Chronicle::Models::ModelFactory.new(properties: details[:properties], superclasses: details[:superclasses]).generate
+        graph.classes.each do |klass|
+          class_id = graph.id_to_identifier(klass.id)
+
+          new_model_klass = Chronicle::Models::ModelFactory.new(
+            properties: klass.all_properties,
+            superclasses: klass.ancestors.map(&:short_id).map(&:to_sym)
+          ).generate
 
           const_set(class_id, new_model_klass)
         end

@@ -2,33 +2,31 @@ require 'spec_helper'
 require 'chronicle/serialization'
 
 RSpec.describe Chronicle::Serialization::HashSerializer do
-  let(:rock_group) do 
-    {
-      '@type': 'RockGroup',
-      name: 'The Beatle',
-      description: 'A rock band',
-      hair_length: 5,
-      video: [video_object]
+  include_context 'with_sample_schema_graph'
+
+  it 'can build a JSONAPI object from a single model' do
+    properties = {
+      name: 'bar',
+      description: 'identity'
     }
+    record = sample_model_module::Person.new(properties)
+
+    expect(described_class.serialize(record)).to eql(properties)
   end
 
-  let(:album) do
-    {
-      '@type': 'MusicAlbum',
-      name: 'White Album',
-      description: 'asdfsda',
-      by_artist: [rock_group, "asdfas"]
-    }
-  end
-  # needs some fixing
-  xit "can build a hash from a model" do
-    expected = {
-      type: "activities",
-      attributes: { verb: "tested" },
-      relationships: { agent: { data: { type: "person", attributes: { name: "bar", description: 'identity' }, relationships: {}, meta: { dedupe_on: [] } } } },
-      meta: { dedupe_on: [] }
-    }
+  it 'can build a JSONAPI object from a model with a nested model' do
+    record = sample_model_module::Action.new(
+      agent: sample_model_module::Person.new(
+        name: 'bar',
+        description: 'identity'
+      )
+    )
 
-    expect(Chronicle::Serialization::HashSerializer.serialize(record)).to eql(expected)
+    expect(described_class.serialize(record).compact).to eql({
+      agent: {
+        name: 'bar',
+        description: 'identity'
+      }
+    })
   end
 end

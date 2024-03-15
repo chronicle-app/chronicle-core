@@ -2,7 +2,6 @@ require_relative 'models/generation'
 require_relative 'models/base'
 require_relative 'models/builder'
 
-
 module Chronicle::Models
   class Error < StandardError; end
   class AttributeError < Error; end
