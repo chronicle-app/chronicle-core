@@ -28,8 +28,12 @@ module Chronicle::Schema::RDFParsing
 
     def self.transform_from_file(definition_file_path)
       dsl_commands = File.read(definition_file_path)
+      transform_from_string(dsl_commands)
+    end
+
+    def self.transform_from_string(dsl_definition)
       transform do
-        instance_eval(dsl_commands)
+        instance_eval(dsl_definition)
       end
     end
 
