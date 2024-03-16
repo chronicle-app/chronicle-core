@@ -16,3 +16,6 @@ Layout/ArgumentAlignment:
 
 Layout/MultilineMethodCallIndentation:
   EnforcedStyle: indented
+
+Gemspec/DevelopmentDependencies:
+  EnforcedStyle: gemspec

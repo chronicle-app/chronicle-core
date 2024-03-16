@@ -1,5 +1,4 @@
 require 'tsort'
-require 'rdf/turtle'
 
 module Chronicle::Schema
   # Represents a RDF graph as a DAG of classes and their properties, built
