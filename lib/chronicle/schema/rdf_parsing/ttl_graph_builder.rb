@@ -44,7 +44,10 @@ module Chronicle::Schema::RDFParsing
     def build_class_graph
       classes = all_classes.map do |class_id|
         comment = comment_of_class(class_id)
-        Chronicle::Schema::SchemaType.new(class_id, comment:, namespace: @default_prefix)
+        Chronicle::Schema::SchemaType.new(class_id) do |t|
+          t.comment = comment
+          t.namespace = @default_prefix
+        end
       end
 
       classes.each do |schema_type|
@@ -56,14 +59,14 @@ module Chronicle::Schema::RDFParsing
 
     def build_property_graph
       all_properties.map do |property_id|
-        property = Chronicle::Schema::SchemaProperty.new(property_id)
-        property.range = range_of_property(property_id)
-        property.domain = domain_of_property(property_id)
-        property.comment = comment_of_property(property_id)
-        property.required = property_required?(property_id)
-        property.many = property_many?(property_id)
-        property.namespace = @default_prefix
-        property
+        Chronicle::Schema::SchemaProperty.new(property_id) do |p|
+          p.range = range_of_property(property_id)
+          p.domain = domain_of_property(property_id)
+          p.comment = comment_of_property(property_id)
+          p.required = property_required?(property_id)
+          p.many = property_many?(property_id)
+          p.namespace = @default_prefix
+        end
       end
     end
 

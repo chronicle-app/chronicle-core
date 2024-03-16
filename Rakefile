@@ -26,9 +26,7 @@ namespace :generate do
 
     schema_dsl_file = File.join(File.dirname(__FILE__), 'schema', "chronicle_schema_v#{version}.rb")
 
-    graph = Chronicle::Schema::RDFParsing::Schemaorg.build_graph
-
-    new_graph = Chronicle::Schema::RDFParsing::GraphTransformer.transform_from_file(graph, :Thing, schema_dsl_file)
+    new_graph = Chronicle::Schema::RDFParsing::GraphTransformer.transform_from_file(schema_dsl_file)
 
     ttl_str = Chronicle::Schema::RDFParsing::RDFSerializer.serialize(new_graph)
     output_filename = schema_dsl_file.gsub(/\.rb$/, '.ttl')

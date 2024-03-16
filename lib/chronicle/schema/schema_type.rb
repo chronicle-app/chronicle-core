@@ -1,20 +1,22 @@
 module Chronicle::Schema
   # Represents a type in the RDF graph
+  #
+  # TODO: rename `class` to `type` to match new class name
   class SchemaType
-    attr_reader :id, :namespace, :graph
+    attr_reader :id
     attr_accessor :properties,
       :subclass_ids,
       :comment,
+      :namespace,
       :subclasses,
       :superclasses
 
-    def initialize(id, graph: nil, comment: nil, namespace: nil)
+    def initialize(id)
       @id = id
-      @comment = comment
-      @namespace = namespace
-      @graph = graph
       @subclass_ids = []
       @properties = []
+
+      yield self if block_given?
     end
 
     def inspect

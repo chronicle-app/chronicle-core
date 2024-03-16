@@ -10,6 +10,8 @@ module Chronicle::Schema
       @range = []
       @many = false
       @required = false
+
+      yield self if block_given?
     end
 
     def pretty_print(pp)

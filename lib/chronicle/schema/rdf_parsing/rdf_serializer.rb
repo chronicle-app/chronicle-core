@@ -16,7 +16,7 @@ module Chronicle::Schema::RDFParsing
     attr_reader :graph
 
     def initialize(graph)
-      raise ArgumentError, 'graph must be a SchemaGraph' unless graph.is_a?(SchemaGraph)
+      raise ArgumentError, 'graph must be a SchemaGraph' unless graph.is_a?(Chronicle::Schema::SchemaGraph)
 
       @graph = graph
     end
@@ -96,6 +96,8 @@ module Chronicle::Schema::RDFParsing
         statements << RDF::Statement(RDF::URI.new(property.id), RDF::URI.new('https://schema.org/domainIncludes'),
           RDF::URI.new(domain))
       end
+
+      statements << RDF::Statement(RDF::URI.new(property.id), RDF::RDFS.comment, property.comment) if property.comment
 
       if property.required?
         statements << RDF::Statement(RDF::URI.new(property.id), RDF::OWL.minCardinality,

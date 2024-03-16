@@ -1,4 +1,5 @@
 version 1.2
+set_base_graph 'schema.org', 'latest'
 
 pick_subclass :Thing do
   pick_subclass :Action do

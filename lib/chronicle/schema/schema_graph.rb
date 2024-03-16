@@ -91,7 +91,7 @@ module Chronicle::Schema
     end
 
     def add_class(identifier)
-      find_class(identifier) || add_new_class(identifier)
+      find_class(identifier) || add_new_type(identifier)
     end
 
     def add_property(identifier)
@@ -108,10 +108,13 @@ module Chronicle::Schema
 
     private
 
-    def add_new_class(identifier)
-      new_class = SchemaType.new(identifier_to_uri(identifier), namespace: @default_prefix)
-      @classes << new_class unless @classes.include?(new_class)
-      new_class
+    def add_new_type(identifier)
+      new_type = SchemaType.new(identifier_to_uri(identifier)) do |t|
+        t.namespace = @default_prefix
+      end
+
+      @classes << new_type unless @classes.include?(new_type)
+      new_type
     end
 
     def add_new_property(identifier)
