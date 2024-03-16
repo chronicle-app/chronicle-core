@@ -5,6 +5,7 @@
       "id": "https://schema.org/Action",
       "comment": "An action performed by a direct agent and indirect participants upon a direct object. Optionally happens at a location with the help of an inanimate instrument. The execution of the action may produce a result. Specific action sub-type documentation specifies the exact expectation of each argument/role.\\n\\nSee also [blog post](http://blog.schema.org/2014/04/announcing-schemaorg-actions.html) and [Actions overview document](https://schema.org/docs/actions.html).",
       "subclass_ids": [
+        "https://schema.org/ConsumeAction",
         "https://schema.org/UpdateAction"
       ]
     },
@@ -20,6 +21,13 @@
       "comment": "Boolean: True or False.",
       "subclass_ids": [
 
+      ]
+    },
+    {
+      "id": "https://schema.org/ConsumeAction",
+      "comment": "The act of ingesting information/resources/food.",
+      "subclass_ids": [
+        "https://schema.org/ListenAction"
       ]
     },
     {
@@ -79,6 +87,13 @@
     {
       "id": "https://schema.org/Integer",
       "comment": "Data type: Integer.",
+      "subclass_ids": [
+
+      ]
+    },
+    {
+      "id": "https://schema.org/ListenAction",
+      "comment": "The act of consuming audio content.",
       "subclass_ids": [
 
       ]

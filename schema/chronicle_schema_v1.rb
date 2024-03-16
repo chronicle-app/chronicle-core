@@ -11,6 +11,10 @@ pick_subclass :Thing do
     pick_property :result
 
     # pick_subclass :SearchAction
+    pick_subclass :ConsumeAction do
+      pick_subclass :ListenAction
+    end
+
     pick_subclass :UpdateAction do
       pick_subclass :AddAction do
         pick_subclass :InsertAction

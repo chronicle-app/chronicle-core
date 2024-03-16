@@ -22,6 +22,10 @@
   rdfs:comment "Boolean: True or False.";
   rdfs:subClassOf :DataType .
 
+:ConsumeAction a rdfs:Class;
+  rdfs:comment "The act of ingesting information/resources/food.";
+  rdfs:subClassOf :Action .
+
 :CreativeWork a rdfs:Class;
   rdfs:comment "The most generic kind of creative work, including books, movies, photographs, software programs, etc.";
   rdfs:subClassOf :Thing .
@@ -52,6 +56,10 @@
 :Integer a rdfs:Class;
   rdfs:comment "Data type: Integer.";
   rdfs:subClassOf :Number .
+
+:ListenAction a rdfs:Class;
+  rdfs:comment "The act of consuming audio content.";
+  rdfs:subClassOf :ConsumeAction .
 
 :MusicAlbum a rdfs:Class;
   rdfs:comment "A collection of music tracks.";
