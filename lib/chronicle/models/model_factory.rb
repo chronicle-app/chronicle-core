@@ -2,10 +2,9 @@ module Chronicle::Models
   class ModelFactory
     attr_reader :id
 
-    def initialize(type_id:, properties: [], superclasses: [])
+    def initialize(type_id:, properties: [])
       @type_id = type_id
       @properties = properties
-      @superclasses = superclasses
     end
 
     def generate
@@ -13,11 +12,9 @@ module Chronicle::Models
         generate_attribute_info(property)
       end
 
-      superclasses = @superclasses
       type_id = @type_id
 
       Class.new(Chronicle::Models::Base) do
-        set_superclasses(superclasses)
         attribute_info.each do |a|
           attribute(a[:name], a[:type])
         end

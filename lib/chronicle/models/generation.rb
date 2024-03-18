@@ -43,8 +43,8 @@ module Chronicle::Models
 
           new_model_klass = Chronicle::Models::ModelFactory.new(
             type_id: class_id.to_sym,
-            properties: klass.all_properties,
-            superclasses: klass.ancestors.map(&:short_id).map(&:to_sym)
+            properties: klass.all_properties
+            # superclasses: klass.ancestors.map(&:short_id).map(&:to_sym)
           ).generate
 
           const_set(class_id, new_model_klass)

@@ -24,8 +24,7 @@ RSpec.describe Chronicle::Models::ModelFactory do
       subject do
         described_class.new(
           type_id: root_class.short_id.to_sym,
-          properties: root_class.all_properties,
-          superclasses: []
+          properties: root_class.all_properties
         ).generate
       end
 
@@ -36,10 +35,6 @@ RSpec.describe Chronicle::Models::ModelFactory do
 
       it 'has expected attributes defined' do
         expect(subject.attribute_names).to include(:name)
-      end
-
-      it 'has the correct superclasses' do
-        expect(subject.superclasses).to eq([])
       end
 
       describe 'attribute type checking' do
@@ -67,16 +62,14 @@ RSpec.describe Chronicle::Models::ModelFactory do
         klass = sample_schema_graph.find_class(:Person)
         described_class.new(
           type_id: klass.short_id.to_sym,
-          properties: klass.all_properties,
-          superclasses: [klass.ancestors.map(&:short_id).map(&:to_sym)]
+          properties: klass.all_properties
         ).generate
       end
 
       subject do
         described_class.new(
           type_id: action_class.short_id.to_sym,
-          properties: action_class.all_properties,
-          superclasses: [action_class.ancestors.map(&:short_id).map(&:to_sym)]
+          properties: action_class.all_properties
         ).generate
       end
 
@@ -102,8 +95,7 @@ RSpec.describe Chronicle::Models::ModelFactory do
         it 'will raise an error if the attribute is not the correct type' do
           root = described_class.new(
             type_id: root_class.short_id.to_sym,
-            properties: root_class.all_properties,
-            superclasses: []
+            properties: root_class.all_properties
           ).generate
 
           expect do

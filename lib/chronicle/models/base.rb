@@ -9,22 +9,12 @@ module Chronicle::Models
 
     alias properties attributes
 
-    @superclasses = []
-
     # TODO: rename naked `provider` attribute
     CHRONICLE_ATTRIBUTES = %i[id].freeze
     # CHRONICLE_ATTRIBUTES = %i[id provider provider_id provider_slug provider_namespace].freeze
 
     CHRONICLE_ATTRIBUTES.each do |attribute|
       attribute(attribute, Chronicle::Schema::Types::String.optional.default(nil).meta(many: false, required: false))
-    end
-
-    def self.set_superclasses(superclasses)
-      @superclasses = superclasses
-    end
-
-    class << self
-      attr_reader :superclasses
     end
 
     def self.new(attributes = {})
@@ -64,8 +54,7 @@ module Chronicle::Models
 
   def self.schema_type(types)
     Chronicle::Schema::Types::Instance(Chronicle::Models::Base).constructor do |input|
-      input_type_id = input.class.type_id
-      unless input_type_id && [types].flatten.include?(input_type_id)
+      unless input.class.type_id && [types].flatten.include?(input.class.type_id)
         raise Dry::Types::ConstraintError.new(:type?, input)
       end
 
