@@ -1,6 +1,9 @@
 module Chronicle::Models
   class ModelFactory
-    def initialize(properties: [], superclasses: [])
+    attr_reader :id
+
+    def initialize(type_id:, properties: [], superclasses: [])
+      @type_id = type_id
       @properties = properties
       @superclasses = superclasses
     end
@@ -11,11 +14,18 @@ module Chronicle::Models
       end
 
       superclasses = @superclasses
+      type_id = @type_id
 
       Class.new(Chronicle::Models::Base) do
         set_superclasses(superclasses)
         attribute_info.each do |a|
           attribute(a[:name], a[:type])
+        end
+
+        @type_id = type_id
+
+        class << self
+          attr_reader :type_id
         end
       end
     end
@@ -42,17 +52,12 @@ module Chronicle::Models
     def build_type(property)
       type_values = []
 
-      range = property.range_identifiers
+      full_range_identifiers = property.full_range_identifiers
 
-      type_values << Chronicle::Schema::Types::Params::Time if range.include? :DateTime
-      type_values << Chronicle::Schema::Types::String if %i[Text URL].intersect?(range)
-      # type_values << Chronicle::Schema::Types::String if true
-      type_values << Chronicle::Schema::Types::Params::Integer if range.include? :Integer
-      type_values << Chronicle::Models.schema_type(range)
-
-      # type_values = type_values.map do |type|
-      #   type.meta(required: property.required?, many: property.many?)
-      # end
+      type_values << Chronicle::Schema::Types::Params::Time if full_range_identifiers.include? :DateTime
+      type_values << Chronicle::Schema::Types::String if %i[Text URL].intersect?(full_range_identifiers)
+      type_values << Chronicle::Schema::Types::Params::Integer if full_range_identifiers.include? :Integer
+      type_values << Chronicle::Models.schema_type(full_range_identifiers)
 
       union = type_values.reduce do |memo, type|
         memo | type

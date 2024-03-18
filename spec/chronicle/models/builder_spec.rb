@@ -25,22 +25,22 @@ RSpec.describe Chronicle::Models::Builder do
     describe 'unnested objects' do
       it 'can build a model from a hash' do
         obj = {
-          '@type': 'Event',
+          '@type': 'Thing',
           name: 'Test'
         }
         model = sample_model_module.build(obj)
-        expect(model).to be_a(sample_model_module::Event)
+        expect(model).to be_a(sample_model_module::Thing)
         expect(model.name).to eq('Test')
       end
 
       it 'can coerce values' do
         obj = {
-          '@type': 'Action',
-          end_time: '2019-01-01'
+          '@type': 'Event',
+          end_date: '2019-01-01'
         }
         model = sample_model_module.build(obj)
-        expect(model.end_time).to be_a(Time)
-        expect(model.end_time).to eq(Time.parse('2019-01-01'))
+        expect(model.end_date).to be_a(Time)
+        expect(model.end_date).to eq(Time.parse('2019-01-01'))
       end
     end
 

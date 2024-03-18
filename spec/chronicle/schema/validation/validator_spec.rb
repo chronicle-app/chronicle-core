@@ -134,14 +134,14 @@ RSpec.describe Chronicle::Schema::Validation::Validator do
       # FIXME: not sure why this isn't working
       it 'will coerce an object' do
         obj = {
-          '@type': 'Action',
-          end_time: '2023-10-27T11:54:08.000-04:00'
+          '@type': 'Event',
+          end_date: '2023-10-27T11:54:08.000-04:00'
         }
         result = described_class.call(obj)
 
         expect { result }.to_not raise_error
         expect(result).to be_considered_valid
-        expect(result.to_h[:end_time].class).to eq(Time)
+        expect(result.to_h[:end_date].class).to eq(Time)
       end
 
       it 'will coerce a deeply-nested object' do

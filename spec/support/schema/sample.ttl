@@ -18,13 +18,25 @@
   rdfs:comment "The act of editing by adding an object to a collection.";
   rdfs:subClassOf :UpdateAction .
 
+:AdministrativeArea a rdfs:Class;
+  rdfs:comment "A geographical region, typically under the jurisdiction of a particular government.";
+  rdfs:subClassOf :Place .
+
 :Boolean a rdfs:Class;
   rdfs:comment "Boolean: True or False.";
   rdfs:subClassOf :DataType .
 
+:City a rdfs:Class;
+  rdfs:comment "A city or town.";
+  rdfs:subClassOf :AdministrativeArea .
+
 :ConsumeAction a rdfs:Class;
   rdfs:comment "The act of ingesting information/resources/food.";
   rdfs:subClassOf :Action .
+
+:Country a rdfs:Class;
+  rdfs:comment "A country.";
+  rdfs:subClassOf :AdministrativeArea .
 
 :CreativeWork a rdfs:Class;
   rdfs:comment "The most generic kind of creative work, including books, movies, photographs, software programs, etc.";
@@ -97,6 +109,10 @@
   rdfs:comment "Entities that have a somewhat fixed, physical extension.";
   rdfs:subClassOf :Thing .
 
+:State a rdfs:Class;
+  rdfs:comment "A state or province of a country.";
+  rdfs:subClassOf :AdministrativeArea .
+
 :Text a rdfs:Class;
   rdfs:comment "Data type: Text.";
   rdfs:subClassOf :DataType .
@@ -129,6 +145,7 @@
 :agent a rdf:Property;
   rdfs:comment "The direct performer or driver of the action (animate or inanimate). E.g. *John* wrote a book.";
   owl:maxCardinality 1;
+  owl:minCardinality 1;
   :domainIncludes :Action;
   :rangeIncludes :Organization,
     :Person .

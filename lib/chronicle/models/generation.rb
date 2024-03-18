@@ -42,6 +42,7 @@ module Chronicle::Models
           class_id = graph.id_to_identifier(klass.id)
 
           new_model_klass = Chronicle::Models::ModelFactory.new(
+            type_id: class_id.to_sym,
             properties: klass.all_properties,
             superclasses: klass.ancestors.map(&:short_id).map(&:to_sym)
           ).generate

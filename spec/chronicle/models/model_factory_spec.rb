@@ -5,81 +5,82 @@ Chronicle::Models::Generation.suppress_model_generation
 require 'chronicle/models'
 
 RSpec.describe Chronicle::Models::ModelFactory do
+  include_context 'with_sample_schema_graph'
+
+  let(:root_class) do
+    sample_schema_graph.find_class(:Thing)
+  end
+
+  let(:event_class) do
+    sample_schema_graph.find_class(:Event)
+  end
+
+  let(:action_class) do
+    sample_schema_graph.find_class(:Action)
+  end
+
   describe '#generate' do
-    let(:name_property) do
-      r = Chronicle::Schema::SchemaProperty.new('https://schema.org/name')
-      r.domain = ['https://schema.org/Thing']
-      r.range = ['https://schema.org/Text']
-      r
-    end
-
-    let(:mandatory_property) do
-      r = Chronicle::Schema::SchemaProperty.new('https://schema.org/mandatoryAges')
-      r.range = ['https://schema.org/Integer']
-      r.required = true
-      r.many = true
-      r
-    end
-
-    let(:chronicle_edge) do
-      r = Chronicle::Schema::SchemaProperty.new('https://schema.org/chronicle_edge')
-      r.range = ['https://schema.org/FooBar']
-      r.required = false
-      r.many = false
-      r
-    end
-
-    let(:superclasses) do
-      %i[Thing]
-    end
-
-    let(:properties_simple) do
-      [name_property]
-    end
-
-    let(:properties_complex) do
-      [name_property, mandatory_property]
-    end
-
-    subject { described_class.new(properties: properties_simple, superclasses:).generate }
-
-    it 'can generates a class' do
-      expect(subject).to be_a(Class)
-      expect(subject.ancestors).to include(Chronicle::Models::Base)
-    end
-
-    it 'has expected attributes defined' do
-      expect(subject.attribute_names).to include(:name)
-    end
-
-    it 'has the correct superclasses' do
-      expect(subject.superclasses).to eq(superclasses)
-    end
-
-    describe 'attribute type checking' do
-      subject { described_class.new(properties: properties_simple).generate }
-
-      it 'will accept the correct type' do
-        expect do
-          subject.new(name: 'foo')
-        end.to_not raise_error
+    context 'for a root class' do
+      subject do
+        described_class.new(
+          type_id: root_class.short_id.to_sym,
+          properties: root_class.all_properties,
+          superclasses: []
+        ).generate
       end
 
-      it 'will raise an error if the attribute is not the correct cardinality' do
-        expect do
-          subject.new(name: ['bar'])
-        end.to raise_error(Chronicle::Models::AttributeError)
+      it 'can generates a class' do
+        expect(subject).to be_a(Class)
+        expect(subject.ancestors).to include(Chronicle::Models::Base)
       end
 
-      it 'will raise an error if the attribute is not the correct type' do
-        expect do
-          subject.new(name: 1)
-        end.to raise_error(Chronicle::Models::AttributeError)
+      it 'has expected attributes defined' do
+        expect(subject.attribute_names).to include(:name)
+      end
+
+      it 'has the correct superclasses' do
+        expect(subject.superclasses).to eq([])
+      end
+
+      describe 'attribute type checking' do
+        it 'will accept the correct type' do
+          expect do
+            subject.new(name: 'foo')
+          end.to_not raise_error
+        end
+
+        it 'will raise an error if the attribute is not the correct cardinality' do
+          expect do
+            subject.new(name: ['bar'])
+          end.to raise_error(Chronicle::Models::AttributeError)
+        end
+
+        it 'will raise an error if the attribute is not the correct type' do
+          expect do
+            subject.new(name: 1)
+          end.to raise_error(Chronicle::Models::AttributeError)
+        end
+      end
+    end
+    context 'with a subclass' do
+      let(:person_class) do
+        klass = sample_schema_graph.find_class(:Person)
+        described_class.new(
+          type_id: klass.short_id.to_sym,
+          properties: klass.all_properties,
+          superclasses: [klass.ancestors.map(&:short_id).map(&:to_sym)]
+        ).generate
+      end
+
+      subject do
+        described_class.new(
+          type_id: action_class.short_id.to_sym,
+          properties: action_class.all_properties,
+          superclasses: [action_class.ancestors.map(&:short_id).map(&:to_sym)]
+        ).generate
       end
 
       describe 'non-optional attributes' do
-        subject { described_class.new(properties: properties_complex).generate }
-
         it 'will raise an error if the attribute is not present' do
           expect do
             subject.new
@@ -88,33 +89,31 @@ RSpec.describe Chronicle::Models::ModelFactory do
 
         it 'will accept the correct type' do
           expect do
-            subject.new(mandatory_ages: [1, 2, 3])
+            subject.new(agent: person_class.new)
           end.to_not raise_error
         end
 
-        it 'will raise an error if the attribute is nil' do
+        it 'will raise an error if the attribute is not the correct cardinality' do
           expect do
-            subject.new(mandatory_ages: nil)
+            subject.new(agent: [person_class.new])
           end.to raise_error(Chronicle::Models::AttributeError)
-        end
-      end
-
-      describe 'chronicle edge checking' do
-        subject { described_class.new(properties: [chronicle_edge]).generate }
-
-        it 'will accept the correct type' do
-          FooBar = described_class.new.generate
-
-          expect do
-            subject.new(chronicle_edge: FooBar.new)
-          end.to_not raise_error
         end
 
         it 'will raise an error if the attribute is not the correct type' do
-          FooBaz = described_class.new.generate
+          root = described_class.new(
+            type_id: root_class.short_id.to_sym,
+            properties: root_class.all_properties,
+            superclasses: []
+          ).generate
 
           expect do
-            subject.new(chronicle_edge: FooBaz.new)
+            subject.new(agent: root.new)
+          end.to raise_error(Chronicle::Models::AttributeError)
+        end
+
+        it 'will raise an error if the attribute is array of nil' do
+          expect do
+            subject.new(agent: nil)
           end.to raise_error(Chronicle::Models::AttributeError)
         end
       end

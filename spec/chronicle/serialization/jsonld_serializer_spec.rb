@@ -43,13 +43,13 @@ RSpec.describe Chronicle::Serialization::JSONLDSerializer do
   end
 
   it 'serializes dates properly' do
-    record = sample_model_module::Action.new(
-      end_time: Time.parse('2019-01-01')
+    record = sample_model_module::Event.new(
+      start_date: Time.parse('2019-01-01')
     )
 
     expected = {
-      '@type': 'Action',
-      end_time: Time.parse('2019-01-01')
+      '@type': 'Event',
+      start_date: Time.parse('2019-01-01')
     }
 
     expect(described_class.serialize(record)).to eql(expected)

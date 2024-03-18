@@ -17,8 +17,24 @@
       ]
     },
     {
+      "id": "https://schema.org/AdministrativeArea",
+      "comment": "A geographical region, typically under the jurisdiction of a particular government.",
+      "subclass_ids": [
+        "https://schema.org/City",
+        "https://schema.org/Country",
+        "https://schema.org/State"
+      ]
+    },
+    {
       "id": "https://schema.org/Boolean",
       "comment": "Boolean: True or False.",
+      "subclass_ids": [
+
+      ]
+    },
+    {
+      "id": "https://schema.org/City",
+      "comment": "A city or town.",
       "subclass_ids": [
 
       ]
@@ -28,6 +44,13 @@
       "comment": "The act of ingesting information/resources/food.",
       "subclass_ids": [
         "https://schema.org/ListenAction"
+      ]
+    },
+    {
+      "id": "https://schema.org/Country",
+      "comment": "A country.",
+      "subclass_ids": [
+
       ]
     },
     {
@@ -159,6 +182,13 @@
       "id": "https://schema.org/Place",
       "comment": "Entities that have a somewhat fixed, physical extension.",
       "subclass_ids": [
+        "https://schema.org/AdministrativeArea"
+      ]
+    },
+    {
+      "id": "https://schema.org/State",
+      "comment": "A state or province of a country.",
+      "subclass_ids": [
 
       ]
     },
@@ -232,7 +262,7 @@
         "https://schema.org/Person"
       ],
       "many": false,
-      "required": false
+      "required": true
     },
     {
       "id": "https://schema.org/album",

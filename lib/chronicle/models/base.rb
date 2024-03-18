@@ -41,10 +41,6 @@ module Chronicle::Models
       raise AttributeError, e.message
     end
 
-    def type
-      self.class.name.split('::').last.to_sym
-    end
-
     def meta
       {}
     end
@@ -68,7 +64,8 @@ module Chronicle::Models
 
   def self.schema_type(types)
     Chronicle::Schema::Types::Instance(Chronicle::Models::Base).constructor do |input|
-      unless input.respond_to?(:type) && [types].flatten.include?(input.type)
+      input_type_id = input.class.type_id
+      unless input_type_id && [types].flatten.include?(input_type_id)
         raise Dry::Types::ConstraintError.new(:type?, input)
       end
 

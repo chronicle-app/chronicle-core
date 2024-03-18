@@ -4,9 +4,9 @@ require 'chronicle/serialization'
 RSpec.describe Chronicle::Serialization::JSONAPISerializer do
   include_context 'with_sample_schema_graph'
 
-  let(:action_record) do
-    sample_model_module::Action.new(
-      end_time: Time.parse('2019-01-01')
+  let(:event_record) do
+    sample_model_module::Event.new(
+      end_date: Time.parse('2019-01-01')
     )
   end
 
@@ -24,12 +24,12 @@ RSpec.describe Chronicle::Serialization::JSONAPISerializer do
   end
 
   it 'can build a JSONAPI object from a single model' do
-    expect(described_class.serialize(action_record)).to eql({
-      type: 'Action',
+    expect(described_class.serialize(event_record)).to eql({
+      type: 'Event',
       meta: {},
       relationships: {},
       attributes: {
-        end_time: Time.parse('2019-01-01')
+        end_date: Time.parse('2019-01-01')
       }
     })
   end

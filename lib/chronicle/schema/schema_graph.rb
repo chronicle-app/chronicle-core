@@ -32,6 +32,8 @@ module Chronicle::Schema
           property.comment = property_data['comment']
           property.domain = property_data['domain']
           property.range = property_data['range']
+          property.many = property_data['many']
+          property.required = property_data['required']
         end
       end
       graph.build_references!
@@ -74,6 +76,8 @@ module Chronicle::Schema
         property.range = property.range.select do |range|
           find_class_by_id(range)
         end
+
+        property.range_types = property.range.map { |id| find_class_by_id(id) }
       end
     end
 

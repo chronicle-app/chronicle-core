@@ -5,7 +5,7 @@ pick_subclass :Thing do
   pick_subclass :Action do
     pick_property :endTime
     pick_property :startTime
-    pick_property :agent
+    pick_property :agent, required: true
     pick_property :instrument
     pick_property :object
     pick_property :result
@@ -23,7 +23,7 @@ pick_subclass :Thing do
   end
 
   pick_subclass :Event do
-    pick_property :location, required: true
+    pick_property :location, many: true
     pick_property :startDate
     pick_property :endDate
     # pick_all_subclasses
@@ -56,6 +56,9 @@ pick_subclass :Thing do
   end
 
   pick_subclass :Place do
+    pick_subclass :AdministrativeArea do
+      pick_all_subclasses
+    end
   end
 
   pick_property :alternateName

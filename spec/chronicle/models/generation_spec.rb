@@ -51,12 +51,19 @@ RSpec.describe Chronicle::Models::Generation do
       test_module.generate_models(sample_schema_graph)
       expect(test_module.models_generated?).to be_truthy
       expect(test_module.extant_models).to_not be_empty
-      expect(test_module.extant_models).to include(:Action)
+      expect(test_module.extant_models).to include(:Event)
 
-      test_only = test_module.const_get(:Action)
+      test_only = test_module.const_get(:Event)
       expect(test_only).to be_a(Class)
       expect(test_only.superclass).to eq(Chronicle::Models::Base)
       expect(test_only.new(name: 'foo').name).to eq('foo')
+
+      # TODO: figure out where to put this sort of test
+      t = test_module::Action.new({
+        agent: test_module::Person.new(name: 'John Doe'),
+        object: test_module::MusicAlbum.new(name: 'Test')
+      })
+      expect { t.agent.name }.to_not raise_error
     end
   end
 end
