@@ -32,10 +32,8 @@ Gem::Specification.new do |spec|
   spec.executables = spec.files.grep(%r{\Aexe/}) { |f| File.basename(f) }
   spec.require_paths = ['lib']
 
-  spec.add_dependency 'dry-schema', '~> 1.13'
   spec.add_dependency 'dry-struct', '~> 1.6'
   spec.add_dependency 'dry-validation', '~> 1.10'
-  spec.add_dependency 'json-ld', '~> 3.3'
 
   spec.add_development_dependency 'rdf-reasoner', '~> 0.9'
   spec.add_development_dependency 'rdf-turtle', '~> 3.3'
