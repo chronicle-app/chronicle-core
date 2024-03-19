@@ -14,7 +14,7 @@ RSpec.describe Chronicle::Schema::RDFParsing::GraphTransformer do
       set_base_graph 'schema.org', 'latest'
 
       pick_subclass :Thing do
-        pick_property :name
+        apply_property :name
         pick_subclass :Person do
         end
       end
@@ -33,12 +33,12 @@ RSpec.describe Chronicle::Schema::RDFParsing::GraphTransformer do
     end
 
     it 'has the right types' do
-      expect(subject.find_class(:Thing)).to be_a(Chronicle::Schema::SchemaType)
-      expect(subject.find_class(:Thing).descendants).to include(subject.find_class(:Person))
+      expect(subject.find_type(:Thing)).to be_a(Chronicle::Schema::SchemaType)
+      expect(subject.find_type(:Thing).descendants).to include(subject.find_type(:Person))
     end
 
     it 'has the right properties' do
-      expect(subject.find_class(:Person).all_properties).to include(subject.find_property(:name))
+      expect(subject.find_type(:Person).all_properties).to include(subject.find_property(:name))
     end
   end
 end

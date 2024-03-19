@@ -43,7 +43,7 @@ namespace :generate do
     puts "Caching schema with version: #{version}"
 
     ttl_file = File.join(File.dirname(__FILE__), 'schema', "chronicle_schema_v#{version}.ttl")
-    graph = Chronicle::Schema::RDFParsing::TTLGraphBuilder.build_from_file(ttl_file)
+    graph = Chronicle::Schema::RDFParsing::TTLGraphBuilder.build_from_file(ttl_file, default_namespace: 'https://schema.chronicle.app/')
 
     output_filename = File.join(File.dirname(__FILE__), 'schema',
       "chronicle_schema_v#{version}.json")

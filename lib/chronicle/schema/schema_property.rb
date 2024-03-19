@@ -8,7 +8,8 @@ module Chronicle::Schema
       :many,
       :required,
       :namespace,
-      :range_types # FIXME
+      :range_types, # FIXME
+      :see_also
 
     def initialize(id)
       @id = id
@@ -37,7 +38,8 @@ module Chronicle::Schema
         domain:,
         range:,
         many: @many,
-        required: @required
+        required: @required,
+        see_also: @see_also
       }
     end
 
@@ -51,6 +53,10 @@ module Chronicle::Schema
 
     def many?
       @many
+    end
+
+    def identifier
+      @id.split('/').last&.to_sym
     end
 
     # FIXME

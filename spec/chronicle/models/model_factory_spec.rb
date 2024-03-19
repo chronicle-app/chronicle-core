@@ -8,15 +8,15 @@ RSpec.describe Chronicle::Models::ModelFactory do
   include_context 'with_sample_schema_graph'
 
   let(:root_class) do
-    sample_schema_graph.find_class(:Thing)
+    sample_schema_graph.find_type(:Thing)
   end
 
   let(:event_class) do
-    sample_schema_graph.find_class(:Event)
+    sample_schema_graph.find_type(:Event)
   end
 
   let(:action_class) do
-    sample_schema_graph.find_class(:Action)
+    sample_schema_graph.find_type(:Action)
   end
 
   describe '#generate' do
@@ -59,7 +59,7 @@ RSpec.describe Chronicle::Models::ModelFactory do
     end
     context 'with a subclass' do
       let(:person_class) do
-        klass = sample_schema_graph.find_class(:Person)
+        klass = sample_schema_graph.find_type(:Person)
         described_class.new(
           type_id: klass.short_id.to_sym,
           properties: klass.all_properties

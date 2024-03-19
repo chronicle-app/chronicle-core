@@ -8,10 +8,10 @@ module Chronicle::Schema::RDFParsing
   class TTLGraphBuilder
     attr_reader :ttl_str, :ttl_graph, :graph
 
-    def initialize(ttl_str, default_prefix: 'https://schema.org/')
+    def initialize(ttl_str, default_namespace: 'https://schema.org/')
       @ttl_str = ttl_str
-      @default_prefix = default_prefix
-      @graph = Chronicle::Schema::SchemaGraph.new
+      @default_namespace = default_namespace
+      @graph = Chronicle::Schema::SchemaGraph.new(default_namespace:)
     end
 
     def build
@@ -26,12 +26,12 @@ module Chronicle::Schema::RDFParsing
       @graph
     end
 
-    def self.build_from_file(file_path)
-      new(File.read(file_path)).build
+    def self.build_from_file(file_path, default_namespace:)
+      new(File.read(file_path), default_namespace:).build
     end
 
-    def self.build_from_ttl(ttl_str)
-      new(ttl_str).build
+    def self.build_from_ttl(ttl_str, default_namespace:)
+      new(ttl_str, default_namespace:).build
     end
 
     private
@@ -46,7 +46,8 @@ module Chronicle::Schema::RDFParsing
         comment = comment_of_class(class_id)
         Chronicle::Schema::SchemaType.new(class_id) do |t|
           t.comment = comment
-          t.namespace = @default_prefix
+          t.namespace = @default_namespace
+          t.see_also = see_also(class_id)
         end
       end
 
@@ -65,7 +66,8 @@ module Chronicle::Schema::RDFParsing
           p.comment = comment_of_property(property_id)
           p.required = property_required?(property_id)
           p.many = property_many?(property_id)
-          p.namespace = @default_prefix
+          p.namespace = @default_namespace
+          p.see_also = see_also(property_id)
         end
       end
     end
@@ -103,7 +105,7 @@ module Chronicle::Schema::RDFParsing
     def range_of_property(property_id)
       @ttl_graph.query([
                          RDF::URI.new(property_id),
-                         RDF::URI.new("#{@default_prefix}rangeIncludes"),
+                         RDF::URI.new("#{@default_namespace}rangeIncludes"),
                          nil
                        ]).map(&:object).map(&:to_s)
     end
@@ -111,7 +113,7 @@ module Chronicle::Schema::RDFParsing
     def domain_of_property(property_id)
       @ttl_graph.query([
                          RDF::URI.new(property_id),
-                         RDF::URI.new("#{@default_prefix}domainIncludes"),
+                         RDF::URI.new("#{@default_namespace}domainIncludes"),
                          nil
                        ]).map(&:object).map(&:to_s)
     end
@@ -127,6 +129,10 @@ module Chronicle::Schema::RDFParsing
                                             nil]).map(&:object)
 
       max_cardinalities.empty? ? true : max_cardinalities.map(&:to_i).first > 1
+    end
+
+    def see_also(id)
+      @ttl_graph.query([RDF::URI.new(id), RDF::RDFS.seeAlso, nil]).map(&:object).map(&:to_s).first
     end
   end
 end

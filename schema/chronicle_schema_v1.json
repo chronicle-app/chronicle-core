@@ -2,479 +2,529 @@
   "version": "1.2",
   "classes": [
     {
-      "id": "https://schema.org/Action",
+      "id": "https://schema.chronicle.app/Action",
       "comment": "An action performed by a direct agent and indirect participants upon a direct object. Optionally happens at a location with the help of an inanimate instrument. The execution of the action may produce a result. Specific action sub-type documentation specifies the exact expectation of each argument/role.\\n\\nSee also [blog post](http://blog.schema.org/2014/04/announcing-schemaorg-actions.html) and [Actions overview document](https://schema.org/docs/actions.html).",
       "subclass_ids": [
-        "https://schema.org/ConsumeAction",
-        "https://schema.org/UpdateAction"
-      ]
+        "https://schema.chronicle.app/ConsumeAction",
+        "https://schema.chronicle.app/UpdateAction"
+      ],
+      "see_also": "https://schema.org/Action"
     },
     {
-      "id": "https://schema.org/AddAction",
+      "id": "https://schema.chronicle.app/AddAction",
       "comment": "The act of editing by adding an object to a collection.",
       "subclass_ids": [
-        "https://schema.org/InsertAction"
-      ]
+        "https://schema.chronicle.app/InsertAction"
+      ],
+      "see_also": "https://schema.org/AddAction"
     },
     {
-      "id": "https://schema.org/AdministrativeArea",
+      "id": "https://schema.chronicle.app/AdministrativeArea",
       "comment": "A geographical region, typically under the jurisdiction of a particular government.",
       "subclass_ids": [
-        "https://schema.org/City",
-        "https://schema.org/Country",
-        "https://schema.org/State"
-      ]
+        "https://schema.chronicle.app/City",
+        "https://schema.chronicle.app/Country",
+        "https://schema.chronicle.app/State"
+      ],
+      "see_also": "https://schema.org/AdministrativeArea"
     },
     {
-      "id": "https://schema.org/Boolean",
+      "id": "https://schema.chronicle.app/Boolean",
       "comment": "Boolean: True or False.",
       "subclass_ids": [
 
-      ]
+      ],
+      "see_also": "https://schema.org/Boolean"
     },
     {
-      "id": "https://schema.org/City",
+      "id": "https://schema.chronicle.app/City",
       "comment": "A city or town.",
       "subclass_ids": [
 
-      ]
+      ],
+      "see_also": "https://schema.org/City"
     },
     {
-      "id": "https://schema.org/ConsumeAction",
+      "id": "https://schema.chronicle.app/ConsumeAction",
       "comment": "The act of ingesting information/resources/food.",
       "subclass_ids": [
-        "https://schema.org/ListenAction"
-      ]
+        "https://schema.chronicle.app/ListenAction"
+      ],
+      "see_also": "https://schema.org/ConsumeAction"
     },
     {
-      "id": "https://schema.org/Country",
+      "id": "https://schema.chronicle.app/Country",
       "comment": "A country.",
       "subclass_ids": [
 
-      ]
+      ],
+      "see_also": "https://schema.org/Country"
     },
     {
-      "id": "https://schema.org/CreativeWork",
+      "id": "https://schema.chronicle.app/CreativeWork",
       "comment": "The most generic kind of creative work, including books, movies, photographs, software programs, etc.",
       "subclass_ids": [
-        "https://schema.org/MusicPlaylist",
-        "https://schema.org/MusicRecording"
-      ]
+        "https://schema.chronicle.app/MusicPlaylist",
+        "https://schema.chronicle.app/MusicRecording"
+      ],
+      "see_also": "https://schema.org/CreativeWork"
     },
     {
-      "id": "https://schema.org/DataType",
+      "id": "https://schema.chronicle.app/DataType",
       "comment": "The basic data types such as Integers, Strings, etc.",
       "subclass_ids": [
-        "https://schema.org/Boolean",
-        "https://schema.org/Date",
-        "https://schema.org/DateTime",
-        "https://schema.org/Number",
-        "https://schema.org/Text"
-      ]
+        "https://schema.chronicle.app/Boolean",
+        "https://schema.chronicle.app/Date",
+        "https://schema.chronicle.app/DateTime",
+        "https://schema.chronicle.app/Number",
+        "https://schema.chronicle.app/Text"
+      ],
+      "see_also": "https://schema.org/DataType"
     },
     {
-      "id": "https://schema.org/Date",
+      "id": "https://schema.chronicle.app/Date",
       "comment": "A date value in [ISO 8601 date format](http://en.wikipedia.org/wiki/ISO_8601).",
       "subclass_ids": [
 
-      ]
+      ],
+      "see_also": "https://schema.org/Date"
     },
     {
-      "id": "https://schema.org/DateTime",
+      "id": "https://schema.chronicle.app/DateTime",
       "comment": "A combination of date and time of day in the form [-]CCYY-MM-DDThh:mm:ss[Z|(+|-)hh:mm] (see Chapter 5.4 of ISO 8601).",
       "subclass_ids": [
 
-      ]
+      ],
+      "see_also": "https://schema.org/DateTime"
     },
     {
-      "id": "https://schema.org/Event",
+      "id": "https://schema.chronicle.app/Event",
       "comment": "An event happening at a certain time and location, such as a concert, lecture, or festival. Ticketing information may be added via the [[offers]] property. Repeated events may be structured as separate Event objects.",
       "subclass_ids": [
 
-      ]
+      ],
+      "see_also": "https://schema.org/Event"
     },
     {
-      "id": "https://schema.org/Float",
+      "id": "https://schema.chronicle.app/Float",
       "comment": "Data type: Floating number.",
       "subclass_ids": [
 
-      ]
+      ],
+      "see_also": "https://schema.org/Float"
     },
     {
-      "id": "https://schema.org/InsertAction",
+      "id": "https://schema.chronicle.app/InsertAction",
       "comment": "The act of adding at a specific location in an ordered collection.",
       "subclass_ids": [
 
-      ]
+      ],
+      "see_also": "https://schema.org/InsertAction"
     },
     {
-      "id": "https://schema.org/Integer",
+      "id": "https://schema.chronicle.app/Integer",
       "comment": "Data type: Integer.",
       "subclass_ids": [
 
-      ]
+      ],
+      "see_also": "https://schema.org/Integer"
     },
     {
-      "id": "https://schema.org/ListenAction",
+      "id": "https://schema.chronicle.app/ListenAction",
       "comment": "The act of consuming audio content.",
       "subclass_ids": [
 
-      ]
+      ],
+      "see_also": "https://schema.org/ListenAction"
     },
     {
-      "id": "https://schema.org/MusicAlbum",
+      "id": "https://schema.chronicle.app/MusicAlbum",
       "comment": "A collection of music tracks.",
       "subclass_ids": [
 
-      ]
+      ],
+      "see_also": "https://schema.org/MusicAlbum"
     },
     {
-      "id": "https://schema.org/MusicGroup",
+      "id": "https://schema.chronicle.app/MusicGroup",
       "comment": "A musical group, such as a band, an orchestra, or a choir. Can also be a solo musician.",
       "subclass_ids": [
 
-      ]
+      ],
+      "see_also": "https://schema.org/MusicGroup"
     },
     {
-      "id": "https://schema.org/MusicPlaylist",
+      "id": "https://schema.chronicle.app/MusicPlaylist",
       "comment": "A collection of music tracks in playlist form.",
       "subclass_ids": [
-        "https://schema.org/MusicAlbum"
-      ]
+        "https://schema.chronicle.app/MusicAlbum"
+      ],
+      "see_also": "https://schema.org/MusicPlaylist"
     },
     {
-      "id": "https://schema.org/MusicRecording",
+      "id": "https://schema.chronicle.app/MusicRecording",
       "comment": "A music recording (track), usually a single song.",
       "subclass_ids": [
 
-      ]
+      ],
+      "see_also": "https://schema.org/MusicRecording"
     },
     {
-      "id": "https://schema.org/Number",
+      "id": "https://schema.chronicle.app/Number",
       "comment": "Data type: Number.\\n\\nUsage guidelines:\\n\\n* Use values from 0123456789 (Unicode 'DIGIT ZERO' (U+0030) to 'DIGIT NINE' (U+0039)) rather than superficially similar Unicode symbols.\\n* Use '.' (Unicode 'FULL STOP' (U+002E)) rather than ',' to indicate a decimal point. Avoid using these symbols as a readability separator.",
       "subclass_ids": [
-        "https://schema.org/Float",
-        "https://schema.org/Integer"
-      ]
+        "https://schema.chronicle.app/Float",
+        "https://schema.chronicle.app/Integer"
+      ],
+      "see_also": "https://schema.org/Number"
     },
     {
-      "id": "https://schema.org/Organization",
+      "id": "https://schema.chronicle.app/Organization",
       "comment": "An organization such as a school, NGO, corporation, club, etc.",
       "subclass_ids": [
-        "https://schema.org/PerformingGroup"
-      ]
+        "https://schema.chronicle.app/PerformingGroup"
+      ],
+      "see_also": "https://schema.org/Organization"
     },
     {
-      "id": "https://schema.org/PerformingGroup",
+      "id": "https://schema.chronicle.app/PerformingGroup",
       "comment": "A performance group, such as a band, an orchestra, or a circus.",
       "subclass_ids": [
-        "https://schema.org/MusicGroup"
-      ]
+        "https://schema.chronicle.app/MusicGroup"
+      ],
+      "see_also": "https://schema.org/PerformingGroup"
     },
     {
-      "id": "https://schema.org/Person",
+      "id": "https://schema.chronicle.app/Person",
       "comment": "A person (alive, dead, undead, or fictional).",
       "subclass_ids": [
 
-      ]
+      ],
+      "see_also": "https://schema.org/Person"
     },
     {
-      "id": "https://schema.org/Place",
+      "id": "https://schema.chronicle.app/Place",
       "comment": "Entities that have a somewhat fixed, physical extension.",
       "subclass_ids": [
-        "https://schema.org/AdministrativeArea"
-      ]
+        "https://schema.chronicle.app/AdministrativeArea"
+      ],
+      "see_also": "https://schema.org/Place"
     },
     {
-      "id": "https://schema.org/State",
+      "id": "https://schema.chronicle.app/State",
       "comment": "A state or province of a country.",
       "subclass_ids": [
 
-      ]
+      ],
+      "see_also": "https://schema.org/State"
     },
     {
-      "id": "https://schema.org/Text",
+      "id": "https://schema.chronicle.app/Text",
       "comment": "Data type: Text.",
       "subclass_ids": [
-        "https://schema.org/URL"
-      ]
+        "https://schema.chronicle.app/URL"
+      ],
+      "see_also": "https://schema.org/Text"
     },
     {
-      "id": "https://schema.org/Thing",
+      "id": "https://schema.chronicle.app/Thing",
       "comment": "The most generic type of item.",
       "subclass_ids": [
-        "https://schema.org/Action",
-        "https://schema.org/CreativeWork",
-        "https://schema.org/Event",
-        "https://schema.org/Organization",
-        "https://schema.org/Person",
-        "https://schema.org/Place"
-      ]
+        "https://schema.chronicle.app/Action",
+        "https://schema.chronicle.app/CreativeWork",
+        "https://schema.chronicle.app/Event",
+        "https://schema.chronicle.app/Organization",
+        "https://schema.chronicle.app/Person",
+        "https://schema.chronicle.app/Place"
+      ],
+      "see_also": "https://schema.org/Thing"
     },
     {
-      "id": "https://schema.org/URL",
+      "id": "https://schema.chronicle.app/URL",
       "comment": "Data type: URL.",
       "subclass_ids": [
 
-      ]
+      ],
+      "see_also": "https://schema.org/URL"
     },
     {
-      "id": "https://schema.org/UpdateAction",
+      "id": "https://schema.chronicle.app/UpdateAction",
       "comment": "The act of managing by changing/editing the state of the object.",
       "subclass_ids": [
-        "https://schema.org/AddAction"
-      ]
+        "https://schema.chronicle.app/AddAction"
+      ],
+      "see_also": "https://schema.org/UpdateAction"
     }
   ],
   "properties": [
     {
-      "id": "https://schema.org/about",
+      "id": "https://schema.chronicle.app/about",
       "comment": "The subject matter of the content.",
       "domain": [
-        "https://schema.org/CreativeWork"
+        "https://schema.chronicle.app/CreativeWork"
       ],
       "range": [
-        "https://schema.org/Thing"
+        "https://schema.chronicle.app/Thing"
       ],
       "many": true,
-      "required": false
+      "required": false,
+      "see_also": "https://schema.org/about"
     },
     {
-      "id": "https://schema.org/address",
+      "id": "https://schema.chronicle.app/address",
       "comment": "Physical address of the item.",
       "domain": [
-        "https://schema.org/Person"
+        "https://schema.chronicle.app/Person"
       ],
       "range": [
-        "https://schema.org/Text"
+        "https://schema.chronicle.app/Text"
       ],
       "many": false,
-      "required": false
+      "required": false,
+      "see_also": "https://schema.org/address"
     },
     {
-      "id": "https://schema.org/agent",
+      "id": "https://schema.chronicle.app/agent",
       "comment": "The direct performer or driver of the action (animate or inanimate). E.g. *John* wrote a book.",
       "domain": [
-        "https://schema.org/Action"
+        "https://schema.chronicle.app/Action"
       ],
       "range": [
-        "https://schema.org/Organization",
-        "https://schema.org/Person"
+        "https://schema.chronicle.app/Organization",
+        "https://schema.chronicle.app/Person"
       ],
       "many": false,
-      "required": true
+      "required": true,
+      "see_also": "https://schema.org/agent"
     },
     {
-      "id": "https://schema.org/album",
+      "id": "https://schema.chronicle.app/album",
       "comment": "A music album.",
       "domain": [
-        "https://schema.org/MusicGroup"
+        "https://schema.chronicle.app/MusicGroup"
       ],
       "range": [
-        "https://schema.org/MusicAlbum"
+        "https://schema.chronicle.app/MusicAlbum"
       ],
       "many": true,
-      "required": false
+      "required": false,
+      "see_also": "https://schema.org/album"
     },
     {
-      "id": "https://schema.org/alternateName",
+      "id": "https://schema.chronicle.app/alternateName",
       "comment": "An alias for the item.",
       "domain": [
-        "https://schema.org/Thing"
+        "https://schema.chronicle.app/Thing"
       ],
       "range": [
-        "https://schema.org/Text"
+        "https://schema.chronicle.app/Text"
       ],
       "many": false,
-      "required": false
+      "required": false,
+      "see_also": "https://schema.org/alternateName"
     },
     {
-      "id": "https://schema.org/byArtist",
+      "id": "https://schema.chronicle.app/byArtist",
       "comment": "The artist that performed this album or recording.",
       "domain": [
-        "https://schema.org/MusicAlbum",
-        "https://schema.org/MusicRecording"
+        "https://schema.chronicle.app/MusicAlbum",
+        "https://schema.chronicle.app/MusicRecording"
       ],
       "range": [
-        "https://schema.org/MusicGroup",
-        "https://schema.org/Person"
+        "https://schema.chronicle.app/MusicGroup",
+        "https://schema.chronicle.app/Person"
       ],
       "many": true,
-      "required": false
+      "required": false,
+      "see_also": "https://schema.org/byArtist"
     },
     {
-      "id": "https://schema.org/description",
+      "id": "https://schema.chronicle.app/description",
       "comment": "A description of the item.",
       "domain": [
-        "https://schema.org/Thing"
+        "https://schema.chronicle.app/Thing"
       ],
       "range": [
-        "https://schema.org/Text"
+        "https://schema.chronicle.app/Text"
       ],
       "many": false,
-      "required": false
+      "required": false,
+      "see_also": "https://schema.org/description"
     },
     {
-      "id": "https://schema.org/endDate",
+      "id": "https://schema.chronicle.app/endDate",
       "comment": "The end date and time of the item (in [ISO 8601 date format](http://en.wikipedia.org/wiki/ISO_8601)).",
       "domain": [
-        "https://schema.org/Event"
+        "https://schema.chronicle.app/Event"
       ],
       "range": [
-        "https://schema.org/Date",
-        "https://schema.org/DateTime"
+        "https://schema.chronicle.app/Date",
+        "https://schema.chronicle.app/DateTime"
       ],
       "many": false,
-      "required": false
+      "required": false,
+      "see_also": "https://schema.org/endDate"
     },
     {
-      "id": "https://schema.org/endTime",
+      "id": "https://schema.chronicle.app/endTime",
       "comment": "The endTime of something. For a reserved event or service (e.g. FoodEstablishmentReservation), the time that it is expected to end. For actions that span a period of time, when the action was performed. E.g. John wrote a book from January to *December*. For media, including audio and video, it's the time offset of the end of a clip within a larger file.\\n\\nNote that Event uses startDate/endDate instead of startTime/endTime, even when describing dates with times. This situation may be clarified in future revisions.",
       "domain": [
-        "https://schema.org/Action"
+        "https://schema.chronicle.app/Action"
       ],
       "range": [
-        "https://schema.org/DateTime"
+        "https://schema.chronicle.app/DateTime"
       ],
       "many": false,
-      "required": false
+      "required": false,
+      "see_also": "https://schema.org/endTime"
     },
     {
-      "id": "https://schema.org/identifier",
+      "id": "https://schema.chronicle.app/identifier",
       "comment": "The identifier property represents any kind of identifier for any kind of [[Thing]], such as ISBNs, GTIN codes, UUIDs etc. Schema.org provides dedicated properties for representing many of these, either as textual strings or as URL (URI) links. See [background notes](/docs/datamodel.html#identifierBg) for more details.\n        ",
       "domain": [
-        "https://schema.org/Thing"
+        "https://schema.chronicle.app/Thing"
       ],
       "range": [
-        "https://schema.org/Text",
-        "https://schema.org/URL"
+        "https://schema.chronicle.app/Text",
+        "https://schema.chronicle.app/URL"
       ],
       "many": false,
-      "required": false
+      "required": false,
+      "see_also": "https://schema.org/identifier"
     },
     {
-      "id": "https://schema.org/inAlbum",
+      "id": "https://schema.chronicle.app/inAlbum",
       "comment": "The album to which this recording belongs.",
       "domain": [
-        "https://schema.org/MusicRecording"
+        "https://schema.chronicle.app/MusicRecording"
       ],
       "range": [
-        "https://schema.org/MusicAlbum"
+        "https://schema.chronicle.app/MusicAlbum"
       ],
       "many": true,
-      "required": false
+      "required": false,
+      "see_also": "https://schema.org/inAlbum"
     },
     {
-      "id": "https://schema.org/instrument",
+      "id": "https://schema.chronicle.app/instrument",
       "comment": "The object that helped the agent perform the action. E.g. John wrote a book with *a pen*.",
       "domain": [
-        "https://schema.org/Action"
+        "https://schema.chronicle.app/Action"
       ],
       "range": [
-        "https://schema.org/Thing"
+        "https://schema.chronicle.app/Thing"
       ],
       "many": false,
-      "required": false
+      "required": false,
+      "see_also": "https://schema.org/instrument"
     },
     {
-      "id": "https://schema.org/location",
+      "id": "https://schema.chronicle.app/location",
       "comment": "The location of, for example, where an event is happening, where an organization is located, or where an action takes place.",
       "domain": [
-        "https://schema.org/Event",
-        "https://schema.org/Organization"
+        "https://schema.chronicle.app/Event",
+        "https://schema.chronicle.app/Organization"
       ],
       "range": [
-        "https://schema.org/Place",
-        "https://schema.org/Text"
+        "https://schema.chronicle.app/Place",
+        "https://schema.chronicle.app/Text"
       ],
       "many": true,
-      "required": false
+      "required": false,
+      "see_also": "https://schema.org/location"
     },
     {
-      "id": "https://schema.org/name",
+      "id": "https://schema.chronicle.app/name",
       "comment": "The name of the item.",
       "domain": [
-        "https://schema.org/Thing"
+        "https://schema.chronicle.app/Thing"
       ],
       "range": [
-        "https://schema.org/Text"
+        "https://schema.chronicle.app/Text"
       ],
       "many": false,
-      "required": false
+      "required": false,
+      "see_also": "https://schema.org/name"
     },
     {
-      "id": "https://schema.org/object",
+      "id": "https://schema.chronicle.app/object",
       "comment": "The object upon which the action is carried out, whose state is kept intact or changed. Also known as the semantic roles patient, affected or undergoer (which change their state) or theme (which doesn't). E.g. John read *a book*.",
       "domain": [
-        "https://schema.org/Action"
+        "https://schema.chronicle.app/Action"
       ],
       "range": [
-        "https://schema.org/Thing"
+        "https://schema.chronicle.app/Thing"
       ],
       "many": false,
-      "required": false
+      "required": false,
+      "see_also": "https://schema.org/object"
     },
     {
-      "id": "https://schema.org/result",
+      "id": "https://schema.chronicle.app/result",
       "comment": "The result produced in the action. E.g. John wrote *a book*.",
       "domain": [
-        "https://schema.org/Action"
+        "https://schema.chronicle.app/Action"
       ],
       "range": [
-        "https://schema.org/Thing"
+        "https://schema.chronicle.app/Thing"
       ],
       "many": false,
-      "required": false
+      "required": false,
+      "see_also": "https://schema.org/result"
     },
     {
-      "id": "https://schema.org/startDate",
+      "id": "https://schema.chronicle.app/startDate",
       "comment": "The start date and time of the item (in [ISO 8601 date format](http://en.wikipedia.org/wiki/ISO_8601)).",
       "domain": [
-        "https://schema.org/Event"
+        "https://schema.chronicle.app/Event"
       ],
       "range": [
-        "https://schema.org/Date",
-        "https://schema.org/DateTime"
+        "https://schema.chronicle.app/Date",
+        "https://schema.chronicle.app/DateTime"
       ],
       "many": false,
-      "required": false
+      "required": false,
+      "see_also": "https://schema.org/startDate"
     },
     {
-      "id": "https://schema.org/startTime",
+      "id": "https://schema.chronicle.app/startTime",
       "comment": "The startTime of something. For a reserved event or service (e.g. FoodEstablishmentReservation), the time that it is expected to start. For actions that span a period of time, when the action was performed. E.g. John wrote a book from *January* to December. For media, including audio and video, it's the time offset of the start of a clip within a larger file.\\n\\nNote that Event uses startDate/endDate instead of startTime/endTime, even when describing dates with times. This situation may be clarified in future revisions.",
       "domain": [
-        "https://schema.org/Action"
+        "https://schema.chronicle.app/Action"
       ],
       "range": [
-        "https://schema.org/DateTime"
+        "https://schema.chronicle.app/DateTime"
       ],
       "many": false,
-      "required": false
+      "required": false,
+      "see_also": "https://schema.org/startTime"
     },
     {
-      "id": "https://schema.org/subjectOf",
+      "id": "https://schema.chronicle.app/subjectOf",
       "comment": "A CreativeWork or Event about this Thing.",
       "domain": [
-        "https://schema.org/Thing"
+        "https://schema.chronicle.app/Thing"
       ],
       "range": [
-        "https://schema.org/CreativeWork",
-        "https://schema.org/Event"
+        "https://schema.chronicle.app/CreativeWork",
+        "https://schema.chronicle.app/Event"
       ],
       "many": true,
-      "required": false
+      "required": false,
+      "see_also": "https://schema.org/subjectOf"
     },
     {
-      "id": "https://schema.org/url",
+      "id": "https://schema.chronicle.app/url",
       "comment": "URL of the item.",
       "domain": [
-        "https://schema.org/Thing"
+        "https://schema.chronicle.app/Thing"
       ],
       "range": [
-        "https://schema.org/URL"
+        "https://schema.chronicle.app/URL"
       ],
       "many": false,
-      "required": false
+      "required": false,
+      "see_also": "https://schema.org/url"
     }
   ]
 }

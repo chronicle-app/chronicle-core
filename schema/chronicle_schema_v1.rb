@@ -3,12 +3,12 @@ set_base_graph 'schema.org', 'latest'
 
 pick_subclass :Thing do
   pick_subclass :Action do
-    pick_property :endTime
-    pick_property :startTime
-    pick_property :agent, required: true
-    pick_property :instrument
-    pick_property :object
-    pick_property :result
+    apply_property :endTime
+    apply_property :startTime
+    apply_property :agent, required: true
+    apply_property :instrument
+    apply_property :object
+    apply_property :result
 
     # pick_subclass :SearchAction
     pick_subclass :ConsumeAction do
@@ -23,34 +23,34 @@ pick_subclass :Thing do
   end
 
   pick_subclass :Event do
-    pick_property :location, many: true
-    pick_property :startDate
-    pick_property :endDate
+    apply_property :location, many: true
+    apply_property :startDate
+    apply_property :endDate
     # pick_all_subclasses
   end
 
   pick_subclass :CreativeWork do
     pick_subclass :MusicPlaylist do
       pick_subclass :MusicAlbum do
-        pick_property :byArtist, many: true
+        apply_property :byArtist, many: true
       end
     end
     pick_subclass :MusicRecording do
-      pick_property :inAlbum, many: true
-      pick_property :byArtist, many: true
+      apply_property :inAlbum, many: true
+      apply_property :byArtist, many: true
     end
 
-    pick_property :about, many: true
+    apply_property :about, many: true
   end
 
   pick_subclass :Person do
-    pick_property :address
+    apply_property :address
   end
   pick_subclass :Organization do
-    pick_property :location, many: true
+    apply_property :location, many: true
     pick_subclass :PerformingGroup do
       pick_subclass :MusicGroup do
-        pick_property :album, many: true
+        apply_property :album, many: true
       end
     end
   end
@@ -61,12 +61,12 @@ pick_subclass :Thing do
     end
   end
 
-  pick_property :alternateName
-  pick_property :description
-  pick_property :identifier
-  pick_property :name
-  pick_property :subjectOf, many: true
-  pick_property :url
+  apply_property :alternateName
+  apply_property :description
+  apply_property :identifier
+  apply_property :name
+  apply_property :subjectOf, many: true
+  apply_property :url
 end
 
 pick_subclass :DataType do

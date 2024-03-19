@@ -9,7 +9,8 @@ module Chronicle::Schema
       :comment,
       :namespace,
       :subclasses,
-      :superclasses
+      :superclasses,
+      :see_also
 
     def initialize(id)
       @id = id
@@ -39,11 +40,17 @@ module Chronicle::Schema
       id.gsub(@namespace, '')
     end
 
+    # FIXME
+    def identifier
+      short_id.to_sym
+    end
+
     def to_h
       {
         id:,
         comment:,
-        subclass_ids:
+        subclass_ids:,
+        see_also: @see_also
       }
     end
 

@@ -5,13 +5,15 @@ module Chronicle::Schema::RDFParsing
   module Schemaorg
     @memoized_graphs = {}
 
+    DEFAULT_NAMESPACE = 'https://schema.org/'.freeze
+
     def self.graph_for_version(version)
       @memoized_graphs[version] ||= build_graph(version)
     end
 
     def self.build_graph(version)
       ttl = ttl_for_version(version)
-      Chronicle::Schema::RDFParsing::TTLGraphBuilder.build_from_ttl(ttl)
+      Chronicle::Schema::RDFParsing::TTLGraphBuilder.build_from_ttl(ttl, default_namespace: DEFAULT_NAMESPACE)
     end
 
     def self.ttl_for_version(version)
@@ -29,7 +31,7 @@ module Chronicle::Schema::RDFParsing
 
     def self.seed_graph_from_file(version, file_path)
       ttl = File.read(file_path)
-      graph = Chronicle::Schema::RDFParsing::TTLGraphBuilder.build_from_ttl(ttl)
+      graph = Chronicle::Schema::RDFParsing::TTLGraphBuilder.build_from_ttl(ttl, default_namespace: DEFAULT_NAMESPACE)
       @memoized_graphs[version] = graph
     end
 

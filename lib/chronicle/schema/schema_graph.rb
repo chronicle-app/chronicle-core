@@ -6,11 +6,10 @@ module Chronicle::Schema
   class SchemaGraph
     include TSort
 
-    attr_accessor :classes, :properties, :datatypes, :version
+    attr_accessor :classes, :properties, :datatypes, :version, :default_namespace
 
-    def initialize
-      # FIXME: This should be a configuration option
-      @default_prefix = 'https://schema.org/'
+    def initialize(default_namespace: 'https://schema.chronicle.app/')
+      @default_namespace = default_namespace
       @classes = []
       @properties = []
       @datatypes = []
@@ -21,7 +20,7 @@ module Chronicle::Schema
       graph.version = json['version']
       json['classes'].each do |class_data|
         id = graph.id_to_identifier(class_data['id'])
-        graph.add_class(id).tap do |klass|
+        graph.add_type(id).tap do |klass|
           klass.comment = class_data['comment']
           klass.subclass_ids = class_data['subclass_ids']
         end
@@ -62,30 +61,30 @@ module Chronicle::Schema
 
     def build_references!
       @classes.each do |klass|
-        klass.subclasses = klass.subclass_ids.map { |id| find_class_by_id(id) }
+        klass.subclasses = klass.subclass_ids.map { |id| find_type_by_id(id) }
         klass.superclasses = @classes.select { |c| c.subclass_ids.include?(klass.id) }
       end
 
       @properties.each do |property|
         property.domain.each do |class_id|
-          klass = find_class_by_id(class_id)
+          klass = find_type_by_id(class_id)
           klass.properties << property if klass
         end
 
         # prune unknown range values from property
         property.range = property.range.select do |range|
-          find_class_by_id(range)
+          find_type_by_id(range)
         end
 
-        property.range_types = property.range.map { |id| find_class_by_id(id) }
+        property.range_types = property.range.map { |id| find_type_by_id(id) }
       end
     end
 
-    def find_class_by_id(id)
+    def find_type_by_id(id)
       @classes.find { |c| c.id == id }
     end
 
-    def find_class(identifier)
+    def find_type(identifier)
       @classes.find { |c| c.id == identifier_to_uri(identifier) }
     end
 
@@ -93,8 +92,12 @@ module Chronicle::Schema
       @properties.find { |p| p.id == identifier_to_uri(identifier) }
     end
 
-    def add_class(identifier)
-      find_class(identifier) || add_new_type(identifier)
+    def find_property_by_id(id)
+      @properties.find { |p| p.id == id }
+    end
+
+    def add_type(identifier)
+      find_type(identifier) || add_new_type(identifier)
     end
 
     def add_property(identifier)
@@ -102,18 +105,18 @@ module Chronicle::Schema
     end
 
     def id_to_identifier(id)
-      id.gsub(@default_prefix, '')
+      id.gsub(@default_namespace, '')
     end
 
     def identifier_to_uri(identifier)
-      "#{@default_prefix}#{identifier}"
+      "#{@default_namespace}#{identifier}"
     end
 
     private
 
     def add_new_type(identifier)
       new_type = SchemaType.new(identifier_to_uri(identifier)) do |t|
-        t.namespace = @default_prefix
+        t.namespace = @default_namespace
       end
 
       @classes << new_type unless @classes.include?(new_type)

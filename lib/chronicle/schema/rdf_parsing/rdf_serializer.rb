@@ -2,7 +2,7 @@ require 'rdf/turtle'
 
 module Chronicle::Schema::RDFParsing
   PREFIXES = {
-    '': 'https://schema.org/',
+    schemaorg: 'https://schema.org/',
     owl: 'http://www.w3.org/2002/07/owl#',
     dc: 'http://purl.org/dc/terms/',
     rdf: 'http://www.w3.org/1999/02/22-rdf-syntax-ns#',
@@ -38,15 +38,23 @@ module Chronicle::Schema::RDFParsing
         end
       end
 
+      def default_namespace
+        @graph.default_namespace
+      end
+
       graph.properties.each do |property|
         serialize_property(property).each do |triple|
           schema_graph << triple
         end
       end
 
+      prefixes = {
+        '': default_namespace
+      }.merge(PREFIXES)
+
       output_str = ''
       output_str += generation_header if include_generator_comment
-      output_str + schema_graph.dump(:ttl, prefixes: PREFIXES)
+      output_str + schema_graph.dump(:ttl, prefixes:)
     end
 
     private
@@ -79,6 +87,10 @@ module Chronicle::Schema::RDFParsing
         statements << RDF::Statement(RDF::URI.new(subclass_id), RDF::RDFS.subClassOf, RDF::URI.new(klass.id))
       end
 
+      if klass.see_also
+        statements << RDF::Statement(RDF::URI.new(klass.id), RDF::RDFS.seeAlso, RDF::URI.new(klass.see_also))
+      end
+
       statements
     end
 
@@ -88,16 +100,20 @@ module Chronicle::Schema::RDFParsing
       statements << RDF::Statement(RDF::URI.new(property.id), RDF.type, RDF::RDFV.Property)
 
       property.range.each do |range|
-        statements << RDF::Statement(RDF::URI.new(property.id), RDF::URI.new('https://schema.org/rangeIncludes'),
+        statements << RDF::Statement(RDF::URI.new(property.id), RDF::URI.new("#{@graph.default_namespace}rangeIncludes"),
           RDF::URI.new(range))
       end
 
       property.domain.each do |domain|
-        statements << RDF::Statement(RDF::URI.new(property.id), RDF::URI.new('https://schema.org/domainIncludes'),
+        statements << RDF::Statement(RDF::URI.new(property.id), RDF::URI.new("#{@graph.default_namespace}domainIncludes"),
           RDF::URI.new(domain))
       end
 
       statements << RDF::Statement(RDF::URI.new(property.id), RDF::RDFS.comment, property.comment) if property.comment
+
+      if property.see_also
+        statements << RDF::Statement(RDF::URI.new(property.id), RDF::RDFS.seeAlso, RDF::URI.new(property.see_also))
+      end
 
       if property.required?
         statements << RDF::Statement(RDF::URI.new(property.id), RDF::OWL.minCardinality,
