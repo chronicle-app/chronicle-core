@@ -98,6 +98,16 @@ module Chronicle::Schema::RDFParsing
       new_property.see_also = property.id
     end
 
+    def add_property(property_identifier, many: false, required: false, comment: nil)
+      new_property = @new_graph.add_property(property_identifier)
+      new_property.domain += [@current_parent.id]
+      # TODO: expand this to handle multiple ranges
+      new_property.range = [@new_graph.identifier_to_uri(:Text)]
+      new_property.comment = comment
+      new_property.many = many
+      new_property.required = required
+    end
+
     def pick_all_properties
       @base_graph.find_type_by_id(@current_parent.id).properties.each do |property|
         identifier = @base_graph.id_to_identifier(property.id)

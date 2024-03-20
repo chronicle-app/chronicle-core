@@ -32,15 +32,16 @@ module Chronicle::Schema
     end
 
     def to_h
-      {
+      output = {
         id:,
-        comment:,
         domain:,
         range:,
         many: @many,
-        required: @required,
-        see_also: @see_also
+        required: @required
       }
+      output[:comment] = @comment if @comment
+      output[:see_also] = @see_also if @see_also
+      output
     end
 
     def ==(other)

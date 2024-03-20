@@ -18,11 +18,11 @@ module Chronicle::Schema
     def self.build_from_json(json)
       graph = new
       graph.version = json['version']
-      json['classes'].each do |class_data|
-        id = graph.id_to_identifier(class_data['id'])
+      json['types'].each do |type_data|
+        id = graph.id_to_identifier(type_data['id'])
         graph.add_type(id).tap do |klass|
-          klass.comment = class_data['comment']
-          klass.subclass_ids = class_data['subclass_ids']
+          klass.comment = type_data['comment']
+          klass.subclass_ids = type_data['subclass_ids']
         end
       end
       json['properties'].each do |property_data|
@@ -54,7 +54,7 @@ module Chronicle::Schema
     def to_h
       {
         version: @version,
-        classes: classes.map(&:to_h),
+        types: classes.map(&:to_h),
         properties: properties.map(&:to_h)
       }
     end

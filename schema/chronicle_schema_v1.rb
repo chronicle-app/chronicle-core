@@ -1,4 +1,4 @@
-version 1.2
+version 1
 set_base_graph 'schema.org', 'latest'
 
 pick_subclass :Thing do
@@ -67,6 +67,11 @@ pick_subclass :Thing do
   apply_property :name
   apply_property :subjectOf, many: true
   apply_property :url
+
+  # TODO: Make these subproperties of identifier, alternateName
+  add_property :source
+  add_property :slug
+  add_property :sourceId
 end
 
 pick_subclass :DataType do

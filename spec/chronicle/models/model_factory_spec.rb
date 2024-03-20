@@ -57,6 +57,7 @@ RSpec.describe Chronicle::Models::ModelFactory do
         end
       end
     end
+
     context 'with a subclass' do
       let(:person_class) do
         klass = sample_schema_graph.find_type(:Person)
