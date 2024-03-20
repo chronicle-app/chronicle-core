@@ -31,7 +31,7 @@ module Chronicle::Schema::RDFParsing
       schema_graph << ontology_triple
       schema_graph << version_triple
 
-      graph.classes.each do |klass|
+      graph.types.each do |klass|
         serialize_class(klass).each do |triple|
           # binding.pry
           schema_graph << triple
@@ -83,8 +83,8 @@ module Chronicle::Schema::RDFParsing
       statements << RDF::Statement(RDF::URI.new(klass.id), RDF.type, RDF::RDFS.Class)
       statements << RDF::Statement(RDF::URI.new(klass.id), RDF::RDFS.comment, klass.comment) if klass.comment
 
-      klass.subclass_ids.each do |subclass_id|
-        statements << RDF::Statement(RDF::URI.new(subclass_id), RDF::RDFS.subClassOf, RDF::URI.new(klass.id))
+      klass.subtype_ids.each do |subtype_id|
+        statements << RDF::Statement(RDF::URI.new(subtype_id), RDF::RDFS.subClassOf, RDF::URI.new(klass.id))
       end
 
       if klass.see_also

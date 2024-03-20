@@ -9,7 +9,7 @@ module Chronicle::Serialization
         end
       end
       {
-        '@type': @record.class.name.split('::').last
+        '@type': @record.type_id.to_s
       }.merge(properties)
     end
 

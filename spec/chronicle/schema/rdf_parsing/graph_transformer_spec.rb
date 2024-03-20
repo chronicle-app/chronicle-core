@@ -13,9 +13,9 @@ RSpec.describe Chronicle::Schema::RDFParsing::GraphTransformer do
       version '2'
       set_base_graph 'schema.org', 'latest'
 
-      pick_subclass :Thing do
+      pick_type :Thing do
         apply_property :name
-        pick_subclass :Person do
+        pick_type :Person do
         end
       end
     DSL

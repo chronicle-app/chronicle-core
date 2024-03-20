@@ -7,7 +7,7 @@ module Chronicle::Serialization
     def initialize(record, options = {})
       unless record.is_a?(Chronicle::Models::Base)
         raise(SerializationError,
-          "Record must be a subclass of Chronicle::Models::Base. It is a: #{record.class}")
+          "Record must be a subtype of Chronicle::Models::Base. It is a: #{record.class}")
       end
 
       @record = record

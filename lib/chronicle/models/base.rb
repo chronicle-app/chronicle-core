@@ -43,6 +43,11 @@ module Chronicle::Models
       output
     end
 
+    def type_id
+      self.class.type_id
+    end
+
+    # TODO: exclude dedupe_on from serialization
     def to_h_flattened
       require 'chronicle/utils/hash_utils'
       Chronicle::Utils::HashUtils.flatten_hash(to_h)
@@ -62,7 +67,7 @@ module Chronicle::Models
 
   def self.schema_type(types)
     Chronicle::Schema::Types::Instance(Chronicle::Models::Base).constructor do |input|
-      unless input.class.type_id && [types].flatten.include?(input.class.type_id)
+      unless input.type_id && [types].flatten.include?(input.type_id)
         raise Dry::Types::ConstraintError.new(:type?, input)
       end
 

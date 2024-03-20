@@ -19,7 +19,7 @@ module Chronicle::Schema::RDFParsing
       @ttl_graph = RDF::Graph.new << reader
 
       @graph.version = get_version
-      @graph.classes = build_class_graph
+      @graph.types = build_type_graph
       @graph.properties = build_property_graph
       # build_datatype_graph
       @graph.build_references!
@@ -41,21 +41,21 @@ module Chronicle::Schema::RDFParsing
       @ttl_graph.query([nil, RDF::OWL.versionInfo, nil]).map(&:object).map(&:to_s).first
     end
 
-    def build_class_graph
-      classes = all_classes.map do |class_id|
-        comment = comment_of_class(class_id)
-        Chronicle::Schema::SchemaType.new(class_id) do |t|
+    def build_type_graph
+      types = all_types.map do |type_id|
+        comment = comment_of_class(type_id)
+        Chronicle::Schema::SchemaType.new(type_id) do |t|
           t.comment = comment
           t.namespace = @default_namespace
-          t.see_also = see_also(class_id)
+          t.see_also = see_also(type_id)
         end
       end
 
-      classes.each do |schema_type|
-        schema_type.subclass_ids = subclasses_of_class(schema_type.id)
+      types.each do |schema_type|
+        schema_type.subtype_ids = subtypes_of_class(schema_type.id)
       end
 
-      classes
+      types
     end
 
     def build_property_graph
@@ -72,7 +72,7 @@ module Chronicle::Schema::RDFParsing
       end
     end
 
-    def all_classes
+    def all_types
       @ttl_graph.query([nil, RDF.type, RDF::RDFS.Class])
         .map(&:subject)
         .map(&:to_s)
@@ -86,16 +86,16 @@ module Chronicle::Schema::RDFParsing
 
     def all_datatypes; end
 
-    def subclasses_of_class(class_id)
-      @ttl_graph.query([nil, RDF::RDFS.subClassOf, RDF::URI.new(class_id)]).map(&:subject).map(&:to_s)
+    def subtypes_of_class(type_id)
+      @ttl_graph.query([nil, RDF::RDFS.subClassOf, RDF::URI.new(type_id)]).map(&:subject).map(&:to_s)
     end
 
-    def parents_of_class(class_id)
-      @ttl_graph.query([RDF::URI.new(class_id), RDF::RDFS.subClassOf, nil]).map(&:object).map(&:to_s)
+    def parents_of_class(type_id)
+      @ttl_graph.query([RDF::URI.new(type_id), RDF::RDFS.subClassOf, nil]).map(&:object).map(&:to_s)
     end
 
-    def comment_of_class(class_id)
-      @ttl_graph.query([RDF::URI.new(class_id), RDF::RDFS.comment, nil]).map(&:object).map(&:to_s).first
+    def comment_of_class(type_id)
+      @ttl_graph.query([RDF::URI.new(type_id), RDF::RDFS.comment, nil]).map(&:object).map(&:to_s).first
     end
 
     def comment_of_property(property_id)

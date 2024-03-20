@@ -38,19 +38,19 @@ module Chronicle::Models
         end
 
         start_time = Time.now
-        graph.classes.each do |klass|
-          class_id = graph.id_to_identifier(klass.id)
+        graph.types.each do |klass|
+          type_id = graph.id_to_identifier(klass.id)
 
           new_model_klass = Chronicle::Models::ModelFactory.new(
-            type_id: class_id.to_sym,
+            type_id: type_id.to_sym,
             properties: klass.all_properties
           ).generate
 
-          const_set(class_id, new_model_klass)
+          const_set(type_id, new_model_klass)
         end
         end_time = Time.now
         duration_ms = (end_time - start_time) * 1000
-        handle_benchmark_data(classes.length, duration_ms) if Chronicle::Models::Generation.benchmark_enabled
+        handle_benchmark_data(graph.types.length, duration_ms) if Chronicle::Models::Generation.benchmark_enabled
 
         Chronicle::Models::Generation.models_generated = true
       end

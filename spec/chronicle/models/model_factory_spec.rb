@@ -58,7 +58,7 @@ RSpec.describe Chronicle::Models::ModelFactory do
       end
     end
 
-    context 'with a subclass' do
+    context 'with a subtype' do
       let(:person_class) do
         klass = sample_schema_graph.find_type(:Person)
         described_class.new(

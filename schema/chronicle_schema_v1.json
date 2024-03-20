@@ -3,7 +3,7 @@
   "types": [
     {
       "id": "https://schema.chronicle.app/Action",
-      "subclass_ids": [
+      "subtype_ids": [
         "https://schema.chronicle.app/ConsumeAction",
         "https://schema.chronicle.app/UpdateAction"
       ],
@@ -12,7 +12,7 @@
     },
     {
       "id": "https://schema.chronicle.app/AddAction",
-      "subclass_ids": [
+      "subtype_ids": [
         "https://schema.chronicle.app/InsertAction"
       ],
       "see_also": "https://schema.org/AddAction",
@@ -20,7 +20,7 @@
     },
     {
       "id": "https://schema.chronicle.app/AdministrativeArea",
-      "subclass_ids": [
+      "subtype_ids": [
         "https://schema.chronicle.app/City",
         "https://schema.chronicle.app/Country",
         "https://schema.chronicle.app/State"
@@ -30,7 +30,7 @@
     },
     {
       "id": "https://schema.chronicle.app/Boolean",
-      "subclass_ids": [
+      "subtype_ids": [
 
       ],
       "see_also": "https://schema.org/Boolean",
@@ -38,7 +38,7 @@
     },
     {
       "id": "https://schema.chronicle.app/City",
-      "subclass_ids": [
+      "subtype_ids": [
 
       ],
       "see_also": "https://schema.org/City",
@@ -46,7 +46,7 @@
     },
     {
       "id": "https://schema.chronicle.app/ConsumeAction",
-      "subclass_ids": [
+      "subtype_ids": [
         "https://schema.chronicle.app/ListenAction"
       ],
       "see_also": "https://schema.org/ConsumeAction",
@@ -54,7 +54,7 @@
     },
     {
       "id": "https://schema.chronicle.app/Country",
-      "subclass_ids": [
+      "subtype_ids": [
 
       ],
       "see_also": "https://schema.org/Country",
@@ -62,7 +62,7 @@
     },
     {
       "id": "https://schema.chronicle.app/CreativeWork",
-      "subclass_ids": [
+      "subtype_ids": [
         "https://schema.chronicle.app/MusicPlaylist",
         "https://schema.chronicle.app/MusicRecording"
       ],
@@ -71,7 +71,7 @@
     },
     {
       "id": "https://schema.chronicle.app/DataType",
-      "subclass_ids": [
+      "subtype_ids": [
         "https://schema.chronicle.app/Boolean",
         "https://schema.chronicle.app/Date",
         "https://schema.chronicle.app/DateTime",
@@ -83,7 +83,7 @@
     },
     {
       "id": "https://schema.chronicle.app/Date",
-      "subclass_ids": [
+      "subtype_ids": [
 
       ],
       "see_also": "https://schema.org/Date",
@@ -91,7 +91,7 @@
     },
     {
       "id": "https://schema.chronicle.app/DateTime",
-      "subclass_ids": [
+      "subtype_ids": [
 
       ],
       "see_also": "https://schema.org/DateTime",
@@ -99,7 +99,7 @@
     },
     {
       "id": "https://schema.chronicle.app/Event",
-      "subclass_ids": [
+      "subtype_ids": [
 
       ],
       "see_also": "https://schema.org/Event",
@@ -107,7 +107,7 @@
     },
     {
       "id": "https://schema.chronicle.app/Float",
-      "subclass_ids": [
+      "subtype_ids": [
 
       ],
       "see_also": "https://schema.org/Float",
@@ -115,7 +115,7 @@
     },
     {
       "id": "https://schema.chronicle.app/InsertAction",
-      "subclass_ids": [
+      "subtype_ids": [
 
       ],
       "see_also": "https://schema.org/InsertAction",
@@ -123,7 +123,7 @@
     },
     {
       "id": "https://schema.chronicle.app/Integer",
-      "subclass_ids": [
+      "subtype_ids": [
 
       ],
       "see_also": "https://schema.org/Integer",
@@ -131,7 +131,7 @@
     },
     {
       "id": "https://schema.chronicle.app/ListenAction",
-      "subclass_ids": [
+      "subtype_ids": [
 
       ],
       "see_also": "https://schema.org/ListenAction",
@@ -139,7 +139,7 @@
     },
     {
       "id": "https://schema.chronicle.app/MusicAlbum",
-      "subclass_ids": [
+      "subtype_ids": [
 
       ],
       "see_also": "https://schema.org/MusicAlbum",
@@ -147,7 +147,7 @@
     },
     {
       "id": "https://schema.chronicle.app/MusicGroup",
-      "subclass_ids": [
+      "subtype_ids": [
 
       ],
       "see_also": "https://schema.org/MusicGroup",
@@ -155,7 +155,7 @@
     },
     {
       "id": "https://schema.chronicle.app/MusicPlaylist",
-      "subclass_ids": [
+      "subtype_ids": [
         "https://schema.chronicle.app/MusicAlbum"
       ],
       "see_also": "https://schema.org/MusicPlaylist",
@@ -163,7 +163,7 @@
     },
     {
       "id": "https://schema.chronicle.app/MusicRecording",
-      "subclass_ids": [
+      "subtype_ids": [
 
       ],
       "see_also": "https://schema.org/MusicRecording",
@@ -171,7 +171,7 @@
     },
     {
       "id": "https://schema.chronicle.app/Number",
-      "subclass_ids": [
+      "subtype_ids": [
         "https://schema.chronicle.app/Float",
         "https://schema.chronicle.app/Integer"
       ],
@@ -180,7 +180,7 @@
     },
     {
       "id": "https://schema.chronicle.app/Organization",
-      "subclass_ids": [
+      "subtype_ids": [
         "https://schema.chronicle.app/PerformingGroup"
       ],
       "see_also": "https://schema.org/Organization",
@@ -188,7 +188,7 @@
     },
     {
       "id": "https://schema.chronicle.app/PerformingGroup",
-      "subclass_ids": [
+      "subtype_ids": [
         "https://schema.chronicle.app/MusicGroup"
       ],
       "see_also": "https://schema.org/PerformingGroup",
@@ -196,7 +196,7 @@
     },
     {
       "id": "https://schema.chronicle.app/Person",
-      "subclass_ids": [
+      "subtype_ids": [
 
       ],
       "see_also": "https://schema.org/Person",
@@ -204,7 +204,7 @@
     },
     {
       "id": "https://schema.chronicle.app/Place",
-      "subclass_ids": [
+      "subtype_ids": [
         "https://schema.chronicle.app/AdministrativeArea"
       ],
       "see_also": "https://schema.org/Place",
@@ -212,7 +212,7 @@
     },
     {
       "id": "https://schema.chronicle.app/State",
-      "subclass_ids": [
+      "subtype_ids": [
 
       ],
       "see_also": "https://schema.org/State",
@@ -220,7 +220,7 @@
     },
     {
       "id": "https://schema.chronicle.app/Text",
-      "subclass_ids": [
+      "subtype_ids": [
         "https://schema.chronicle.app/URL"
       ],
       "see_also": "https://schema.org/Text",
@@ -228,7 +228,7 @@
     },
     {
       "id": "https://schema.chronicle.app/Thing",
-      "subclass_ids": [
+      "subtype_ids": [
         "https://schema.chronicle.app/Action",
         "https://schema.chronicle.app/CreativeWork",
         "https://schema.chronicle.app/Event",
@@ -241,7 +241,7 @@
     },
     {
       "id": "https://schema.chronicle.app/URL",
-      "subclass_ids": [
+      "subtype_ids": [
 
       ],
       "see_also": "https://schema.org/URL",
@@ -249,7 +249,7 @@
     },
     {
       "id": "https://schema.chronicle.app/UpdateAction",
-      "subclass_ids": [
+      "subtype_ids": [
         "https://schema.chronicle.app/AddAction"
       ],
       "see_also": "https://schema.org/UpdateAction",

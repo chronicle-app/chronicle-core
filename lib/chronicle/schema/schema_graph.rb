@@ -1,16 +1,16 @@
 require 'tsort'
 
 module Chronicle::Schema
-  # Represents a RDF graph as a DAG of classes and their properties, built
+  # Represents a RDF graph as a DAG of types and their properties, built
   # from a TTL string
   class SchemaGraph
     include TSort
 
-    attr_accessor :classes, :properties, :datatypes, :version, :default_namespace
+    attr_accessor :types, :properties, :datatypes, :version, :default_namespace
 
     def initialize(default_namespace: 'https://schema.chronicle.app/')
       @default_namespace = default_namespace
-      @classes = []
+      @types = []
       @properties = []
       @datatypes = []
     end
@@ -22,7 +22,7 @@ module Chronicle::Schema
         id = graph.id_to_identifier(type_data['id'])
         graph.add_type(id).tap do |klass|
           klass.comment = type_data['comment']
-          klass.subclass_ids = type_data['subclass_ids']
+          klass.subtype_ids = type_data['subtype_ids']
         end
       end
       json['properties'].each do |property_data|
@@ -43,7 +43,7 @@ module Chronicle::Schema
       pp.text('SchemaGraph')
       pp.nest(2) do
         pp.breakable
-        pp.text("Num classes: #{classes.size}")
+        pp.text("Num types: #{types.size}")
       end
     end
 
@@ -54,20 +54,20 @@ module Chronicle::Schema
     def to_h
       {
         version: @version,
-        types: classes.map(&:to_h),
+        types: types.map(&:to_h),
         properties: properties.map(&:to_h)
       }
     end
 
     def build_references!
-      @classes.each do |klass|
-        klass.subclasses = klass.subclass_ids.map { |id| find_type_by_id(id) }
-        klass.superclasses = @classes.select { |c| c.subclass_ids.include?(klass.id) }
+      @types.each do |klass|
+        klass.subtypes = klass.subtype_ids.map { |id| find_type_by_id(id) }
+        klass.supertypes = @types.select { |c| c.subtype_ids.include?(klass.id) }
       end
 
       @properties.each do |property|
-        property.domain.each do |class_id|
-          klass = find_type_by_id(class_id)
+        property.domain.each do |type_id|
+          klass = find_type_by_id(type_id)
           klass.properties << property if klass
         end
 
@@ -81,11 +81,11 @@ module Chronicle::Schema
     end
 
     def find_type_by_id(id)
-      @classes.find { |c| c.id == id }
+      @types.find { |c| c.id == id }
     end
 
     def find_type(identifier)
-      @classes.find { |c| c.id == identifier_to_uri(identifier) }
+      @types.find { |c| c.id == identifier_to_uri(identifier) }
     end
 
     def find_property(identifier)
@@ -119,7 +119,7 @@ module Chronicle::Schema
         t.namespace = @default_namespace
       end
 
-      @classes << new_type unless @classes.include?(new_type)
+      @types << new_type unless @types.include?(new_type)
       new_type
     end
 
@@ -130,14 +130,14 @@ module Chronicle::Schema
     end
 
     def tsort_each_node(&block)
-      @classes.each do |node|
+      @types.each do |node|
         block.call(node)
       end
     end
 
     def tsort_each_child(node, &)
       puts "tsort_each_child called with node: #{node&.id}"
-      node&.subclasses&.each(&)
+      node&.subtypes&.each(&)
     end
   end
 end

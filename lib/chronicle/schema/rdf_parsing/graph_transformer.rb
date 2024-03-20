@@ -17,8 +17,8 @@ module Chronicle::Schema::RDFParsing
 
       # TODO: figure out if we need to this still
       transformer.new_graph.properties.each do |property|
-        property.domain = property.domain.select do |class_id|
-          transformer.new_graph.find_type_by_id(class_id)
+        property.domain = property.domain.select do |type_id|
+          transformer.new_graph.find_type_by_id(type_id)
         end
       end
 
@@ -56,29 +56,29 @@ module Chronicle::Schema::RDFParsing
       end
     end
 
-    def pick_subclass(subclass_identifier, &)
-      id = @base_graph.identifier_to_uri(subclass_identifier)
-      subclass = @base_graph.find_type_by_id(id)
-      raise ArgumentError, "Subclass not found: #{subclass_identifier}" unless subclass
+    def pick_type(subtype_identifier, &)
+      id = @base_graph.identifier_to_uri(subtype_identifier)
+      type = @base_graph.find_type_by_id(id)
+      raise ArgumentError, "Subtype not found: #{subtype_identifier}" unless type
 
-      new_subclass = @new_graph.add_type(subclass_identifier)
-      new_subclass.comment = subclass.comment
-      new_subclass.see_also = subclass.id
+      new_subtype = @new_graph.add_type(subtype_identifier)
+      new_subtype.comment = type.comment
+      new_subtype.see_also = type.id
 
-      @current_parent&.add_subclass_id(new_subclass.id)
+      @current_parent&.add_subtype_id(new_subtype.id)
 
       previous_parent = @current_parent
-      @current_parent = new_subclass
+      @current_parent = new_subtype
 
       instance_eval(&) if block_given?
 
       @current_parent = previous_parent
     end
 
-    def pick_all_subclasses(&)
-      @base_graph.find_type(@current_parent.short_id.to_sym).subclass_ids.each do |subclass_id|
-        identifier = @base_graph.id_to_identifier(subclass_id)
-        pick_subclass(identifier, &)
+    def pick_all_subtypes(&)
+      @base_graph.find_type(@current_parent.short_id.to_sym).subtype_ids.each do |subtype_id|
+        identifier = @base_graph.id_to_identifier(subtype_id)
+        pick_type(identifier, &)
       end
     end
 

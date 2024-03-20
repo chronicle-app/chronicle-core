@@ -17,18 +17,18 @@ module Chronicle::Schema::Validation
       messages
     end
 
-    def self.create(class_id:, properties: [])
+    def self.create(type_id:, properties: [])
       Class.new(Chronicle::Schema::Validation::BaseContract) do
-        type class_id
+        type type_id
 
-        params(Chronicle::Schema::Validation::ContractFactory.create_schema(class_id:, properties:))
+        params(Chronicle::Schema::Validation::ContractFactory.create_schema(type_id:, properties:))
 
         properties.each do |property|
           edge_name = property.id_snakecase
 
           if property.many?
             rule(edge_name).each do |index:|
-              errors = edge_validator.validate(class_id, edge_name, value)
+              errors = edge_validator.validate(type_id, edge_name, value)
 
               error_path = [edge_name, index]
               messages = Chronicle::Schema::Validation::ContractFactory.process_errors(errors)
@@ -41,7 +41,7 @@ module Chronicle::Schema::Validation
               # handle nils. FIXME: this is a hack
               next unless value
 
-              errors = edge_validator.validate(class_id, edge_name, value)
+              errors = edge_validator.validate(type_id, edge_name, value)
               error_path = [edge_name]
               messages = Chronicle::Schema::Validation::ContractFactory.process_errors(errors)
               messages.each do |path, message|
@@ -53,9 +53,9 @@ module Chronicle::Schema::Validation
       end
     end
 
-    def self.create_schema(class_id:, properties: [])
+    def self.create_schema(type_id:, properties: [])
       Dry::Schema.JSON do
-        required(:@type).value(:str?).filled(eql?: class_id.to_s)
+        required(:@type).value(:str?).filled(eql?: type_id.to_s)
 
         before(:key_coercer) do |result|
           result.to_h.transform_keys!(&:to_sym)

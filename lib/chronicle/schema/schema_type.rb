@@ -5,16 +5,16 @@ module Chronicle::Schema
   class SchemaType
     attr_reader :id
     attr_accessor :properties,
-      :subclass_ids,
+      :subtype_ids,
       :comment,
       :namespace,
-      :subclasses,
-      :superclasses,
+      :subtypes,
+      :supertypes,
       :see_also
 
     def initialize(id)
       @id = id
-      @subclass_ids = []
+      @subtype_ids = []
       @properties = []
 
       yield self if block_given?
@@ -28,7 +28,7 @@ module Chronicle::Schema
       pp.text("SchemaType: #{id}")
       pp.nest(2) do
         pp.breakable
-        pp.text("SubclassIds: #{subclass_ids.map(&:id)}")
+        pp.text("subtypeIds: #{subtype_ids.map(&:id)}")
         pp.breakable
         pp.text("Comment: #{comment}")
         pp.breakable
@@ -48,7 +48,7 @@ module Chronicle::Schema
     def to_h
       output = {
         id:,
-        subclass_ids:
+        subtype_ids:
       }
       output[:see_also] = @see_also if @see_also
       output[:comment] = @comment if @comment
@@ -59,19 +59,19 @@ module Chronicle::Schema
       id == other.id
     end
 
-    def add_subclass_id(subclass_id)
-      @subclass_ids << subclass_id unless @subclass_ids.include?(subclass_id)
+    def add_subtype_id(subtype_id)
+      @subtype_ids << subtype_id unless @subtype_ids.include?(subtype_id)
     end
 
     def ancestors
       @ancestors ||= begin
         ancestors = []
 
-        queue = superclasses.dup
+        queue = supertypes.dup
         until queue.empty?
           current = queue.shift
           ancestors << current
-          queue.concat(current.superclasses)
+          queue.concat(current.supertypes)
         end
         ancestors
       end
@@ -81,11 +81,11 @@ module Chronicle::Schema
       @descendants ||= begin
         descendants = []
 
-        queue = subclasses.dup
+        queue = subtypes.dup
         until queue.empty?
           current = queue.shift
           descendants << current
-          queue.concat(current.subclasses)
+          queue.concat(current.subtypes)
         end
         descendants
       end

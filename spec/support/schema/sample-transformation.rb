@@ -1,4 +1,4 @@
-pick_subclass :Action do
+pick_subtype :Action do
   pick_property :endTime
   pick_property :startTime
   pick_property :agent
@@ -7,13 +7,13 @@ pick_subclass :Action do
   pick_property :result
 end
 
-pick_subclass :Event do
-  pick_all_subclasses
+pick_subtype :Event do
+  pick_all_subtypes
 end
 
-pick_subclass :Person do
+pick_subtype :Person do
   pick_property :address
 end
-pick_subclass :Organization
+pick_subtype :Organization
 pick_property :name
 pick_property :description
