@@ -7,6 +7,8 @@ require 'chronicle/serialization'
 RSpec.describe Chronicle::Serialization::JSONLDSerializer do
   include_context 'with_sample_schema_graph'
 
+  let(:schema_context) { { '@context': 'https://schema.chronicle.app/' } }
+
   it 'can build a JSONAPI object from a single model' do
     record = sample_model_module::Person.new(
       name: 'bar',
@@ -17,7 +19,7 @@ RSpec.describe Chronicle::Serialization::JSONLDSerializer do
       '@type': 'Person',
       name: 'bar',
       description: 'identity'
-    }
+    }.merge(schema_context)
 
     expect(described_class.serialize(record)).to eql(expected)
   end
@@ -37,7 +39,7 @@ RSpec.describe Chronicle::Serialization::JSONLDSerializer do
         name: 'bar',
         description: 'identity'
       }
-    }
+    }.merge(schema_context)
 
     expect(described_class.serialize(record)).to eql(expected)
   end
@@ -50,7 +52,7 @@ RSpec.describe Chronicle::Serialization::JSONLDSerializer do
     expected = {
       '@type': 'Event',
       start_date: Time.parse('2019-01-01')
-    }
+    }.merge(schema_context)
 
     expect(described_class.serialize(record)).to eql(expected)
   end
