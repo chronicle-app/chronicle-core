@@ -7,20 +7,26 @@ module Chronicle::Models
     transform_keys(&:to_sym)
     schema schema.strict
 
-    alias properties attributes
-
-    # TODO: rename naked `provider` attribute
-    CHRONICLE_ATTRIBUTES = %i[id].freeze
-    # CHRONICLE_ATTRIBUTES = %i[id provider provider_id provider_slug provider_namespace].freeze
-
-    CHRONICLE_ATTRIBUTES.each do |attribute|
-      attribute(attribute, Chronicle::Schema::Types::String.optional.default(nil).meta(many: false, required: false))
+    def properties
+      # FIXME: think about this more. Does dedupe belong in serialization
+      attributes.except(:dedupe_on)
     end
+
+    attribute(:id, Chronicle::Schema::Types::String.optional.default(nil).meta(many: false, required: false))
+
+    # set of properties to dedupe on
+    # each set of properties is an array of symbols representing the properties to dedupe on
+    # example: [[:slug, :source], [:url]]
+    attribute(:dedupe_on,
+      Chronicle::Schema::Types::Array.of(Chronicle::Schema::Types::Array.of(Chronicle::Schema::Types::Symbol)).optional.default([]).meta(
+        many: false, required: false
+      ))
 
     def self.new(attributes = {})
       if block_given?
-        attribute_struct = Struct.new(*schema.map(&:name))
-        attribute_struct = attribute_struct.new
+        attribute_struct = Struct.new(*schema.map(&:name)).new
+        attribute_struct.dedupe_on = []
+
         yield(attribute_struct)
         attributes = attribute_struct.to_h
       end
@@ -32,7 +38,9 @@ module Chronicle::Models
     end
 
     def meta
-      {}
+      output = {}
+      output[:dedupe_on] = dedupe_on unless dedupe_on.empty?
+      output
     end
 
     def to_h_flattened

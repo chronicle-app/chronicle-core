@@ -17,6 +17,18 @@ RSpec.describe Chronicle::Models::Base do
       end.to raise_error(Chronicle::Models::AttributeError)
     end
 
+    context 'with deduping properties' do
+      it 'can set deduping properties' do
+        expect(described_class.new(dedupe_on: [%i[slug source], [:url]]).properties[:dedupe_on])
+      end
+
+      it 'will not accept deduping properties that are not arrays of symbols' do
+        expect do
+          described_class.new(dedupe_on: 'foo')
+        end.to raise_error(Chronicle::Models::AttributeError)
+      end
+    end
+
     context 'when creating with a block' do
       it 'can be created with attributes through a block' do
         expect do
@@ -29,6 +41,13 @@ RSpec.describe Chronicle::Models::Base do
           c.id = 'foo'
         end
         .properties[:id]).to eq('foo')
+      end
+
+      it 'can pass in deduping properties through a block' do
+        expect(described_class.new do |c|
+          c.dedupe_on << %i[slug source]
+          c.dedupe_on << %i[url]
+        end.dedupe_on).to eq([%i[slug source], [:url]])
       end
 
       it 'will raise an error when an attribute is not expected' do

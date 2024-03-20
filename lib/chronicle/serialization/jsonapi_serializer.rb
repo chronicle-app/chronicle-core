@@ -18,7 +18,7 @@ module Chronicle::Serialization
     end
 
     def attribute_hash
-      @record.attributes.slice(*@record.class.one_cardinality_attributes).compact.transform_values do |v|
+      @record.properties.slice(*@record.class.one_cardinality_attributes).compact.transform_values do |v|
         if v.is_a?(Chronicle::Models::Base)
           JSONAPISerializer.new(v).serializable_hash
         else
