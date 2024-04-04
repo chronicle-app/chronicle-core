@@ -12,7 +12,7 @@ Gem::Specification.new do |spec|
   spec.description   = 'Core libraries for Chronicle including models and schema definitions.'
   spec.homepage      = 'https://github.com/chronicle-app'
   spec.license       = 'MIT'
-  spec.required_ruby_version = '>= 2.7'
+  spec.required_ruby_version = '>= 3.0'
 
   if spec.respond_to?(:metadata)
     spec.metadata['allowed_push_host'] = 'https://rubygems.org'

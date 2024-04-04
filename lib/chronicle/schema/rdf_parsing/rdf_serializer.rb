@@ -38,10 +38,6 @@ module Chronicle::Schema::RDFParsing
         end
       end
 
-      def default_namespace
-        @graph.default_namespace
-      end
-
       graph.properties.each do |property|
         serialize_property(property).each do |triple|
           schema_graph << triple
@@ -58,6 +54,10 @@ module Chronicle::Schema::RDFParsing
     end
 
     private
+
+    def default_namespace
+      @graph.default_namespace
+    end
 
     def generation_header
       <<~TTL

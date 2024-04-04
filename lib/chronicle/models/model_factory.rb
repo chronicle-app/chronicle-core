@@ -20,10 +20,6 @@ module Chronicle::Models
         end
 
         @type_id = type_id
-
-        class << self
-          attr_reader :type_id
-        end
       end
     end
 

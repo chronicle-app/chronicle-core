@@ -20,12 +20,13 @@ module Chronicle::Serialization
       end
 
       {
-        '@type': record.type_id.to_s
-      }.merge(properties)
+        '@type': record.type.to_s,
+        '@id': record.id
+      }.merge(properties).compact
     end
 
     def serialize_value(value)
-      if value.is_a?(Chronicle::Models::Base)
+      if value.is_a?(Chronicle::Serialization::Record)
         serialize_record(value)
       else
         value

@@ -27,6 +27,10 @@ RSpec.describe Chronicle::Models::Base do
           described_class.new(dedupe_on: 'foo')
         end.to raise_error(Chronicle::Models::AttributeError)
       end
+
+      it 'will not be part of the to_h output' do
+        expect(described_class.new(dedupe_on: [%i[slug source], [:url]]).to_h).to_not include(:dedupe_on)
+      end
     end
 
     context 'when creating with a block' do

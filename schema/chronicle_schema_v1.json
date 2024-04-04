@@ -5,6 +5,7 @@
       "id": "https://schema.chronicle.app/Action",
       "subtype_ids": [
         "https://schema.chronicle.app/ConsumeAction",
+        "https://schema.chronicle.app/InteractAction",
         "https://schema.chronicle.app/UpdateAction"
       ],
       "see_also": "https://schema.org/Action",
@@ -45,6 +46,14 @@
       "comment": "A city or town."
     },
     {
+      "id": "https://schema.chronicle.app/CommunicateAction",
+      "subtype_ids": [
+
+      ],
+      "see_also": "https://schema.org/CommunicateAction",
+      "comment": "The act of conveying information to another person via a communication medium (instrument) such as speech, email, or telephone conversation."
+    },
+    {
       "id": "https://schema.chronicle.app/ConsumeAction",
       "subtype_ids": [
         "https://schema.chronicle.app/ListenAction"
@@ -63,6 +72,7 @@
     {
       "id": "https://schema.chronicle.app/CreativeWork",
       "subtype_ids": [
+        "https://schema.chronicle.app/Message",
         "https://schema.chronicle.app/MusicPlaylist",
         "https://schema.chronicle.app/MusicRecording"
       ],
@@ -130,12 +140,28 @@
       "comment": "Data type: Integer."
     },
     {
+      "id": "https://schema.chronicle.app/InteractAction",
+      "subtype_ids": [
+        "https://schema.chronicle.app/CommunicateAction"
+      ],
+      "see_also": "https://schema.org/InteractAction",
+      "comment": "The act of interacting with another person or organization."
+    },
+    {
       "id": "https://schema.chronicle.app/ListenAction",
       "subtype_ids": [
 
       ],
       "see_also": "https://schema.org/ListenAction",
       "comment": "The act of consuming audio content."
+    },
+    {
+      "id": "https://schema.chronicle.app/Message",
+      "subtype_ids": [
+
+      ],
+      "see_also": "https://schema.org/Message",
+      "comment": "A single message from a sender to one or more organizations or people."
     },
     {
       "id": "https://schema.chronicle.app/MusicAlbum",
@@ -460,6 +486,20 @@
       "see_also": "https://schema.org/object"
     },
     {
+      "id": "https://schema.chronicle.app/recipient",
+      "domain": [
+        "https://schema.chronicle.app/Message"
+      ],
+      "range": [
+        "https://schema.chronicle.app/Organization",
+        "https://schema.chronicle.app/Person"
+      ],
+      "many": true,
+      "required": false,
+      "comment": "A sub property of participant. The participant who is at the receiving end of the action.",
+      "see_also": "https://schema.org/recipient"
+    },
+    {
       "id": "https://schema.chronicle.app/result",
       "domain": [
         "https://schema.chronicle.app/Action"
@@ -471,6 +511,20 @@
       "required": false,
       "comment": "The result produced in the action. E.g. John wrote *a book*.",
       "see_also": "https://schema.org/result"
+    },
+    {
+      "id": "https://schema.chronicle.app/sender",
+      "domain": [
+        "https://schema.chronicle.app/Message"
+      ],
+      "range": [
+        "https://schema.chronicle.app/Organization",
+        "https://schema.chronicle.app/Person"
+      ],
+      "many": false,
+      "required": false,
+      "comment": "A sub property of participant. The participant who is at the sending end of the action.",
+      "see_also": "https://schema.org/sender"
     },
     {
       "id": "https://schema.chronicle.app/slug",
@@ -496,6 +550,17 @@
     },
     {
       "id": "https://schema.chronicle.app/sourceId",
+      "domain": [
+        "https://schema.chronicle.app/Thing"
+      ],
+      "range": [
+        "https://schema.chronicle.app/Text"
+      ],
+      "many": false,
+      "required": false
+    },
+    {
+      "id": "https://schema.chronicle.app/sourceNamespace",
       "domain": [
         "https://schema.chronicle.app/Thing"
       ],
@@ -545,6 +610,19 @@
       "required": false,
       "comment": "A CreativeWork or Event about this Thing.",
       "see_also": "https://schema.org/subjectOf"
+    },
+    {
+      "id": "https://schema.chronicle.app/text",
+      "domain": [
+        "https://schema.chronicle.app/CreativeWork"
+      ],
+      "range": [
+        "https://schema.chronicle.app/Text"
+      ],
+      "many": false,
+      "required": false,
+      "comment": "The textual content of this CreativeWork.",
+      "see_also": "https://schema.org/text"
     },
     {
       "id": "https://schema.chronicle.app/url",

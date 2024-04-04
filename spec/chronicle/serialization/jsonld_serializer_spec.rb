@@ -10,7 +10,7 @@ RSpec.describe Chronicle::Serialization::JSONLDSerializer do
   let(:schema_context) { { '@context': 'https://schema.chronicle.app/' } }
 
   it 'can build a JSONAPI object from a single model' do
-    record = sample_model_module::Person.new(
+    model = sample_model_module::Person.new(
       name: 'bar',
       description: 'identity'
     )
@@ -21,11 +21,11 @@ RSpec.describe Chronicle::Serialization::JSONLDSerializer do
       description: 'identity'
     }.merge(schema_context)
 
-    expect(described_class.serialize(record)).to eql(expected)
+    expect(described_class.serialize(model)).to eql(expected)
   end
 
   it 'can build a JSONAPI object from a model with a nested model' do
-    record = sample_model_module::Action.new(
+    model = sample_model_module::Action.new(
       agent: sample_model_module::Person.new(
         name: 'bar',
         description: 'identity'
@@ -41,11 +41,11 @@ RSpec.describe Chronicle::Serialization::JSONLDSerializer do
       }
     }.merge(schema_context)
 
-    expect(described_class.serialize(record)).to eql(expected)
+    expect(described_class.serialize(model)).to eql(expected)
   end
 
   it 'serializes dates properly' do
-    record = sample_model_module::Event.new(
+    model = sample_model_module::Event.new(
       start_date: Time.parse('2019-01-01')
     )
 
@@ -54,6 +54,6 @@ RSpec.describe Chronicle::Serialization::JSONLDSerializer do
       start_date: Time.parse('2019-01-01')
     }.merge(schema_context)
 
-    expect(described_class.serialize(record)).to eql(expected)
+    expect(described_class.serialize(model)).to eql(expected)
   end
 end

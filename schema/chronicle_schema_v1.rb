@@ -15,6 +15,10 @@ pick_type :Thing do
       pick_type :ListenAction
     end
 
+    pick_type :InteractAction do
+      pick_type :CommunicateAction
+    end
+
     pick_type :UpdateAction do
       pick_type :AddAction do
         pick_type :InsertAction
@@ -40,6 +44,12 @@ pick_type :Thing do
       apply_property :byArtist, many: true
     end
 
+    pick_type :Message do
+      apply_property :recipient, many: true
+      apply_property :sender
+    end
+
+    apply_property :text
     apply_property :about, many: true
   end
 
@@ -72,6 +82,7 @@ pick_type :Thing do
   add_property :source
   add_property :slug
   add_property :sourceId
+  add_property :sourceNamespace
 end
 
 pick_type :DataType do

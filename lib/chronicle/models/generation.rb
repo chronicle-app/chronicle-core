@@ -32,7 +32,6 @@ module Chronicle::Models
       def generate_models(graph = nil)
         graph ||= begin
           require 'json'
-          require 'chronicle/schema/rdf_parsing'
           schema_path = File.join(File.dirname(__FILE__), '..', '..', '..', 'schema', 'chronicle_schema_v1.json')
           Chronicle::Schema::SchemaGraph.build_from_json(JSON.parse(File.read(schema_path)))
         end

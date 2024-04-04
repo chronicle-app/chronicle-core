@@ -7,20 +7,31 @@ module Chronicle::Models
     transform_keys(&:to_sym)
     schema schema.strict
 
+    class << self
+      attr_reader :type_id
+    end
+
     def properties
       # FIXME: think about this more. Does dedupe belong in serialization
       attributes.except(:dedupe_on)
     end
 
+    # TODO: remove this from attributes and just do custom getters/setters
     attribute(:id, Chronicle::Schema::Types::String.optional.default(nil).meta(many: false, required: false))
 
     # set of properties to dedupe on
     # each set of properties is an array of symbols representing the properties to dedupe on
     # example: [[:slug, :source], [:url]]
-    attribute(:dedupe_on,
-      Chronicle::Schema::Types::Array.of(Chronicle::Schema::Types::Array.of(Chronicle::Schema::Types::Symbol)).optional.default([]).meta(
+    attribute(
+      :dedupe_on,
+      Chronicle::Schema::Types::Array.of(
+        Chronicle::Schema::Types::Array.of(
+          Chronicle::Schema::Types::Symbol
+        )
+      ).optional.default([]).meta(
         many: false, required: false
-      ))
+      )
+    )
 
     def self.new(attributes = {})
       if block_given?
@@ -45,6 +56,12 @@ module Chronicle::Models
 
     def type_id
       self.class.type_id
+    end
+
+    def to_h
+      super.merge({ type: type_id })
+        .except(:dedupe_on)
+        .compact # TODO: don't know about this one
     end
 
     # TODO: exclude dedupe_on from serialization

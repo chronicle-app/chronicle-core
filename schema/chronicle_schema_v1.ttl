@@ -36,6 +36,11 @@
   rdfs:seeAlso schemaorg:City;
   rdfs:subClassOf :AdministrativeArea .
 
+:CommunicateAction a rdfs:Class;
+  rdfs:comment "The act of conveying information to another person via a communication medium (instrument) such as speech, email, or telephone conversation.";
+  rdfs:seeAlso schemaorg:CommunicateAction;
+  rdfs:subClassOf :InteractAction .
+
 :ConsumeAction a rdfs:Class;
   rdfs:comment "The act of ingesting information/resources/food.";
   rdfs:seeAlso schemaorg:ConsumeAction;
@@ -85,10 +90,20 @@
   rdfs:seeAlso schemaorg:Integer;
   rdfs:subClassOf :Number .
 
+:InteractAction a rdfs:Class;
+  rdfs:comment "The act of interacting with another person or organization.";
+  rdfs:seeAlso schemaorg:InteractAction;
+  rdfs:subClassOf :Action .
+
 :ListenAction a rdfs:Class;
   rdfs:comment "The act of consuming audio content.";
   rdfs:seeAlso schemaorg:ListenAction;
   rdfs:subClassOf :ConsumeAction .
+
+:Message a rdfs:Class;
+  rdfs:comment "A single message from a sender to one or more organizations or people.";
+  rdfs:seeAlso schemaorg:Message;
+  rdfs:subClassOf :CreativeWork .
 
 :MusicAlbum a rdfs:Class;
   rdfs:comment "A collection of music tracks.";
@@ -271,12 +286,27 @@
   :domainIncludes :Action;
   :rangeIncludes :Thing .
 
+:recipient a rdf:Property;
+  rdfs:comment "A sub property of participant. The participant who is at the receiving end of the action.";
+  rdfs:seeAlso schemaorg:recipient;
+  :domainIncludes :Message;
+  :rangeIncludes :Organization,
+    :Person .
+
 :result a rdf:Property;
   rdfs:comment "The result produced in the action. E.g. John wrote *a book*.";
   rdfs:seeAlso schemaorg:result;
   owl:maxCardinality 1;
   :domainIncludes :Action;
   :rangeIncludes :Thing .
+
+:sender a rdf:Property;
+  rdfs:comment "A sub property of participant. The participant who is at the sending end of the action.";
+  rdfs:seeAlso schemaorg:sender;
+  owl:maxCardinality 1;
+  :domainIncludes :Message;
+  :rangeIncludes :Organization,
+    :Person .
 
 :slug a rdf:Property;
   owl:maxCardinality 1;
@@ -289,6 +319,11 @@
   :rangeIncludes :Text .
 
 :sourceId a rdf:Property;
+  owl:maxCardinality 1;
+  :domainIncludes :Thing;
+  :rangeIncludes :Text .
+
+:sourceNamespace a rdf:Property;
   owl:maxCardinality 1;
   :domainIncludes :Thing;
   :rangeIncludes :Text .
@@ -314,6 +349,13 @@
   :domainIncludes :Thing;
   :rangeIncludes :CreativeWork,
     :Event .
+
+:text a rdf:Property;
+  rdfs:comment "The textual content of this CreativeWork.";
+  rdfs:seeAlso schemaorg:text;
+  owl:maxCardinality 1;
+  :domainIncludes :CreativeWork;
+  :rangeIncludes :Text .
 
 :url a rdf:Property;
   rdfs:comment "URL of the item.";
