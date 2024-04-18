@@ -1,13 +1,10 @@
 AllCops:
   NewCops: enable
   TargetRubyVersion: 3.0
+  SuggestExtensions: false
 
 Style/FrozenStringLiteralComment:
   Enabled: false
-
-Style/ClassAndModuleChildren:
-  Enabled: true
-  EnforcedStyle: compact
 
 Metrics:
   Enabled: false
