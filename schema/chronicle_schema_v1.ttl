@@ -26,10 +26,25 @@
   rdfs:seeAlso schemaorg:AdministrativeArea;
   rdfs:subClassOf :Place .
 
+:AssessAction a rdfs:Class;
+  rdfs:comment "The act of forming one's opinion, reaction or sentiment.";
+  rdfs:seeAlso schemaorg:AssessAction;
+  rdfs:subClassOf :Action .
+
+:Book a rdfs:Class;
+  rdfs:comment "A book.";
+  rdfs:seeAlso schemaorg:Book;
+  rdfs:subClassOf :CreativeWork .
+
 :Boolean a rdfs:Class;
   rdfs:comment "Boolean: True or False.";
   rdfs:seeAlso schemaorg:Boolean;
   rdfs:subClassOf :DataType .
+
+:CheckInAction a rdfs:Class;
+  rdfs:comment "The act of an agent communicating (service provider, social media, etc) their arrival by registering/confirming for a previously reserved service (e.g. flight check-in) or at a place (e.g. hotel), possibly resulting in a result (boarding pass, etc).\\n\\nRelated actions:\\n\\n* [[CheckOutAction]]: The antonym of CheckInAction.\\n* [[ArriveAction]]: Unlike ArriveAction, CheckInAction implies that the agent is informing/confirming the start of a previously reserved service.\\n* [[ConfirmAction]]: Unlike ConfirmAction, CheckInAction implies that the agent is informing/confirming the *start* of a previously reserved service rather than its validity/existence.";
+  rdfs:seeAlso schemaorg:CheckInAction;
+  rdfs:subClassOf :CommunicateAction .
 
 :City a rdfs:Class;
   rdfs:comment "A city or town.";
@@ -56,6 +71,12 @@
   rdfs:seeAlso schemaorg:CreativeWork;
   rdfs:subClassOf :Thing .
 
+:CreativeWorkSeries a rdfs:Class;
+  rdfs:comment """A CreativeWorkSeries in schema.org is a group of related items, typically but not necessarily of the same kind. CreativeWorkSeries are usually organized into some order, often chronological. Unlike [[ItemList]] which is a general purpose data structure for lists of things, the emphasis with CreativeWorkSeries is on published materials (written e.g. books and periodicals, or media such as TV, radio and games).\\n\\nSpecific subtypes are available for describing [[TVSeries]], [[RadioSeries]], [[MovieSeries]], [[BookSeries]], [[Periodical]] and [[VideoGameSeries]]. In each case, the [[hasPart]] / [[isPartOf]] properties can be used to relate the CreativeWorkSeries to its parts. The general CreativeWorkSeries type serves largely just to organize these more specific and practical subtypes.\\n\\nIt is common for properties applicable to an item from the series to be usefully applied to the containing group. Schema.org attempts to anticipate some of these cases, but publishers should be free to apply properties of the series parts to the series as a whole wherever they seem appropriate.
+	  """;
+  rdfs:seeAlso schemaorg:CreativeWorkSeries;
+  rdfs:subClassOf :CreativeWork .
+
 :DataType a rdfs:Class;
   rdfs:comment "The basic data types such as Integers, Strings, etc.";
   rdfs:seeAlso schemaorg:DataType .
@@ -69,6 +90,26 @@
   rdfs:comment "A combination of date and time of day in the form [-]CCYY-MM-DDThh:mm:ss[Z|(+|-)hh:mm] (see Chapter 5.4 of ISO 8601).";
   rdfs:seeAlso schemaorg:DateTime;
   rdfs:subClassOf :DataType .
+
+:Distance a rdfs:Class;
+  rdfs:comment "Properties that take Distances as values are of the form '&lt;Number&gt; &lt;Length unit of measure&gt;'. E.g., '7 ft'.";
+  rdfs:seeAlso schemaorg:Distance;
+  rdfs:subClassOf :Quantity .
+
+:Duration a rdfs:Class;
+  rdfs:comment "Quantity: Duration (use [ISO 8601 duration format](http://en.wikipedia.org/wiki/ISO_8601)).";
+  rdfs:seeAlso schemaorg:Duration;
+  rdfs:subClassOf :Quantity .
+
+:Energy a rdfs:Class;
+  rdfs:comment "Properties that take Energy as values are of the form '&lt;Number&gt; &lt;Energy unit of measure&gt;'.";
+  rdfs:seeAlso schemaorg:Energy;
+  rdfs:subClassOf :Quantity .
+
+:Episode a rdfs:Class;
+  rdfs:comment "A media episode (e.g. TV, radio, video game) which can be part of a series or season.";
+  rdfs:seeAlso schemaorg:Episode;
+  rdfs:subClassOf :CreativeWork .
 
 :Event a rdfs:Class;
   rdfs:comment "An event happening at a certain time and location, such as a concert, lecture, or festival. Ticketing information may be added via the [[offers]] property. Repeated events may be structured as separate Event objects.";
@@ -85,6 +126,11 @@
   rdfs:seeAlso schemaorg:InsertAction;
   rdfs:subClassOf :AddAction .
 
+:Intangible a rdfs:Class;
+  rdfs:comment "A utility class that serves as the umbrella for a number of 'intangible' things such as quantities, structured values, etc.";
+  rdfs:seeAlso schemaorg:Intangible;
+  rdfs:subClassOf :Thing .
+
 :Integer a rdfs:Class;
   rdfs:comment "Data type: Integer.";
   rdfs:seeAlso schemaorg:Integer;
@@ -95,10 +141,20 @@
   rdfs:seeAlso schemaorg:InteractAction;
   rdfs:subClassOf :Action .
 
+:LikeAction a rdfs:Class;
+  rdfs:comment "The act of expressing a positive sentiment about the object. An agent likes an object (a proposition, topic or theme) with participants.";
+  rdfs:seeAlso schemaorg:LikeAction;
+  rdfs:subClassOf :ReactAction .
+
 :ListenAction a rdfs:Class;
   rdfs:comment "The act of consuming audio content.";
   rdfs:seeAlso schemaorg:ListenAction;
   rdfs:subClassOf :ConsumeAction .
+
+:Mass a rdfs:Class;
+  rdfs:comment "Properties that take Mass as values are of the form '&lt;Number&gt; &lt;Mass unit of measure&gt;'. E.g., '7 kg'.";
+  rdfs:seeAlso schemaorg:Mass;
+  rdfs:subClassOf :Quantity .
 
 :Message a rdfs:Class;
   rdfs:comment "A single message from a sender to one or more organizations or people.";
@@ -150,6 +206,31 @@
   rdfs:seeAlso schemaorg:Place;
   rdfs:subClassOf :Thing .
 
+:PodcastEpisode a rdfs:Class;
+  rdfs:comment "A single episode of a podcast series.";
+  rdfs:seeAlso schemaorg:PodcastEpisode;
+  rdfs:subClassOf :Episode .
+
+:PodcastSeries a rdfs:Class;
+  rdfs:comment "A podcast is an episodic series of digital audio or video files which a user can download and listen to.";
+  rdfs:seeAlso schemaorg:PodcastSeries;
+  rdfs:subClassOf :CreativeWorkSeries .
+
+:Quantity a rdfs:Class;
+  rdfs:comment "Quantities such as distance, time, mass, weight, etc. Particular instances of say Mass are entities like '3 kg' or '4 milligrams'.";
+  rdfs:seeAlso schemaorg:Quantity;
+  rdfs:subClassOf :Intangible .
+
+:ReactAction a rdfs:Class;
+  rdfs:comment "The act of responding instinctively and emotionally to an object, expressing a sentiment.";
+  rdfs:seeAlso schemaorg:ReactAction;
+  rdfs:subClassOf :AssessAction .
+
+:SchoolDistrict a rdfs:Class;
+  rdfs:comment "A School District is an administrative area for the administration of schools.";
+  rdfs:seeAlso schemaorg:SchoolDistrict;
+  rdfs:subClassOf :AdministrativeArea .
+
 :State a rdfs:Class;
   rdfs:comment "A state or province of a country.";
   rdfs:seeAlso schemaorg:State;
@@ -199,6 +280,12 @@
   :rangeIncludes :Organization,
     :Person .
 
+:aggregateRating a rdf:Property;
+  rdfs:comment "The overall rating, based on a collection of reviews or ratings, of the item.";
+  rdfs:seeAlso schemaorg:aggregateRating;
+  owl:maxCardinality 1;
+  :domainIncludes :CreativeWork .
+
 :album a rdf:Property;
   rdfs:comment "A music album.";
   rdfs:seeAlso schemaorg:album;
@@ -212,6 +299,13 @@
   :domainIncludes :Thing;
   :rangeIncludes :Text .
 
+:author a rdf:Property;
+  rdfs:comment "The author of this content or rating. Please note that author is special in that HTML 5 provides a special mechanism for indicating authorship via the rel tag. That is equivalent to this and may be used interchangeably.";
+  rdfs:seeAlso schemaorg:author;
+  :domainIncludes :CreativeWork;
+  :rangeIncludes :Organization,
+    :Person .
+
 :byArtist a rdf:Property;
   rdfs:comment "The artist that performed this album or recording.";
   rdfs:seeAlso schemaorg:byArtist;
@@ -220,12 +314,39 @@
   :rangeIncludes :MusicGroup,
     :Person .
 
+:contentLocation a rdf:Property;
+  rdfs:comment "The location depicted or described in the content. For example, the location in a photograph or painting.";
+  rdfs:seeAlso schemaorg:contentLocation;
+  :domainIncludes :CreativeWork;
+  :rangeIncludes :Place .
+
+:contributor a rdf:Property;
+  rdfs:comment "A secondary contributor to the CreativeWork or Event.";
+  rdfs:seeAlso schemaorg:contributor;
+  :domainIncludes :CreativeWork;
+  :rangeIncludes :Organization,
+    :Person .
+
+:creator a rdf:Property;
+  rdfs:comment "The creator/author of this CreativeWork. This is the same as the Author property for CreativeWork.";
+  rdfs:seeAlso schemaorg:creator;
+  :domainIncludes :CreativeWork;
+  :rangeIncludes :Organization,
+    :Person .
+
 :description a rdf:Property;
   rdfs:comment "A description of the item.";
   rdfs:seeAlso schemaorg:description;
   owl:maxCardinality 1;
   :domainIncludes :Thing;
   :rangeIncludes :Text .
+
+:duration a rdf:Property;
+  rdfs:comment "The duration of the item (movie, audio recording, event, etc.) in [ISO 8601 date format](http://en.wikipedia.org/wiki/ISO_8601).";
+  rdfs:seeAlso schemaorg:duration;
+  owl:maxCardinality 1;
+  :domainIncludes :Episode;
+  :rangeIncludes :Duration .
 
 :endDate a rdf:Property;
   rdfs:comment "The end date and time of the item (in [ISO 8601 date format](http://en.wikipedia.org/wiki/ISO_8601)).";
@@ -242,6 +363,14 @@
   :domainIncludes :Action;
   :rangeIncludes :DateTime .
 
+:episodeNumber a rdf:Property;
+  rdfs:comment "Position of the episode within an ordered group of episodes.";
+  rdfs:seeAlso schemaorg:episodeNumber;
+  owl:maxCardinality 1;
+  :domainIncludes :Episode;
+  :rangeIncludes :Integer,
+    :Text .
+
 :identifier a rdf:Property;
   rdfs:comment """The identifier property represents any kind of identifier for any kind of [[Thing]], such as ISBNs, GTIN codes, UUIDs etc. Schema.org provides dedicated properties for representing many of these, either as textual strings or as URL (URI) links. See [background notes](/docs/datamodel.html#identifierBg) for more details.
         """;
@@ -257,12 +386,32 @@
   :domainIncludes :MusicRecording;
   :rangeIncludes :MusicAlbum .
 
+:inLanguage a rdf:Property;
+  rdfs:comment "The language of the content or performance or used in an action. Please use one of the language codes from the [IETF BCP 47 standard](http://tools.ietf.org/html/bcp47). See also [[availableLanguage]].";
+  rdfs:seeAlso schemaorg:inLanguage;
+  :domainIncludes :CreativeWork;
+  :rangeIncludes :Text .
+
 :instrument a rdf:Property;
   rdfs:comment "The object that helped the agent perform the action. E.g. John wrote a book with *a pen*.";
   rdfs:seeAlso schemaorg:instrument;
   owl:maxCardinality 1;
   :domainIncludes :Action;
   :rangeIncludes :Thing .
+
+:isPartOf a rdf:Property;
+  rdfs:comment "Indicates an item or CreativeWork that this item, or CreativeWork (in some sense), is part of.";
+  rdfs:seeAlso schemaorg:isPartOf;
+  :domainIncludes :CreativeWork;
+  :rangeIncludes :CreativeWork,
+    :URL .
+
+:keywords a rdf:Property;
+  rdfs:comment "Keywords or tags used to describe some item. Multiple textual entries in a keywords list are typically delimited by commas, or by repeating the property.";
+  rdfs:seeAlso schemaorg:keywords;
+  :domainIncludes :CreativeWork;
+  :rangeIncludes :Text,
+    :URL .
 
 :location a rdf:Property;
   rdfs:comment "The location of, for example, where an event is happening, where an organization is located, or where an action takes place.";
@@ -272,6 +421,12 @@
   :rangeIncludes :Place,
     :Text .
 
+:mentions a rdf:Property;
+  rdfs:comment "Indicates that the CreativeWork contains a reference to, but is not necessarily about a concept.";
+  rdfs:seeAlso schemaorg:mentions;
+  :domainIncludes :CreativeWork;
+  :rangeIncludes :Thing .
+
 :name a rdf:Property;
   rdfs:comment "The name of the item.";
   rdfs:seeAlso schemaorg:name;
@@ -279,12 +434,46 @@
   :domainIncludes :Thing;
   :rangeIncludes :Text .
 
+:numberOfPages a rdf:Property;
+  rdfs:comment "The number of pages in the book.";
+  rdfs:seeAlso schemaorg:numberOfPages;
+  owl:maxCardinality 1;
+  :domainIncludes :Book;
+  :rangeIncludes :Integer .
+
 :object a rdf:Property;
   rdfs:comment "The object upon which the action is carried out, whose state is kept intact or changed. Also known as the semantic roles patient, affected or undergoer (which change their state) or theme (which doesn't). E.g. John read *a book*.";
   rdfs:seeAlso schemaorg:object;
   owl:maxCardinality 1;
   :domainIncludes :Action;
   :rangeIncludes :Thing .
+
+:partOfSeason a rdf:Property;
+  rdfs:comment "The season to which this episode belongs.";
+  rdfs:seeAlso schemaorg:partOfSeason;
+  owl:maxCardinality 1;
+  :domainIncludes :Episode .
+
+:partOfSeries a rdf:Property;
+  rdfs:comment "The series to which this episode or season belongs.";
+  rdfs:seeAlso schemaorg:partOfSeries;
+  owl:maxCardinality 1;
+  :domainIncludes :Episode;
+  :rangeIncludes :CreativeWorkSeries .
+
+:producer a rdf:Property;
+  rdfs:comment "The person or organization who produced the work (e.g. music album, movie, TV/radio series etc.).";
+  rdfs:seeAlso schemaorg:producer;
+  :domainIncludes :CreativeWork;
+  :rangeIncludes :Organization,
+    :Person .
+
+:publisher a rdf:Property;
+  rdfs:comment "The publisher of the creative work.";
+  rdfs:seeAlso schemaorg:publisher;
+  :domainIncludes :CreativeWork;
+  :rangeIncludes :Organization,
+    :Person .
 
 :recipient a rdf:Property;
   rdfs:comment "A sub property of participant. The participant who is at the receiving end of the action.";
@@ -362,4 +551,11 @@
   rdfs:seeAlso schemaorg:url;
   owl:maxCardinality 1;
   :domainIncludes :Thing;
+  :rangeIncludes :URL .
+
+:webFeed a rdf:Property;
+  rdfs:comment "The URL for a feed, e.g. associated with a podcast series, blog, or series of date-stamped updates. This is usually RSS or Atom.";
+  rdfs:seeAlso schemaorg:webFeed;
+  owl:maxCardinality 1;
+  :domainIncludes :PodcastSeries;
   :rangeIncludes :URL .

@@ -48,7 +48,7 @@ module Chronicle::Models
       full_range_identifiers = property.full_range_identifiers
 
       type_values << Chronicle::Schema::Types::Params::Time if full_range_identifiers.include? :DateTime
-      type_values << Chronicle::Schema::Types::String if %i[Text URL].intersect?(full_range_identifiers)
+      type_values << Chronicle::Schema::Types::String if %i[Text URL Distance Duration Energy Mass].intersect?(full_range_identifiers)
       type_values << Chronicle::Schema::Types::Params::Integer if full_range_identifiers.include? :Integer
       type_values << Chronicle::Models.schema_type(full_range_identifiers)
 

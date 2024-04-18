@@ -36,9 +36,10 @@ module Chronicle::Schema::RDFParsing
     end
 
     def self.url_for_version(version)
-      raise NotImplementedError, "Only 'latest' version is supported" unless version == 'latest'
+      # Previously just used this one but it's missing ontologies
+      # 'https://raw.githubusercontent.com/schemaorg/schemaorg/main/data/schema.ttl'
 
-      'https://raw.githubusercontent.com/schemaorg/schemaorg/main/data/schema.ttl'
+      "https://raw.githubusercontent.com/schemaorg/schemaorg/main/data/releases/#{version}/schemaorg-all-https.ttl"
     end
   end
 end

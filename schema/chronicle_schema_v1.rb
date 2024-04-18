@@ -1,5 +1,5 @@
 version 1
-set_base_graph 'schema.org', 'latest'
+set_base_graph 'schema.org', '22.0'
 
 pick_type :Thing do
   pick_type :Action do
@@ -10,13 +10,21 @@ pick_type :Thing do
     apply_property :object
     apply_property :result
 
+    pick_type :AssessAction do
+      pick_type :ReactAction do
+        pick_type :LikeAction
+      end
+    end
+
     # pick_type :SearchAction
     pick_type :ConsumeAction do
       pick_type :ListenAction
     end
 
     pick_type :InteractAction do
-      pick_type :CommunicateAction
+      pick_type :CommunicateAction do
+        pick_type :CheckInAction
+      end
     end
 
     pick_type :UpdateAction do
@@ -34,6 +42,25 @@ pick_type :Thing do
   end
 
   pick_type :CreativeWork do
+    pick_type :Book do
+      apply_property :numberOfPages
+    end
+
+    pick_type :CreativeWorkSeries do
+      pick_type :PodcastSeries do
+        apply_property :webFeed
+      end
+    end
+
+    pick_type :Episode do
+      pick_type :PodcastEpisode
+
+      apply_property :partOfSeason
+      apply_property :partOfSeries
+      apply_property :duration
+      apply_property :episodeNumber
+    end
+
     pick_type :MusicPlaylist do
       pick_type :MusicAlbum do
         apply_property :byArtist, many: true
@@ -49,8 +76,31 @@ pick_type :Thing do
       apply_property :sender
     end
 
-    apply_property :text
     apply_property :about, many: true
+    apply_property :aggregateRating
+    apply_property :author, many: true
+    apply_property :contributor, many: true
+    apply_property :contentLocation, many: true
+    apply_property :creator, many: true
+    apply_property :inLanguage, many: true
+    apply_property :isPartOf, many: true
+    apply_property :keywords, many: true
+    apply_property :mentions, many: true
+    apply_property :producer, many: true
+    apply_property :publisher, many: true
+    apply_property :text
+  end
+
+  pick_type :Intangible do
+    pick_type :Quantity do
+      pick_type :Duration
+      pick_type :Distance
+      pick_type :Energy
+      pick_type :Mass
+    end
+  end
+
+  pick_type :Organization do
   end
 
   pick_type :Person do

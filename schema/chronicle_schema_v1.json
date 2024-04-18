@@ -4,6 +4,7 @@
     {
       "id": "https://schema.chronicle.app/Action",
       "subtype_ids": [
+        "https://schema.chronicle.app/AssessAction",
         "https://schema.chronicle.app/ConsumeAction",
         "https://schema.chronicle.app/InteractAction",
         "https://schema.chronicle.app/UpdateAction"
@@ -24,10 +25,27 @@
       "subtype_ids": [
         "https://schema.chronicle.app/City",
         "https://schema.chronicle.app/Country",
+        "https://schema.chronicle.app/SchoolDistrict",
         "https://schema.chronicle.app/State"
       ],
       "see_also": "https://schema.org/AdministrativeArea",
       "comment": "A geographical region, typically under the jurisdiction of a particular government."
+    },
+    {
+      "id": "https://schema.chronicle.app/AssessAction",
+      "subtype_ids": [
+        "https://schema.chronicle.app/ReactAction"
+      ],
+      "see_also": "https://schema.org/AssessAction",
+      "comment": "The act of forming one's opinion, reaction or sentiment."
+    },
+    {
+      "id": "https://schema.chronicle.app/Book",
+      "subtype_ids": [
+
+      ],
+      "see_also": "https://schema.org/Book",
+      "comment": "A book."
     },
     {
       "id": "https://schema.chronicle.app/Boolean",
@@ -36,6 +54,14 @@
       ],
       "see_also": "https://schema.org/Boolean",
       "comment": "Boolean: True or False."
+    },
+    {
+      "id": "https://schema.chronicle.app/CheckInAction",
+      "subtype_ids": [
+
+      ],
+      "see_also": "https://schema.org/CheckInAction",
+      "comment": "The act of an agent communicating (service provider, social media, etc) their arrival by registering/confirming for a previously reserved service (e.g. flight check-in) or at a place (e.g. hotel), possibly resulting in a result (boarding pass, etc).\\n\\nRelated actions:\\n\\n* [[CheckOutAction]]: The antonym of CheckInAction.\\n* [[ArriveAction]]: Unlike ArriveAction, CheckInAction implies that the agent is informing/confirming the start of a previously reserved service.\\n* [[ConfirmAction]]: Unlike ConfirmAction, CheckInAction implies that the agent is informing/confirming the *start* of a previously reserved service rather than its validity/existence."
     },
     {
       "id": "https://schema.chronicle.app/City",
@@ -48,7 +74,7 @@
     {
       "id": "https://schema.chronicle.app/CommunicateAction",
       "subtype_ids": [
-
+        "https://schema.chronicle.app/CheckInAction"
       ],
       "see_also": "https://schema.org/CommunicateAction",
       "comment": "The act of conveying information to another person via a communication medium (instrument) such as speech, email, or telephone conversation."
@@ -72,12 +98,23 @@
     {
       "id": "https://schema.chronicle.app/CreativeWork",
       "subtype_ids": [
+        "https://schema.chronicle.app/Book",
+        "https://schema.chronicle.app/CreativeWorkSeries",
+        "https://schema.chronicle.app/Episode",
         "https://schema.chronicle.app/Message",
         "https://schema.chronicle.app/MusicPlaylist",
         "https://schema.chronicle.app/MusicRecording"
       ],
       "see_also": "https://schema.org/CreativeWork",
       "comment": "The most generic kind of creative work, including books, movies, photographs, software programs, etc."
+    },
+    {
+      "id": "https://schema.chronicle.app/CreativeWorkSeries",
+      "subtype_ids": [
+        "https://schema.chronicle.app/PodcastSeries"
+      ],
+      "see_also": "https://schema.org/CreativeWorkSeries",
+      "comment": "A CreativeWorkSeries in schema.org is a group of related items, typically but not necessarily of the same kind. CreativeWorkSeries are usually organized into some order, often chronological. Unlike [[ItemList]] which is a general purpose data structure for lists of things, the emphasis with CreativeWorkSeries is on published materials (written e.g. books and periodicals, or media such as TV, radio and games).\\n\\nSpecific subtypes are available for describing [[TVSeries]], [[RadioSeries]], [[MovieSeries]], [[BookSeries]], [[Periodical]] and [[VideoGameSeries]]. In each case, the [[hasPart]] / [[isPartOf]] properties can be used to relate the CreativeWorkSeries to its parts. The general CreativeWorkSeries type serves largely just to organize these more specific and practical subtypes.\\n\\nIt is common for properties applicable to an item from the series to be usefully applied to the containing group. Schema.org attempts to anticipate some of these cases, but publishers should be free to apply properties of the series parts to the series as a whole wherever they seem appropriate.\n\t  "
     },
     {
       "id": "https://schema.chronicle.app/DataType",
@@ -108,6 +145,38 @@
       "comment": "A combination of date and time of day in the form [-]CCYY-MM-DDThh:mm:ss[Z|(+|-)hh:mm] (see Chapter 5.4 of ISO 8601)."
     },
     {
+      "id": "https://schema.chronicle.app/Distance",
+      "subtype_ids": [
+
+      ],
+      "see_also": "https://schema.org/Distance",
+      "comment": "Properties that take Distances as values are of the form '&lt;Number&gt; &lt;Length unit of measure&gt;'. E.g., '7 ft'."
+    },
+    {
+      "id": "https://schema.chronicle.app/Duration",
+      "subtype_ids": [
+
+      ],
+      "see_also": "https://schema.org/Duration",
+      "comment": "Quantity: Duration (use [ISO 8601 duration format](http://en.wikipedia.org/wiki/ISO_8601))."
+    },
+    {
+      "id": "https://schema.chronicle.app/Energy",
+      "subtype_ids": [
+
+      ],
+      "see_also": "https://schema.org/Energy",
+      "comment": "Properties that take Energy as values are of the form '&lt;Number&gt; &lt;Energy unit of measure&gt;'."
+    },
+    {
+      "id": "https://schema.chronicle.app/Episode",
+      "subtype_ids": [
+        "https://schema.chronicle.app/PodcastEpisode"
+      ],
+      "see_also": "https://schema.org/Episode",
+      "comment": "A media episode (e.g. TV, radio, video game) which can be part of a series or season."
+    },
+    {
       "id": "https://schema.chronicle.app/Event",
       "subtype_ids": [
 
@@ -132,6 +201,14 @@
       "comment": "The act of adding at a specific location in an ordered collection."
     },
     {
+      "id": "https://schema.chronicle.app/Intangible",
+      "subtype_ids": [
+        "https://schema.chronicle.app/Quantity"
+      ],
+      "see_also": "https://schema.org/Intangible",
+      "comment": "A utility class that serves as the umbrella for a number of 'intangible' things such as quantities, structured values, etc."
+    },
+    {
       "id": "https://schema.chronicle.app/Integer",
       "subtype_ids": [
 
@@ -148,12 +225,28 @@
       "comment": "The act of interacting with another person or organization."
     },
     {
+      "id": "https://schema.chronicle.app/LikeAction",
+      "subtype_ids": [
+
+      ],
+      "see_also": "https://schema.org/LikeAction",
+      "comment": "The act of expressing a positive sentiment about the object. An agent likes an object (a proposition, topic or theme) with participants."
+    },
+    {
       "id": "https://schema.chronicle.app/ListenAction",
       "subtype_ids": [
 
       ],
       "see_also": "https://schema.org/ListenAction",
       "comment": "The act of consuming audio content."
+    },
+    {
+      "id": "https://schema.chronicle.app/Mass",
+      "subtype_ids": [
+
+      ],
+      "see_also": "https://schema.org/Mass",
+      "comment": "Properties that take Mass as values are of the form '&lt;Number&gt; &lt;Mass unit of measure&gt;'. E.g., '7 kg'."
     },
     {
       "id": "https://schema.chronicle.app/Message",
@@ -237,6 +330,49 @@
       "comment": "Entities that have a somewhat fixed, physical extension."
     },
     {
+      "id": "https://schema.chronicle.app/PodcastEpisode",
+      "subtype_ids": [
+
+      ],
+      "see_also": "https://schema.org/PodcastEpisode",
+      "comment": "A single episode of a podcast series."
+    },
+    {
+      "id": "https://schema.chronicle.app/PodcastSeries",
+      "subtype_ids": [
+
+      ],
+      "see_also": "https://schema.org/PodcastSeries",
+      "comment": "A podcast is an episodic series of digital audio or video files which a user can download and listen to."
+    },
+    {
+      "id": "https://schema.chronicle.app/Quantity",
+      "subtype_ids": [
+        "https://schema.chronicle.app/Distance",
+        "https://schema.chronicle.app/Duration",
+        "https://schema.chronicle.app/Energy",
+        "https://schema.chronicle.app/Mass"
+      ],
+      "see_also": "https://schema.org/Quantity",
+      "comment": "Quantities such as distance, time, mass, weight, etc. Particular instances of say Mass are entities like '3 kg' or '4 milligrams'."
+    },
+    {
+      "id": "https://schema.chronicle.app/ReactAction",
+      "subtype_ids": [
+        "https://schema.chronicle.app/LikeAction"
+      ],
+      "see_also": "https://schema.org/ReactAction",
+      "comment": "The act of responding instinctively and emotionally to an object, expressing a sentiment."
+    },
+    {
+      "id": "https://schema.chronicle.app/SchoolDistrict",
+      "subtype_ids": [
+
+      ],
+      "see_also": "https://schema.org/SchoolDistrict",
+      "comment": "A School District is an administrative area for the administration of schools."
+    },
+    {
       "id": "https://schema.chronicle.app/State",
       "subtype_ids": [
 
@@ -258,6 +394,7 @@
         "https://schema.chronicle.app/Action",
         "https://schema.chronicle.app/CreativeWork",
         "https://schema.chronicle.app/Event",
+        "https://schema.chronicle.app/Intangible",
         "https://schema.chronicle.app/Organization",
         "https://schema.chronicle.app/Person",
         "https://schema.chronicle.app/Place"
@@ -324,6 +461,19 @@
       "see_also": "https://schema.org/agent"
     },
     {
+      "id": "https://schema.chronicle.app/aggregateRating",
+      "domain": [
+        "https://schema.chronicle.app/CreativeWork"
+      ],
+      "range": [
+
+      ],
+      "many": false,
+      "required": false,
+      "comment": "The overall rating, based on a collection of reviews or ratings, of the item.",
+      "see_also": "https://schema.org/aggregateRating"
+    },
+    {
       "id": "https://schema.chronicle.app/album",
       "domain": [
         "https://schema.chronicle.app/MusicGroup"
@@ -350,6 +500,20 @@
       "see_also": "https://schema.org/alternateName"
     },
     {
+      "id": "https://schema.chronicle.app/author",
+      "domain": [
+        "https://schema.chronicle.app/CreativeWork"
+      ],
+      "range": [
+        "https://schema.chronicle.app/Organization",
+        "https://schema.chronicle.app/Person"
+      ],
+      "many": true,
+      "required": false,
+      "comment": "The author of this content or rating. Please note that author is special in that HTML 5 provides a special mechanism for indicating authorship via the rel tag. That is equivalent to this and may be used interchangeably.",
+      "see_also": "https://schema.org/author"
+    },
+    {
       "id": "https://schema.chronicle.app/byArtist",
       "domain": [
         "https://schema.chronicle.app/MusicAlbum",
@@ -365,6 +529,47 @@
       "see_also": "https://schema.org/byArtist"
     },
     {
+      "id": "https://schema.chronicle.app/contentLocation",
+      "domain": [
+        "https://schema.chronicle.app/CreativeWork"
+      ],
+      "range": [
+        "https://schema.chronicle.app/Place"
+      ],
+      "many": true,
+      "required": false,
+      "comment": "The location depicted or described in the content. For example, the location in a photograph or painting.",
+      "see_also": "https://schema.org/contentLocation"
+    },
+    {
+      "id": "https://schema.chronicle.app/contributor",
+      "domain": [
+        "https://schema.chronicle.app/CreativeWork"
+      ],
+      "range": [
+        "https://schema.chronicle.app/Organization",
+        "https://schema.chronicle.app/Person"
+      ],
+      "many": true,
+      "required": false,
+      "comment": "A secondary contributor to the CreativeWork or Event.",
+      "see_also": "https://schema.org/contributor"
+    },
+    {
+      "id": "https://schema.chronicle.app/creator",
+      "domain": [
+        "https://schema.chronicle.app/CreativeWork"
+      ],
+      "range": [
+        "https://schema.chronicle.app/Organization",
+        "https://schema.chronicle.app/Person"
+      ],
+      "many": true,
+      "required": false,
+      "comment": "The creator/author of this CreativeWork. This is the same as the Author property for CreativeWork.",
+      "see_also": "https://schema.org/creator"
+    },
+    {
       "id": "https://schema.chronicle.app/description",
       "domain": [
         "https://schema.chronicle.app/Thing"
@@ -376,6 +581,19 @@
       "required": false,
       "comment": "A description of the item.",
       "see_also": "https://schema.org/description"
+    },
+    {
+      "id": "https://schema.chronicle.app/duration",
+      "domain": [
+        "https://schema.chronicle.app/Episode"
+      ],
+      "range": [
+        "https://schema.chronicle.app/Duration"
+      ],
+      "many": false,
+      "required": false,
+      "comment": "The duration of the item (movie, audio recording, event, etc.) in [ISO 8601 date format](http://en.wikipedia.org/wiki/ISO_8601).",
+      "see_also": "https://schema.org/duration"
     },
     {
       "id": "https://schema.chronicle.app/endDate",
@@ -405,6 +623,20 @@
       "see_also": "https://schema.org/endTime"
     },
     {
+      "id": "https://schema.chronicle.app/episodeNumber",
+      "domain": [
+        "https://schema.chronicle.app/Episode"
+      ],
+      "range": [
+        "https://schema.chronicle.app/Integer",
+        "https://schema.chronicle.app/Text"
+      ],
+      "many": false,
+      "required": false,
+      "comment": "Position of the episode within an ordered group of episodes.",
+      "see_also": "https://schema.org/episodeNumber"
+    },
+    {
       "id": "https://schema.chronicle.app/identifier",
       "domain": [
         "https://schema.chronicle.app/Thing"
@@ -432,6 +664,19 @@
       "see_also": "https://schema.org/inAlbum"
     },
     {
+      "id": "https://schema.chronicle.app/inLanguage",
+      "domain": [
+        "https://schema.chronicle.app/CreativeWork"
+      ],
+      "range": [
+        "https://schema.chronicle.app/Text"
+      ],
+      "many": true,
+      "required": false,
+      "comment": "The language of the content or performance or used in an action. Please use one of the language codes from the [IETF BCP 47 standard](http://tools.ietf.org/html/bcp47). See also [[availableLanguage]].",
+      "see_also": "https://schema.org/inLanguage"
+    },
+    {
       "id": "https://schema.chronicle.app/instrument",
       "domain": [
         "https://schema.chronicle.app/Action"
@@ -443,6 +688,34 @@
       "required": false,
       "comment": "The object that helped the agent perform the action. E.g. John wrote a book with *a pen*.",
       "see_also": "https://schema.org/instrument"
+    },
+    {
+      "id": "https://schema.chronicle.app/isPartOf",
+      "domain": [
+        "https://schema.chronicle.app/CreativeWork"
+      ],
+      "range": [
+        "https://schema.chronicle.app/CreativeWork",
+        "https://schema.chronicle.app/URL"
+      ],
+      "many": true,
+      "required": false,
+      "comment": "Indicates an item or CreativeWork that this item, or CreativeWork (in some sense), is part of.",
+      "see_also": "https://schema.org/isPartOf"
+    },
+    {
+      "id": "https://schema.chronicle.app/keywords",
+      "domain": [
+        "https://schema.chronicle.app/CreativeWork"
+      ],
+      "range": [
+        "https://schema.chronicle.app/Text",
+        "https://schema.chronicle.app/URL"
+      ],
+      "many": true,
+      "required": false,
+      "comment": "Keywords or tags used to describe some item. Multiple textual entries in a keywords list are typically delimited by commas, or by repeating the property.",
+      "see_also": "https://schema.org/keywords"
     },
     {
       "id": "https://schema.chronicle.app/location",
@@ -460,6 +733,19 @@
       "see_also": "https://schema.org/location"
     },
     {
+      "id": "https://schema.chronicle.app/mentions",
+      "domain": [
+        "https://schema.chronicle.app/CreativeWork"
+      ],
+      "range": [
+        "https://schema.chronicle.app/Thing"
+      ],
+      "many": true,
+      "required": false,
+      "comment": "Indicates that the CreativeWork contains a reference to, but is not necessarily about a concept.",
+      "see_also": "https://schema.org/mentions"
+    },
+    {
       "id": "https://schema.chronicle.app/name",
       "domain": [
         "https://schema.chronicle.app/Thing"
@@ -473,6 +759,19 @@
       "see_also": "https://schema.org/name"
     },
     {
+      "id": "https://schema.chronicle.app/numberOfPages",
+      "domain": [
+        "https://schema.chronicle.app/Book"
+      ],
+      "range": [
+        "https://schema.chronicle.app/Integer"
+      ],
+      "many": false,
+      "required": false,
+      "comment": "The number of pages in the book.",
+      "see_also": "https://schema.org/numberOfPages"
+    },
+    {
       "id": "https://schema.chronicle.app/object",
       "domain": [
         "https://schema.chronicle.app/Action"
@@ -484,6 +783,60 @@
       "required": false,
       "comment": "The object upon which the action is carried out, whose state is kept intact or changed. Also known as the semantic roles patient, affected or undergoer (which change their state) or theme (which doesn't). E.g. John read *a book*.",
       "see_also": "https://schema.org/object"
+    },
+    {
+      "id": "https://schema.chronicle.app/partOfSeason",
+      "domain": [
+        "https://schema.chronicle.app/Episode"
+      ],
+      "range": [
+
+      ],
+      "many": false,
+      "required": false,
+      "comment": "The season to which this episode belongs.",
+      "see_also": "https://schema.org/partOfSeason"
+    },
+    {
+      "id": "https://schema.chronicle.app/partOfSeries",
+      "domain": [
+        "https://schema.chronicle.app/Episode"
+      ],
+      "range": [
+        "https://schema.chronicle.app/CreativeWorkSeries"
+      ],
+      "many": false,
+      "required": false,
+      "comment": "The series to which this episode or season belongs.",
+      "see_also": "https://schema.org/partOfSeries"
+    },
+    {
+      "id": "https://schema.chronicle.app/producer",
+      "domain": [
+        "https://schema.chronicle.app/CreativeWork"
+      ],
+      "range": [
+        "https://schema.chronicle.app/Organization",
+        "https://schema.chronicle.app/Person"
+      ],
+      "many": true,
+      "required": false,
+      "comment": "The person or organization who produced the work (e.g. music album, movie, TV/radio series etc.).",
+      "see_also": "https://schema.org/producer"
+    },
+    {
+      "id": "https://schema.chronicle.app/publisher",
+      "domain": [
+        "https://schema.chronicle.app/CreativeWork"
+      ],
+      "range": [
+        "https://schema.chronicle.app/Organization",
+        "https://schema.chronicle.app/Person"
+      ],
+      "many": true,
+      "required": false,
+      "comment": "The publisher of the creative work.",
+      "see_also": "https://schema.org/publisher"
     },
     {
       "id": "https://schema.chronicle.app/recipient",
@@ -636,6 +989,19 @@
       "required": false,
       "comment": "URL of the item.",
       "see_also": "https://schema.org/url"
+    },
+    {
+      "id": "https://schema.chronicle.app/webFeed",
+      "domain": [
+        "https://schema.chronicle.app/PodcastSeries"
+      ],
+      "range": [
+        "https://schema.chronicle.app/URL"
+      ],
+      "many": false,
+      "required": false,
+      "comment": "The URL for a feed, e.g. associated with a podcast series, blog, or series of date-stamped updates. This is usually RSS or Atom.",
+      "see_also": "https://schema.org/webFeed"
     }
   ]
 }
