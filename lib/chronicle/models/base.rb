@@ -28,7 +28,7 @@ module Chronicle::Models
         Chronicle::Schema::Types::Array.of(
           Chronicle::Schema::Types::Symbol
         )
-      ).optional.default([]).meta(
+      ).optional.default([].freeze).meta(
         many: false, required: false
       )
     )
