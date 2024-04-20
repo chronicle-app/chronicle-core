@@ -585,7 +585,8 @@
     {
       "id": "https://schema.chronicle.app/duration",
       "domain": [
-        "https://schema.chronicle.app/Episode"
+        "https://schema.chronicle.app/Episode",
+        "https://schema.chronicle.app/MusicRecording"
       ],
       "range": [
         "https://schema.chronicle.app/Duration"

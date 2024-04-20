@@ -69,6 +69,7 @@ pick_type :Thing do
     pick_type :MusicRecording do
       apply_property :inAlbum, many: true
       apply_property :byArtist, many: true
+      apply_property :duration
     end
 
     pick_type :Message do

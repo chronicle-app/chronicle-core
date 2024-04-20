@@ -345,7 +345,8 @@
   rdfs:comment "The duration of the item (movie, audio recording, event, etc.) in [ISO 8601 date format](http://en.wikipedia.org/wiki/ISO_8601).";
   rdfs:seeAlso schemaorg:duration;
   owl:maxCardinality 1;
-  :domainIncludes :Episode;
+  :domainIncludes :Episode,
+    :MusicRecording;
   :rangeIncludes :Duration .
 
 :endDate a rdf:Property;
