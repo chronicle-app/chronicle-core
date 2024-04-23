@@ -11,7 +11,6 @@ namespace :generate do
     version = args[:version] || latest_version
     Rake::Task['generate:generate'].invoke(version)
     Rake::Task['generate:cache_schema'].invoke(version)
-    # Rake::Task['generate:test'].invoke(version)
   end
 
   desc 'Generate schema'
@@ -52,12 +51,6 @@ namespace :generate do
 
     File.write(output_filename, output_str)
   end
-
-  # desc 'test'
-  # task :test, :version do |_t, args|
-  #   require 'chronicle/models'
-  #   binding.pry
-  # end
 
   # Highest version schema file in schema/ directory
   def latest_version
