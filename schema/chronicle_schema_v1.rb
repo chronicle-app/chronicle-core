@@ -16,7 +16,6 @@ pick_type :Thing do
       end
     end
 
-    # pick_type :SearchAction
     pick_type :ConsumeAction do
       pick_type :ListenAction
     end
@@ -38,7 +37,6 @@ pick_type :Thing do
     apply_property :location, many: true
     apply_property :startDate
     apply_property :endDate
-    # pick_all_subtypes
   end
 
   pick_type :CreativeWork do
@@ -101,8 +99,7 @@ pick_type :Thing do
     end
   end
 
-  pick_type :Organization do
-  end
+  pick_type :Organization
 
   pick_type :Person do
     apply_property :address
