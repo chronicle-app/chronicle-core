@@ -1,11 +1,16 @@
 require 'simplecov'
 SimpleCov.start
 
-require "bundler/setup"
+require 'support/matchers/valid_contract_matcher'
+require 'support/shared_contexts'
 
-require "chronicle/core"
-require "chronicle/schema"
-require "chronicle/serialization"
+require 'bundler/setup'
+
+require 'chronicle/core'
+# require "chronicle/schema"
+# require "chronicle/serialization"
+
+$LOAD_PATH.unshift File.expand_path('../lib', __dir__)
 
 RSpec.configure do |config|
   # Disable RSpec exposing methods globally on `Module` and `main`
@@ -16,4 +21,7 @@ RSpec.configure do |config|
   config.expect_with :rspec do |c|
     c.syntax = :expect
   end
+
+  config.filter_run focus: true
+  config.run_all_when_everything_filtered = true
 end

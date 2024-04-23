@@ -1,5 +1,19 @@
+AllCops:
+  NewCops: enable
+  TargetRubyVersion: 3.1
+  SuggestExtensions: false
+
 Style/FrozenStringLiteralComment:
   Enabled: false
 
-StringLiterals:
+Metrics:
   Enabled: false
+
+Layout/ArgumentAlignment:
+  EnforcedStyle: with_fixed_indentation
+
+Layout/MultilineMethodCallIndentation:
+  EnforcedStyle: indented
+
+Gemspec/DevelopmentDependencies:
+  EnforcedStyle: gemspec
