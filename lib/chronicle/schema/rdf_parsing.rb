@@ -1,5 +1,7 @@
-module Chronicle::Schema
-  module RDFParsing
+module Chronicle
+  module Schema
+    module RDFParsing
+    end
   end
 end
 

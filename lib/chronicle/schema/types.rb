@@ -1,7 +1,9 @@
 require 'dry-types'
 
-module Chronicle::Schema
-  module Types
-    include Dry.Types()
+module Chronicle
+  module Schema
+    module Types
+      include Dry.Types()
+    end
   end
 end
