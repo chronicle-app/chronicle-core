@@ -11,6 +11,9 @@ There are a few top-level properties that are unique to Chronicle:
 - `sourceId` - the unique identifier of the record in the source system
 - `slug` - a human-readable identifier for the record (e.g. `bridge-over-troubled-water`)
 
+To view all valid types and properties in Chronicle Schema, see the `schema/` diretory.
+
+TODO: generate doc files from schema automatically.
 
 To update the schema, edit `schema/chronicle_schema_VERSION.rb` and run `rake schema:generate`.
 
@@ -33,7 +36,7 @@ song = Chronicle::Models::MusicRecording.new do |r|
 end
 
 puts song.to_json
-# => {"@type":"MusicRecording","name":"Bridge Over Troubled Water","inAlbum":"Aretha Live at Fillmore West","byArtist":[{"@type":"MusicGroup","name":"Aretha Franklin"}],"duration":"PT5M49S","source":"spotify","sourceId":"0e0isrwFsu5W0KJqxkfPpX?si=3d2f08d6d63149bb"}
+# => {"@type":"MusicRecording","name":"Bridge Over Troubled Water","in_album":"Aretha Live at Fillmore West","by_artist":[{"@type":"MusicGroup","name":"Aretha Franklin"}],"duration":"PT5M49S","source":"spotify","sourceId":"0e0isrwFsu5W0KJqxkfPpX?si=3d2f08d6d63149bb"}
 ```
 
 ## Validation
