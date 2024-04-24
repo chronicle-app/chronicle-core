@@ -1,6 +1,6 @@
-# Chronicle::Core
+[![Gem Version](https://badge.fury.io/rb/chronicle-core.svg)](https://badge.fury.io/rb/chronicle-core) [![Ruby](https://github.com/chronicle-app/chronicle-core/actions/workflows/ruby.yml/badge.svg)](https://github.com/chronicle-app/chronicle-core/actions/workflows/ruby.yml) [![Docs](https://img.shields.io/badge/docs-rubydoc.info-blue)](https://www.rubydoc.info/gems/chronicle-core/)
 
-Home of some shared code for [Chronicle](https://github.com/chronicle-app/). 
+Core schema-related code for [Chronicle](https://github.com/chronicle-app/)
 
 ## Schema
 
