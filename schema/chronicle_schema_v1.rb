@@ -1,5 +1,5 @@
 version 1
-set_base_graph 'schema.org', '22.0'
+set_base_graph 'schema.org', '26.0'
 
 pick_type :Thing do
   pick_type :Action do
@@ -97,6 +97,12 @@ pick_type :Thing do
       pick_type :Energy
       pick_type :Mass
     end
+
+    pick_type :StructuredValue do
+      pick_type :ContactPoint do
+        pick_type :PostalAddress
+      end
+    end
   end
 
   pick_type :Organization
@@ -117,6 +123,10 @@ pick_type :Thing do
     pick_type :AdministrativeArea do
       pick_all_subtypes
     end
+
+    apply_property :address
+    apply_property :latitude
+    apply_property :longitude
   end
 
   apply_property :alternateName

@@ -88,6 +88,14 @@
       "comment": "The act of ingesting information/resources/food."
     },
     {
+      "id": "https://schema.chronicle.app/ContactPoint",
+      "subtype_ids": [
+        "https://schema.chronicle.app/PostalAddress"
+      ],
+      "see_also": "https://schema.org/ContactPoint",
+      "comment": "A contact point&#x2014;for example, a Customer Complaints department."
+    },
+    {
       "id": "https://schema.chronicle.app/Country",
       "subtype_ids": [
 
@@ -203,7 +211,8 @@
     {
       "id": "https://schema.chronicle.app/Intangible",
       "subtype_ids": [
-        "https://schema.chronicle.app/Quantity"
+        "https://schema.chronicle.app/Quantity",
+        "https://schema.chronicle.app/StructuredValue"
       ],
       "see_also": "https://schema.org/Intangible",
       "comment": "A utility class that serves as the umbrella for a number of 'intangible' things such as quantities, structured values, etc."
@@ -346,6 +355,14 @@
       "comment": "A podcast is an episodic series of digital audio or video files which a user can download and listen to."
     },
     {
+      "id": "https://schema.chronicle.app/PostalAddress",
+      "subtype_ids": [
+
+      ],
+      "see_also": "https://schema.org/PostalAddress",
+      "comment": "The mailing address."
+    },
+    {
       "id": "https://schema.chronicle.app/Quantity",
       "subtype_ids": [
         "https://schema.chronicle.app/Distance",
@@ -379,6 +396,14 @@
       ],
       "see_also": "https://schema.org/State",
       "comment": "A state or province of a country."
+    },
+    {
+      "id": "https://schema.chronicle.app/StructuredValue",
+      "subtype_ids": [
+        "https://schema.chronicle.app/ContactPoint"
+      ],
+      "see_also": "https://schema.org/StructuredValue",
+      "comment": "Structured values are used when the value of a property has a more complex structure than simply being a textual value or a reference to another thing."
     },
     {
       "id": "https://schema.chronicle.app/Text",
@@ -436,9 +461,11 @@
     {
       "id": "https://schema.chronicle.app/address",
       "domain": [
-        "https://schema.chronicle.app/Person"
+        "https://schema.chronicle.app/Person",
+        "https://schema.chronicle.app/Place"
       ],
       "range": [
+        "https://schema.chronicle.app/PostalAddress",
         "https://schema.chronicle.app/Text"
       ],
       "many": false,
@@ -719,6 +746,20 @@
       "see_also": "https://schema.org/keywords"
     },
     {
+      "id": "https://schema.chronicle.app/latitude",
+      "domain": [
+        "https://schema.chronicle.app/Place"
+      ],
+      "range": [
+        "https://schema.chronicle.app/Number",
+        "https://schema.chronicle.app/Text"
+      ],
+      "many": false,
+      "required": false,
+      "comment": "The latitude of a location. For example ```37.42242``` ([WGS 84](https://en.wikipedia.org/wiki/World_Geodetic_System)).",
+      "see_also": "https://schema.org/latitude"
+    },
+    {
       "id": "https://schema.chronicle.app/location",
       "domain": [
         "https://schema.chronicle.app/Event",
@@ -726,12 +767,27 @@
       ],
       "range": [
         "https://schema.chronicle.app/Place",
+        "https://schema.chronicle.app/PostalAddress",
         "https://schema.chronicle.app/Text"
       ],
       "many": true,
       "required": false,
       "comment": "The location of, for example, where an event is happening, where an organization is located, or where an action takes place.",
       "see_also": "https://schema.org/location"
+    },
+    {
+      "id": "https://schema.chronicle.app/longitude",
+      "domain": [
+        "https://schema.chronicle.app/Place"
+      ],
+      "range": [
+        "https://schema.chronicle.app/Number",
+        "https://schema.chronicle.app/Text"
+      ],
+      "many": false,
+      "required": false,
+      "comment": "The longitude of a location. For example ```-122.08585``` ([WGS 84](https://en.wikipedia.org/wiki/World_Geodetic_System)).",
+      "see_also": "https://schema.org/longitude"
     },
     {
       "id": "https://schema.chronicle.app/mentions",
@@ -845,6 +901,7 @@
         "https://schema.chronicle.app/Message"
       ],
       "range": [
+        "https://schema.chronicle.app/ContactPoint",
         "https://schema.chronicle.app/Organization",
         "https://schema.chronicle.app/Person"
       ],

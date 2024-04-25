@@ -61,6 +61,11 @@
   rdfs:seeAlso schemaorg:ConsumeAction;
   rdfs:subClassOf :Action .
 
+:ContactPoint a rdfs:Class;
+  rdfs:comment "A contact point&#x2014;for example, a Customer Complaints department.";
+  rdfs:seeAlso schemaorg:ContactPoint;
+  rdfs:subClassOf :StructuredValue .
+
 :Country a rdfs:Class;
   rdfs:comment "A country.";
   rdfs:seeAlso schemaorg:Country;
@@ -216,6 +221,11 @@
   rdfs:seeAlso schemaorg:PodcastSeries;
   rdfs:subClassOf :CreativeWorkSeries .
 
+:PostalAddress a rdfs:Class;
+  rdfs:comment "The mailing address.";
+  rdfs:seeAlso schemaorg:PostalAddress;
+  rdfs:subClassOf :ContactPoint .
+
 :Quantity a rdfs:Class;
   rdfs:comment "Quantities such as distance, time, mass, weight, etc. Particular instances of say Mass are entities like '3 kg' or '4 milligrams'.";
   rdfs:seeAlso schemaorg:Quantity;
@@ -235,6 +245,11 @@
   rdfs:comment "A state or province of a country.";
   rdfs:seeAlso schemaorg:State;
   rdfs:subClassOf :AdministrativeArea .
+
+:StructuredValue a rdfs:Class;
+  rdfs:comment "Structured values are used when the value of a property has a more complex structure than simply being a textual value or a reference to another thing.";
+  rdfs:seeAlso schemaorg:StructuredValue;
+  rdfs:subClassOf :Intangible .
 
 :Text a rdfs:Class;
   rdfs:comment "Data type: Text.";
@@ -268,8 +283,10 @@
   rdfs:comment "Physical address of the item.";
   rdfs:seeAlso schemaorg:address;
   owl:maxCardinality 1;
-  :domainIncludes :Person;
-  :rangeIncludes :Text .
+  :domainIncludes :Person,
+    :Place;
+  :rangeIncludes :PostalAddress,
+    :Text .
 
 :agent a rdf:Property;
   rdfs:comment "The direct performer or driver of the action (animate or inanimate). E.g. *John* wrote a book.";
@@ -414,12 +431,29 @@
   :rangeIncludes :Text,
     :URL .
 
+:latitude a rdf:Property;
+  rdfs:comment "The latitude of a location. For example ```37.42242``` ([WGS 84](https://en.wikipedia.org/wiki/World_Geodetic_System)).";
+  rdfs:seeAlso schemaorg:latitude;
+  owl:maxCardinality 1;
+  :domainIncludes :Place;
+  :rangeIncludes :Number,
+    :Text .
+
 :location a rdf:Property;
   rdfs:comment "The location of, for example, where an event is happening, where an organization is located, or where an action takes place.";
   rdfs:seeAlso schemaorg:location;
   :domainIncludes :Event,
     :Organization;
   :rangeIncludes :Place,
+    :PostalAddress,
+    :Text .
+
+:longitude a rdf:Property;
+  rdfs:comment "The longitude of a location. For example ```-122.08585``` ([WGS 84](https://en.wikipedia.org/wiki/World_Geodetic_System)).";
+  rdfs:seeAlso schemaorg:longitude;
+  owl:maxCardinality 1;
+  :domainIncludes :Place;
+  :rangeIncludes :Number,
     :Text .
 
 :mentions a rdf:Property;
@@ -480,7 +514,8 @@
   rdfs:comment "A sub property of participant. The participant who is at the receiving end of the action.";
   rdfs:seeAlso schemaorg:recipient;
   :domainIncludes :Message;
-  :rangeIncludes :Organization,
+  :rangeIncludes :ContactPoint,
+    :Organization,
     :Person .
 
 :result a rdf:Property;
