@@ -288,6 +288,28 @@
   :rangeIncludes :PostalAddress,
     :Text .
 
+:addressCountry a rdf:Property;
+  rdfs:comment "The country. For example, USA. You can also provide the two-letter [ISO 3166-1 alpha-2 country code](http://en.wikipedia.org/wiki/ISO_3166-1).";
+  rdfs:seeAlso schemaorg:addressCountry;
+  owl:maxCardinality 1;
+  :domainIncludes :PostalAddress;
+  :rangeIncludes :Country,
+    :Text .
+
+:addressLocality a rdf:Property;
+  rdfs:comment "The locality in which the street address is, and which is in the region. For example, Mountain View.";
+  rdfs:seeAlso schemaorg:addressLocality;
+  owl:maxCardinality 1;
+  :domainIncludes :PostalAddress;
+  :rangeIncludes :Text .
+
+:addressRegion a rdf:Property;
+  rdfs:comment "The region in which the locality is, and which is in the country. For example, California or another appropriate first-level [Administrative division](https://en.wikipedia.org/wiki/List_of_administrative_divisions_by_country).";
+  rdfs:seeAlso schemaorg:addressRegion;
+  owl:maxCardinality 1;
+  :domainIncludes :PostalAddress;
+  :rangeIncludes :Text .
+
 :agent a rdf:Property;
   rdfs:comment "The direct performer or driver of the action (animate or inanimate). E.g. *John* wrote a book.";
   rdfs:seeAlso schemaorg:agent;
@@ -496,6 +518,20 @@
   :domainIncludes :Episode;
   :rangeIncludes :CreativeWorkSeries .
 
+:postOfficeBoxNumber a rdf:Property;
+  rdfs:comment "The post office box number for PO box addresses.";
+  rdfs:seeAlso schemaorg:postOfficeBoxNumber;
+  owl:maxCardinality 1;
+  :domainIncludes :PostalAddress;
+  :rangeIncludes :Text .
+
+:postalCode a rdf:Property;
+  rdfs:comment "The postal code. For example, 94043.";
+  rdfs:seeAlso schemaorg:postalCode;
+  owl:maxCardinality 1;
+  :domainIncludes :PostalAddress;
+  :rangeIncludes :Text .
+
 :producer a rdf:Property;
   rdfs:comment "The person or organization who produced the work (e.g. music album, movie, TV/radio series etc.).";
   rdfs:seeAlso schemaorg:producer;
@@ -567,6 +603,13 @@
   owl:maxCardinality 1;
   :domainIncludes :Action;
   :rangeIncludes :DateTime .
+
+:streetAddress a rdf:Property;
+  rdfs:comment "The street address. For example, 1600 Amphitheatre Pkwy.";
+  rdfs:seeAlso schemaorg:streetAddress;
+  owl:maxCardinality 1;
+  :domainIncludes :PostalAddress;
+  :rangeIncludes :Text .
 
 :subjectOf a rdf:Property;
   rdfs:comment "A CreativeWork or Event about this Thing.";

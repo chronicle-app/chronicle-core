@@ -100,7 +100,14 @@ pick_type :Thing do
 
     pick_type :StructuredValue do
       pick_type :ContactPoint do
-        pick_type :PostalAddress
+        pick_type :PostalAddress do
+          apply_property :addressCountry
+          apply_property :addressLocality
+          apply_property :addressRegion
+          apply_property :postOfficeBoxNumber
+          apply_property :postalCode
+          apply_property :streetAddress
+        end
       end
     end
   end

@@ -474,6 +474,46 @@
       "see_also": "https://schema.org/address"
     },
     {
+      "id": "https://schema.chronicle.app/addressCountry",
+      "domain": [
+        "https://schema.chronicle.app/PostalAddress"
+      ],
+      "range": [
+        "https://schema.chronicle.app/Country",
+        "https://schema.chronicle.app/Text"
+      ],
+      "many": false,
+      "required": false,
+      "comment": "The country. For example, USA. You can also provide the two-letter [ISO 3166-1 alpha-2 country code](http://en.wikipedia.org/wiki/ISO_3166-1).",
+      "see_also": "https://schema.org/addressCountry"
+    },
+    {
+      "id": "https://schema.chronicle.app/addressLocality",
+      "domain": [
+        "https://schema.chronicle.app/PostalAddress"
+      ],
+      "range": [
+        "https://schema.chronicle.app/Text"
+      ],
+      "many": false,
+      "required": false,
+      "comment": "The locality in which the street address is, and which is in the region. For example, Mountain View.",
+      "see_also": "https://schema.org/addressLocality"
+    },
+    {
+      "id": "https://schema.chronicle.app/addressRegion",
+      "domain": [
+        "https://schema.chronicle.app/PostalAddress"
+      ],
+      "range": [
+        "https://schema.chronicle.app/Text"
+      ],
+      "many": false,
+      "required": false,
+      "comment": "The region in which the locality is, and which is in the country. For example, California or another appropriate first-level [Administrative division](https://en.wikipedia.org/wiki/List_of_administrative_divisions_by_country).",
+      "see_also": "https://schema.org/addressRegion"
+    },
+    {
       "id": "https://schema.chronicle.app/agent",
       "domain": [
         "https://schema.chronicle.app/Action"
@@ -868,6 +908,32 @@
       "see_also": "https://schema.org/partOfSeries"
     },
     {
+      "id": "https://schema.chronicle.app/postOfficeBoxNumber",
+      "domain": [
+        "https://schema.chronicle.app/PostalAddress"
+      ],
+      "range": [
+        "https://schema.chronicle.app/Text"
+      ],
+      "many": false,
+      "required": false,
+      "comment": "The post office box number for PO box addresses.",
+      "see_also": "https://schema.org/postOfficeBoxNumber"
+    },
+    {
+      "id": "https://schema.chronicle.app/postalCode",
+      "domain": [
+        "https://schema.chronicle.app/PostalAddress"
+      ],
+      "range": [
+        "https://schema.chronicle.app/Text"
+      ],
+      "many": false,
+      "required": false,
+      "comment": "The postal code. For example, 94043.",
+      "see_also": "https://schema.org/postalCode"
+    },
+    {
       "id": "https://schema.chronicle.app/producer",
       "domain": [
         "https://schema.chronicle.app/CreativeWork"
@@ -1007,6 +1073,19 @@
       "required": false,
       "comment": "The startTime of something. For a reserved event or service (e.g. FoodEstablishmentReservation), the time that it is expected to start. For actions that span a period of time, when the action was performed. E.g. John wrote a book from *January* to December. For media, including audio and video, it's the time offset of the start of a clip within a larger file.\\n\\nNote that Event uses startDate/endDate instead of startTime/endTime, even when describing dates with times. This situation may be clarified in future revisions.",
       "see_also": "https://schema.org/startTime"
+    },
+    {
+      "id": "https://schema.chronicle.app/streetAddress",
+      "domain": [
+        "https://schema.chronicle.app/PostalAddress"
+      ],
+      "range": [
+        "https://schema.chronicle.app/Text"
+      ],
+      "many": false,
+      "required": false,
+      "comment": "The street address. For example, 1600 Amphitheatre Pkwy.",
+      "see_also": "https://schema.org/streetAddress"
     },
     {
       "id": "https://schema.chronicle.app/subjectOf",
