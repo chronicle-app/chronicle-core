@@ -59,11 +59,22 @@ pick_type :Thing do
       apply_property :episodeNumber
     end
 
+    pick_type :MediaObject do
+      pick_type :AudioObject
+      pick_type :ImageObject
+      pick_type :VideoObject
+
+      apply_property :duration
+      apply_property :width
+      apply_property :height
+    end
+
     pick_type :MusicPlaylist do
       pick_type :MusicAlbum do
         apply_property :byArtist, many: true
       end
     end
+
     pick_type :MusicRecording do
       apply_property :inAlbum, many: true
       apply_property :byArtist, many: true
@@ -109,6 +120,9 @@ pick_type :Thing do
           apply_property :streetAddress
         end
       end
+      pick_type :QuantitativeValue do
+        apply_property :value
+      end
     end
   end
 
@@ -139,6 +153,7 @@ pick_type :Thing do
   apply_property :alternateName
   apply_property :description
   apply_property :identifier
+  apply_property :image
   apply_property :name
   apply_property :subjectOf, many: true
   apply_property :url

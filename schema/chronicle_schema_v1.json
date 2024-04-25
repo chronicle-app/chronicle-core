@@ -40,6 +40,14 @@
       "comment": "The act of forming one's opinion, reaction or sentiment."
     },
     {
+      "id": "https://schema.chronicle.app/AudioObject",
+      "subtype_ids": [
+
+      ],
+      "see_also": "https://schema.org/AudioObject",
+      "comment": "An audio file."
+    },
+    {
       "id": "https://schema.chronicle.app/Book",
       "subtype_ids": [
 
@@ -109,6 +117,7 @@
         "https://schema.chronicle.app/Book",
         "https://schema.chronicle.app/CreativeWorkSeries",
         "https://schema.chronicle.app/Episode",
+        "https://schema.chronicle.app/MediaObject",
         "https://schema.chronicle.app/Message",
         "https://schema.chronicle.app/MusicPlaylist",
         "https://schema.chronicle.app/MusicRecording"
@@ -201,6 +210,14 @@
       "comment": "Data type: Floating number."
     },
     {
+      "id": "https://schema.chronicle.app/ImageObject",
+      "subtype_ids": [
+
+      ],
+      "see_also": "https://schema.org/ImageObject",
+      "comment": "An image file."
+    },
+    {
       "id": "https://schema.chronicle.app/InsertAction",
       "subtype_ids": [
 
@@ -256,6 +273,16 @@
       ],
       "see_also": "https://schema.org/Mass",
       "comment": "Properties that take Mass as values are of the form '&lt;Number&gt; &lt;Mass unit of measure&gt;'. E.g., '7 kg'."
+    },
+    {
+      "id": "https://schema.chronicle.app/MediaObject",
+      "subtype_ids": [
+        "https://schema.chronicle.app/AudioObject",
+        "https://schema.chronicle.app/ImageObject",
+        "https://schema.chronicle.app/VideoObject"
+      ],
+      "see_also": "https://schema.org/MediaObject",
+      "comment": "A media object, such as an image, video, audio, or text object embedded in a web page or a downloadable dataset i.e. DataDownload. Note that a creative work may have many media objects associated with it on the same web page. For example, a page about a single song (MusicRecording) may have a music video (VideoObject), and a high and low bandwidth audio stream (2 AudioObject's)."
     },
     {
       "id": "https://schema.chronicle.app/Message",
@@ -363,6 +390,14 @@
       "comment": "The mailing address."
     },
     {
+      "id": "https://schema.chronicle.app/QuantitativeValue",
+      "subtype_ids": [
+
+      ],
+      "see_also": "https://schema.org/QuantitativeValue",
+      "comment": " A point value or interval for product characteristics and other purposes."
+    },
+    {
       "id": "https://schema.chronicle.app/Quantity",
       "subtype_ids": [
         "https://schema.chronicle.app/Distance",
@@ -400,7 +435,8 @@
     {
       "id": "https://schema.chronicle.app/StructuredValue",
       "subtype_ids": [
-        "https://schema.chronicle.app/ContactPoint"
+        "https://schema.chronicle.app/ContactPoint",
+        "https://schema.chronicle.app/QuantitativeValue"
       ],
       "see_also": "https://schema.org/StructuredValue",
       "comment": "Structured values are used when the value of a property has a more complex structure than simply being a textual value or a reference to another thing."
@@ -442,6 +478,14 @@
       ],
       "see_also": "https://schema.org/UpdateAction",
       "comment": "The act of managing by changing/editing the state of the object."
+    },
+    {
+      "id": "https://schema.chronicle.app/VideoObject",
+      "subtype_ids": [
+
+      ],
+      "see_also": "https://schema.org/VideoObject",
+      "comment": "A video file."
     }
   ],
   "properties": [
@@ -653,6 +697,7 @@
       "id": "https://schema.chronicle.app/duration",
       "domain": [
         "https://schema.chronicle.app/Episode",
+        "https://schema.chronicle.app/MediaObject",
         "https://schema.chronicle.app/MusicRecording"
       ],
       "range": [
@@ -705,6 +750,20 @@
       "see_also": "https://schema.org/episodeNumber"
     },
     {
+      "id": "https://schema.chronicle.app/height",
+      "domain": [
+        "https://schema.chronicle.app/MediaObject"
+      ],
+      "range": [
+        "https://schema.chronicle.app/Distance",
+        "https://schema.chronicle.app/QuantitativeValue"
+      ],
+      "many": false,
+      "required": false,
+      "comment": "The height of the item.",
+      "see_also": "https://schema.org/height"
+    },
+    {
       "id": "https://schema.chronicle.app/identifier",
       "domain": [
         "https://schema.chronicle.app/Thing"
@@ -717,6 +776,20 @@
       "required": false,
       "comment": "The identifier property represents any kind of identifier for any kind of [[Thing]], such as ISBNs, GTIN codes, UUIDs etc. Schema.org provides dedicated properties for representing many of these, either as textual strings or as URL (URI) links. See [background notes](/docs/datamodel.html#identifierBg) for more details.\n        ",
       "see_also": "https://schema.org/identifier"
+    },
+    {
+      "id": "https://schema.chronicle.app/image",
+      "domain": [
+        "https://schema.chronicle.app/Thing"
+      ],
+      "range": [
+        "https://schema.chronicle.app/ImageObject",
+        "https://schema.chronicle.app/URL"
+      ],
+      "many": false,
+      "required": false,
+      "comment": "An image of the item. This can be a [[URL]] or a fully described [[ImageObject]].",
+      "see_also": "https://schema.org/image"
     },
     {
       "id": "https://schema.chronicle.app/inAlbum",
@@ -1128,6 +1201,22 @@
       "see_also": "https://schema.org/url"
     },
     {
+      "id": "https://schema.chronicle.app/value",
+      "domain": [
+        "https://schema.chronicle.app/QuantitativeValue"
+      ],
+      "range": [
+        "https://schema.chronicle.app/Boolean",
+        "https://schema.chronicle.app/Number",
+        "https://schema.chronicle.app/StructuredValue",
+        "https://schema.chronicle.app/Text"
+      ],
+      "many": false,
+      "required": false,
+      "comment": "The value of a [[QuantitativeValue]] (including [[Observation]]) or property value node.\\n\\n* For [[QuantitativeValue]] and [[MonetaryAmount]], the recommended type for values is 'Number'.\\n* For [[PropertyValue]], it can be 'Text', 'Number', 'Boolean', or 'StructuredValue'.\\n* Use values from 0123456789 (Unicode 'DIGIT ZERO' (U+0030) to 'DIGIT NINE' (U+0039)) rather than superficially similar Unicode symbols.\\n* Use '.' (Unicode 'FULL STOP' (U+002E)) rather than ',' to indicate a decimal point. Avoid using these symbols as a readability separator.",
+      "see_also": "https://schema.org/value"
+    },
+    {
       "id": "https://schema.chronicle.app/webFeed",
       "domain": [
         "https://schema.chronicle.app/PodcastSeries"
@@ -1139,6 +1228,20 @@
       "required": false,
       "comment": "The URL for a feed, e.g. associated with a podcast series, blog, or series of date-stamped updates. This is usually RSS or Atom.",
       "see_also": "https://schema.org/webFeed"
+    },
+    {
+      "id": "https://schema.chronicle.app/width",
+      "domain": [
+        "https://schema.chronicle.app/MediaObject"
+      ],
+      "range": [
+        "https://schema.chronicle.app/Distance",
+        "https://schema.chronicle.app/QuantitativeValue"
+      ],
+      "many": false,
+      "required": false,
+      "comment": "The width of the item.",
+      "see_also": "https://schema.org/width"
     }
   ]
 }
