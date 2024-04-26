@@ -90,7 +90,11 @@
     {
       "id": "https://schema.chronicle.app/ConsumeAction",
       "subtype_ids": [
-        "https://schema.chronicle.app/ListenAction"
+        "https://schema.chronicle.app/ListenAction",
+        "https://schema.chronicle.app/ReadAction",
+        "https://schema.chronicle.app/UseAction",
+        "https://schema.chronicle.app/ViewAction",
+        "https://schema.chronicle.app/WatchAction"
       ],
       "see_also": "https://schema.org/ConsumeAction",
       "comment": "The act of ingesting information/resources/food."
@@ -417,6 +421,14 @@
       "comment": "The act of responding instinctively and emotionally to an object, expressing a sentiment."
     },
     {
+      "id": "https://schema.chronicle.app/ReadAction",
+      "subtype_ids": [
+
+      ],
+      "see_also": "https://schema.org/ReadAction",
+      "comment": "The act of consuming written content."
+    },
+    {
       "id": "https://schema.chronicle.app/SchoolDistrict",
       "subtype_ids": [
 
@@ -480,12 +492,36 @@
       "comment": "The act of managing by changing/editing the state of the object."
     },
     {
+      "id": "https://schema.chronicle.app/UseAction",
+      "subtype_ids": [
+
+      ],
+      "see_also": "https://schema.org/UseAction",
+      "comment": "The act of applying an object to its intended purpose."
+    },
+    {
       "id": "https://schema.chronicle.app/VideoObject",
       "subtype_ids": [
 
       ],
       "see_also": "https://schema.org/VideoObject",
       "comment": "A video file."
+    },
+    {
+      "id": "https://schema.chronicle.app/ViewAction",
+      "subtype_ids": [
+
+      ],
+      "see_also": "https://schema.org/ViewAction",
+      "comment": "The act of consuming static visual content."
+    },
+    {
+      "id": "https://schema.chronicle.app/WatchAction",
+      "subtype_ids": [
+
+      ],
+      "see_also": "https://schema.org/WatchAction",
+      "comment": "The act of consuming dynamic/moving visual content."
     }
   ],
   "properties": [

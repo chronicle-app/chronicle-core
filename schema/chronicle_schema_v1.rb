@@ -18,6 +18,10 @@ pick_type :Thing do
 
     pick_type :ConsumeAction do
       pick_type :ListenAction
+      pick_type :ReadAction
+      pick_type :UseAction
+      pick_type :ViewAction
+      pick_type :WatchAction
     end
 
     pick_type :InteractAction do

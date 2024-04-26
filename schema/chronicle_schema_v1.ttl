@@ -256,6 +256,11 @@
   rdfs:seeAlso schemaorg:ReactAction;
   rdfs:subClassOf :AssessAction .
 
+:ReadAction a rdfs:Class;
+  rdfs:comment "The act of consuming written content.";
+  rdfs:seeAlso schemaorg:ReadAction;
+  rdfs:subClassOf :ConsumeAction .
+
 :SchoolDistrict a rdfs:Class;
   rdfs:comment "A School District is an administrative area for the administration of schools.";
   rdfs:seeAlso schemaorg:SchoolDistrict;
@@ -290,10 +295,25 @@
   rdfs:seeAlso schemaorg:UpdateAction;
   rdfs:subClassOf :Action .
 
+:UseAction a rdfs:Class;
+  rdfs:comment "The act of applying an object to its intended purpose.";
+  rdfs:seeAlso schemaorg:UseAction;
+  rdfs:subClassOf :ConsumeAction .
+
 :VideoObject a rdfs:Class;
   rdfs:comment "A video file.";
   rdfs:seeAlso schemaorg:VideoObject;
   rdfs:subClassOf :MediaObject .
+
+:ViewAction a rdfs:Class;
+  rdfs:comment "The act of consuming static visual content.";
+  rdfs:seeAlso schemaorg:ViewAction;
+  rdfs:subClassOf :ConsumeAction .
+
+:WatchAction a rdfs:Class;
+  rdfs:comment "The act of consuming dynamic/moving visual content.";
+  rdfs:seeAlso schemaorg:WatchAction;
+  rdfs:subClassOf :ConsumeAction .
 
 <https://schema.chronicle.app> a owl:Ontology;
   owl:versionInfo "1" .
