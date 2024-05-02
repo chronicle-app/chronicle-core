@@ -24,10 +24,17 @@ pick_type :Thing do
       pick_type :WatchAction
     end
 
+    pick_type :ControlAction
+
     pick_type :InteractAction do
       pick_type :CommunicateAction do
         pick_type :CheckInAction
+        pick_type :CommentAction
       end
+    end
+
+    pick_type :OrganizeAction do
+      pick_type :BookmarkAction
     end
 
     pick_type :UpdateAction do
@@ -53,6 +60,10 @@ pick_type :Thing do
         apply_property :webFeed
       end
     end
+
+    add_type :ComputerCommand, comment: 'A command that can be executed on a computer.'
+
+    pick_type :Comment
 
     pick_type :Episode do
       pick_type :PodcastEpisode
@@ -98,7 +109,6 @@ pick_type :Thing do
     apply_property :creator, many: true
     apply_property :inLanguage, many: true
     apply_property :isPartOf, many: true
-    apply_property :keywords, many: true
     apply_property :mentions, many: true
     apply_property :producer, many: true
     apply_property :publisher, many: true
@@ -167,6 +177,9 @@ pick_type :Thing do
   add_property :slug
   add_property :sourceId
   add_property :sourceNamespace
+
+  # allow keywords on everything
+  add_property :keywords, many: true
 end
 
 pick_type :DataType do

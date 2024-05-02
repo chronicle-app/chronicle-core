@@ -41,6 +41,11 @@
   rdfs:seeAlso schemaorg:Book;
   rdfs:subClassOf :CreativeWork .
 
+:BookmarkAction a rdfs:Class;
+  rdfs:comment "An agent bookmarks/flags/labels/tags/marks an object.";
+  rdfs:seeAlso schemaorg:BookmarkAction;
+  rdfs:subClassOf :OrganizeAction .
+
 :Boolean a rdfs:Class;
   rdfs:comment "Boolean: True or False.";
   rdfs:seeAlso schemaorg:Boolean;
@@ -56,10 +61,24 @@
   rdfs:seeAlso schemaorg:City;
   rdfs:subClassOf :AdministrativeArea .
 
+:Comment a rdfs:Class;
+  rdfs:comment "A comment on an item - for example, a comment on a blog post. The comment's content is expressed via the [[text]] property, and its topic via [[about]], properties shared with all CreativeWorks.";
+  rdfs:seeAlso schemaorg:Comment;
+  rdfs:subClassOf :CreativeWork .
+
+:CommentAction a rdfs:Class;
+  rdfs:comment "The act of generating a comment about a subject.";
+  rdfs:seeAlso schemaorg:CommentAction;
+  rdfs:subClassOf :CommunicateAction .
+
 :CommunicateAction a rdfs:Class;
   rdfs:comment "The act of conveying information to another person via a communication medium (instrument) such as speech, email, or telephone conversation.";
   rdfs:seeAlso schemaorg:CommunicateAction;
   rdfs:subClassOf :InteractAction .
+
+:ComputerCommand a rdfs:Class;
+  rdfs:comment "A command that can be executed on a computer.";
+  rdfs:subClassOf :CreativeWork .
 
 :ConsumeAction a rdfs:Class;
   rdfs:comment "The act of ingesting information/resources/food.";
@@ -70,6 +89,11 @@
   rdfs:comment "A contact point&#x2014;for example, a Customer Complaints department.";
   rdfs:seeAlso schemaorg:ContactPoint;
   rdfs:subClassOf :StructuredValue .
+
+:ControlAction a rdfs:Class;
+  rdfs:comment "An agent controls a device or application.";
+  rdfs:seeAlso schemaorg:ControlAction;
+  rdfs:subClassOf :Action .
 
 :Country a rdfs:Class;
   rdfs:comment "A country.";
@@ -210,6 +234,11 @@
   rdfs:comment "An organization such as a school, NGO, corporation, club, etc.";
   rdfs:seeAlso schemaorg:Organization;
   rdfs:subClassOf :Thing .
+
+:OrganizeAction a rdfs:Class;
+  rdfs:comment "The act of manipulating/administering/supervising/controlling one or more objects.";
+  rdfs:seeAlso schemaorg:OrganizeAction;
+  rdfs:subClassOf :Action .
 
 :PerformingGroup a rdfs:Class;
   rdfs:comment "A performance group, such as a band, an orchestra, or a circus.";
@@ -509,11 +538,8 @@
     :URL .
 
 :keywords a rdf:Property;
-  rdfs:comment "Keywords or tags used to describe some item. Multiple textual entries in a keywords list are typically delimited by commas, or by repeating the property.";
-  rdfs:seeAlso schemaorg:keywords;
-  :domainIncludes :CreativeWork;
-  :rangeIncludes :Text,
-    :URL .
+  :domainIncludes :Thing;
+  :rangeIncludes :Text .
 
 :latitude a rdf:Property;
   rdfs:comment "The latitude of a location. For example ```37.42242``` ([WGS 84](https://en.wikipedia.org/wiki/World_Geodetic_System)).";

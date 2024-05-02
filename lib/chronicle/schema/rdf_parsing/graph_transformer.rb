@@ -77,6 +77,21 @@ module Chronicle
           @current_parent = previous_parent
         end
 
+        # add a new type that's child of the parent
+        def add_type(identifier, comment: nil, &)
+          new_type = @new_graph.add_type(identifier)
+          new_type.comment = comment
+
+          @current_parent&.add_subtype_id(new_type.id)
+
+          previous_parent = @current_parent
+          @current_parent = new_type
+
+          instance_eval(&) if block_given?
+
+          @current_parent = previous_parent
+        end
+
         def pick_all_subtypes(&)
           @base_graph.find_type(@current_parent.short_id.to_sym).subtype_ids.each do |subtype_id|
             identifier = @base_graph.id_to_identifier(subtype_id)

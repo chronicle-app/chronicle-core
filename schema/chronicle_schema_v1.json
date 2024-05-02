@@ -6,7 +6,9 @@
       "subtype_ids": [
         "https://schema.chronicle.app/AssessAction",
         "https://schema.chronicle.app/ConsumeAction",
+        "https://schema.chronicle.app/ControlAction",
         "https://schema.chronicle.app/InteractAction",
+        "https://schema.chronicle.app/OrganizeAction",
         "https://schema.chronicle.app/UpdateAction"
       ],
       "see_also": "https://schema.org/Action",
@@ -56,6 +58,14 @@
       "comment": "A book."
     },
     {
+      "id": "https://schema.chronicle.app/BookmarkAction",
+      "subtype_ids": [
+
+      ],
+      "see_also": "https://schema.org/BookmarkAction",
+      "comment": "An agent bookmarks/flags/labels/tags/marks an object."
+    },
+    {
       "id": "https://schema.chronicle.app/Boolean",
       "subtype_ids": [
 
@@ -80,12 +90,36 @@
       "comment": "A city or town."
     },
     {
+      "id": "https://schema.chronicle.app/Comment",
+      "subtype_ids": [
+
+      ],
+      "see_also": "https://schema.org/Comment",
+      "comment": "A comment on an item - for example, a comment on a blog post. The comment's content is expressed via the [[text]] property, and its topic via [[about]], properties shared with all CreativeWorks."
+    },
+    {
+      "id": "https://schema.chronicle.app/CommentAction",
+      "subtype_ids": [
+
+      ],
+      "see_also": "https://schema.org/CommentAction",
+      "comment": "The act of generating a comment about a subject."
+    },
+    {
       "id": "https://schema.chronicle.app/CommunicateAction",
       "subtype_ids": [
-        "https://schema.chronicle.app/CheckInAction"
+        "https://schema.chronicle.app/CheckInAction",
+        "https://schema.chronicle.app/CommentAction"
       ],
       "see_also": "https://schema.org/CommunicateAction",
       "comment": "The act of conveying information to another person via a communication medium (instrument) such as speech, email, or telephone conversation."
+    },
+    {
+      "id": "https://schema.chronicle.app/ComputerCommand",
+      "subtype_ids": [
+
+      ],
+      "comment": "A command that can be executed on a computer."
     },
     {
       "id": "https://schema.chronicle.app/ConsumeAction",
@@ -108,6 +142,14 @@
       "comment": "A contact point&#x2014;for example, a Customer Complaints department."
     },
     {
+      "id": "https://schema.chronicle.app/ControlAction",
+      "subtype_ids": [
+
+      ],
+      "see_also": "https://schema.org/ControlAction",
+      "comment": "An agent controls a device or application."
+    },
+    {
       "id": "https://schema.chronicle.app/Country",
       "subtype_ids": [
 
@@ -119,6 +161,8 @@
       "id": "https://schema.chronicle.app/CreativeWork",
       "subtype_ids": [
         "https://schema.chronicle.app/Book",
+        "https://schema.chronicle.app/Comment",
+        "https://schema.chronicle.app/ComputerCommand",
         "https://schema.chronicle.app/CreativeWorkSeries",
         "https://schema.chronicle.app/Episode",
         "https://schema.chronicle.app/MediaObject",
@@ -344,6 +388,14 @@
       ],
       "see_also": "https://schema.org/Organization",
       "comment": "An organization such as a school, NGO, corporation, club, etc."
+    },
+    {
+      "id": "https://schema.chronicle.app/OrganizeAction",
+      "subtype_ids": [
+        "https://schema.chronicle.app/BookmarkAction"
+      ],
+      "see_also": "https://schema.org/OrganizeAction",
+      "comment": "The act of manipulating/administering/supervising/controlling one or more objects."
     },
     {
       "id": "https://schema.chronicle.app/PerformingGroup",
@@ -883,16 +935,13 @@
     {
       "id": "https://schema.chronicle.app/keywords",
       "domain": [
-        "https://schema.chronicle.app/CreativeWork"
+        "https://schema.chronicle.app/Thing"
       ],
       "range": [
-        "https://schema.chronicle.app/Text",
-        "https://schema.chronicle.app/URL"
+        "https://schema.chronicle.app/Text"
       ],
       "many": true,
-      "required": false,
-      "comment": "Keywords or tags used to describe some item. Multiple textual entries in a keywords list are typically delimited by commas, or by repeating the property.",
-      "see_also": "https://schema.org/keywords"
+      "required": false
     },
     {
       "id": "https://schema.chronicle.app/latitude",
